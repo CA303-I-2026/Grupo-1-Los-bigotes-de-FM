@@ -1,14 +1,331 @@
-\documentclass[12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
-\usepackage{geometry}
-\geometry{margin=2.5cm}
+%==============================
+% PREFORMA
+% Autor: Anthonny Flores Rojas | C32975
+% Basado en un documento propio, ordenado y documentado por IA
+%==============================
 
-\title{Bitácora 1}
-\author{}
-\date{}
+%==============================
+% DEFINICIÓN DEL DOCUMENTO
+%==============================
+\documentclass[letterpaper,10pt,twoside]{book}  % Tamaño carta según APA
+
+%==============================
+% PAQUETES DE IDIOMA Y CODIFICACIÓN
+%==============================
+\usepackage[T1]{fontenc}  % Configuración de fuentes (Texto) - ELIMINADO inputenc
+\usepackage{textcomp}  % Mejora compatibilidad de símbolos
+\usepackage{indentfirst}      % Activa sangría en el primer párrafo
+\setlength{\parindent}{2em}   % Define el tamaño de la sangría
+\setlength{\parskip}{0pt}     % Elimina espacio entre párrafos
+
+%==============================
+% PAQUETES DE TIPOGRAFÍA
+%==============================
+\usepackage{lmodern}                    % Latin Modern para texto
+
+%==============================
+% PAQUETES MATEMÁTICOS (ORDEN CORREGIDO)
+%==============================
+% PRIMERO: Paquetes base ANTES de unicode-math
+\usepackage{amsmath}      % Base matemática
+\usepackage{amsthm}       % Teoremas
+\usepackage{amsfonts}
+\usepackage{mathtools}    % ANTES de unicode-math - CORREGIDO
+\usepackage{nicematrix}   % Matrices bonitas
+\usepackage{xfrac}        % Fracciones
+\usepackage{unicode-math} % Unicode para matemáticas avanzadas
+
+\setmathfontface\mathsf{Latin Modern Sans}   % Sans-serif matemático
+\setmathfontface\mathtt{Latin Modern Mono}   % Typewriter matemático
+\setmathfont{NewCMMath-Book}
+
+% SEGUNDO: Paquetes restantes (SIN amssymb para evitar conflictos)
+\usepackage{amsfonts}     % Fuentes AMS (SIN amssymb)
+\usepackage{esint}        % Integrales especiales
+\usepackage{physics}      % Notación física
+\usepackage{derivative}   % Derivadas
+\usepackage{siunitx}      % Unidades
+\usepackage{tensor}       % Tensores
+\usepackage{mathrsfs}     % Script math
+\usepackage{arcs}
+
+%==============================
+% SOLUCIÓN A CONFLICTOS DE SÍMBOLOS (MÚLTIPLES)
+%==============================
+% Redefinir TODOS los símbolos conflictivos
+\let\oldeth\eth
+\let\oldsmallsetminus\smallsetminus
+\let\olddigamma\digamma
+\let\oldbackepsilon\backepsilon
+
+\AtBeginDocument{
+	\renewcommand{\eth}{\oldeth}
+	\renewcommand{\smallsetminus}{\oldsmallsetminus}
+	\renewcommand{\digamma}{\olddigamma}
+	\renewcommand{\backepsilon}{\oldbackepsilon}
+}
+
+%==============================
+% PAQUETES DE DISEÑO Y FORMATO
+%==============================
+\usepackage[a4paper, margin=2.54cm]{geometry}  % Márgenes correctos según APA
+\usepackage{fancyhdr}  % Encabezado y pie de página
+\usepackage{setspace}  % Espaciado entre líneas
+\usepackage{caption}  % Personalización de títulos de figuras y tablas
+\usepackage{booktabs}  % Mejoras en tablas
+\usepackage{array}  % Control preciso de columnas en tablas
+\usepackage{enumitem}  % Listas personalizadas
+
+%==============================
+% PAQUETES DE GRÁFICOS Y COLORES
+%==============================
+\usepackage{graphicx}              % Insertar imágenes
+\usepackage{tikz}                  % Gráficos vectoriales
+\usepackage{pgfplots}              % Plots matemáticos
+\pgfplotsset{compat=1.18}          % Optimización de gráficos
+\usepgfplotslibrary{fillbetween}   % Rellenos
+
+% CIRCUITOS - CONFIGURACIÓN CORREGIDA
+\usepackage{circuitikz}            % Paquete de circuitos
+\usetikzlibrary{patterns}          % Patrones básicos
+\usetikzlibrary{circuits.ee.IEC}   % Símbolos IEC
+
+\usepackage[dvipsnames]{xcolor}    % Más opciones de colores
+
+%==============================
+% PAQUETES DE HIPERVÍNCULOS Y CITAS
+%==============================
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black]{hyperref}  % Enlaces y citas optimizados
+\usepackage[style=apa, backend=biber, doi=true, isbn=false]{biblatex}  % Estilo de citas A.P.A.
+\addbibresource{referencias.bib}  % Archivo de referencias
+
+%==============================
+% PAQUETES DE ENTORNOS Y RECUADROS
+%==============================
+\usepackage{tcolorbox, mdframed}  % Recuadros decorativos y simples
+\tcbset{colframe=blue!50!black, colback=white, boxrule=1pt}  % Configuración de recuadros
+
+%==============================
+% CONFIGURACIÓN DE LA APARIENCIA DE CAPÍTULOS
+%==============================
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{graphicx}  % Para rotar texto
+\usepackage{xcolor}  % Definir colores
+
+%==============================
+% PAQUETES ADICIONALES
+%==============================
+\usepackage{tocloft}  % Paquete para personalizar la tabla de contenido
+
+%==============================
+% AÑADIR PUNTOS DE SEPARACIÓN ENTRE TÍTULO Y NÚMERO DE PÁGINA
+%==============================
+\renewcommand{\cftchapdotsep}{\cftdotsep}  % Puntos de separación para capítulos
+\renewcommand{\cftsecdotsep}{\cftdotsep}   % Puntos de separación para secciones
+\renewcommand{\cftsubsecdotsep}{\cftdotsep} % Puntos de separación para subsecciones
+
+%==============================
+% CAMBIAR EL NOMBRE DE "ÍNDICE GENERAL" A "CONTENIDO"
+%==============================
+\renewcommand{\contentsname}{Contenido}  % Cambia el nombre del índice de "Índice General" a "Contenido
+
+%==============================
+% ESTILO PARA EL PREFACIO SIN NUMERACIÓN GRANDE
+%==============================
+\newcommand{\prefaciostyle}{
+	\titleformat{\chapter}[display]
+	{\huge\bfseries}  % Estilo sin número grande
+	{}  % Sin "Capítulo X"
+	{0pt}  % Sin espacio entre número y título
+	{}  % No mostrar número de capítulo
+	% --- Ajustar el espacio antes y después del capítulo ---
+	\titlespacing*{\chapter}{0pt}{-20pt}{260pt}
+}
+
+%==============================
+% ESTILO PARA EL RESTO DE LOS CAPÍTULOS
+%==============================
+\newcommand{\lchaptersstyle}{
+	\titleformat{\chapter}[display]
+	{\Huge\bfseries}  % Estilo del título (grande y en negrita)
+	{}  % Sin "Capítulo X"
+	{-150pt}  % Espacio entre número y título
+	{\fontsize{50}{60}\selectfont\thechapter \Huge\\}  % Mostrar número grande para capítulos
+	% --- Ajustar el espacio antes y después del capítulo ---
+	\titlespacing*{\chapter}{0pt}{100pt}{260pt}
+}
+
+%==============================
+% ESTILO PARA CAPÍTULOS DERECHOS
+%==============================
+\newcommand{\rchaptersstyle}{
+	\titleformat{\chapter}[display]
+	{\Huge\bfseries\raggedleft}  % Estilo + alineación derecha
+	{}  % Sin "Capítulo X"
+	{-150pt}  % Espacio entre número y título
+	{\fontsize{50}{60}\selectfont\raggedleft\thechapter \Huge\\}  % Número alineado a la derecha
+	\titlespacing*{\chapter}{0pt}{100pt}{260pt}  % Espaciado antes y después
+}
+
+\newcommand{\chapterstyle}{
+	\titleformat{\chapter}[display]
+	{\huge\bfseries}  % Estilo sin número grande
+	{}  % Sin "Capítulo X"
+	{}  % Sin espacio entre número y título
+	{}  % No mostrar número de capítulo
+}
+
+%==============================
+% CONFIGURACIÓN DE GEOMETRÍA DE LA HOJA
+%==============================
+\geometry{
+	left=2.54cm,
+	right=2.54cm,
+	top=2.54cm,
+	bottom=2.54cm
+}
+
+%==============================
+% CONFIGURACIÓN DE ENCABEZADO Y PIE DE PÁGINA
+%==============================
+\pagestyle{fancy}
+\fancyhf{} % Borra los encabezados
+\fancyhead[LE, RO]{xxxxx}  % Número de página alineado a la derecha
+\fancyhead[RE, LO]{\thepage}
+\renewcommand{\headrulewidth}{0pt}  % Sin línea en el encabezado (APA)
+
+%==============================
+% CONFIGURACIÓN DE ESPACIADO
+%==============================
+\setstretch{1}  % Interlineado doble según APA
+
+%==============================
+% CONFIGURACIÓN DE NUMERACIÓN Y LISTAS
+%==============================
+\setlist[itemize]{noitemsep, topsep=0pt, leftmargin=1cm}  % Ajuste de sangría en listas
+\setlist[enumerate]{label=\arabic*.}  % Numeración estándar en listas ordenadas
+
+%==============================
+% DEFINICIÓN DE COLORES PERSONALIZADOS
+%==============================
+\definecolor{definitioncolor}{HTML}{002c3e}  % Azul más oscuro para Definiciones
+\definecolor{axiomcolor}{HTML}{004c70}  % Azul profundo para Axiomas
+\definecolor{theoremcolor}{HTML}{006494}  % Azul intermedio para Teoremas
+\definecolor{corollarycolor}{HTML}{0096c7}  % Azul brillante para Corolarios
+\definecolor{lemacolor}{HTML}{00b4d8}  % Azul claro para Lemas
+\definecolor{propositioncolor}{HTML}{90e0ef}  % Celeste más suave para Proposiciones
+\definecolor{resultcolor}{HTML}{bdeff8}  % Celeste más suave para Proposiciones
+\definecolor{background}{HTML}{FFFFFF}  % Fondo celeste claro para cajas
+
+%==============================
+% CREACIÓN DE ENTORNOS MATEMÁTICOS PERSONALIZADOS
+%==============================
+\tcolorboxenvironment{definition}{
+	colframe=definitioncolor,
+	colback=background,
+	coltitle=white,
+	fonttitle=\bfseries,
+	boxrule=0.5mm,
+	arc=0.2mm
+}
+\tcolorboxenvironment{axiom}{
+	colframe=axiomcolor,
+	colback=background,
+	coltitle=white,
+	fonttitle=\bfseries,
+	boxrule=0.5mm,
+	arc=0.2mm,
+}
+\tcolorboxenvironment{theorem}{
+	colframe=theoremcolor,
+	colback=background,
+	coltitle=white,
+	fonttitle=\bfseries,
+	boxrule=0.5mm,
+	arc=0.2mm,
+}
+\tcolorboxenvironment{corollary}{
+	colframe=corollarycolor,
+	colback=background,
+	coltitle=white,
+	fonttitle=\bfseries,
+	boxrule=0.5mm,
+	arc=0.2mm
+}
+\tcolorboxenvironment{lemma}{
+	colframe=lemacolor,
+	colback=background,
+	coltitle=white,
+	fonttitle=\bfseries,
+	boxrule=0.5mm,
+	arc=0.2mm,
+}
+\tcolorboxenvironment{proposition}{
+	colframe=propositioncolor,
+	colback=background,
+	coltitle=white,
+	fonttitle=\bfseries,
+	boxrule=0.5mm,
+	arc=0.2mm
+}
+\tcolorboxenvironment{result}{
+	colframe=resultcolor,
+	colback=background,
+	coltitle=white,
+	fonttitle=\bfseries,
+	boxrule=0.5mm,
+	arc=0.2mm
+}
+\renewcommand{\proofname}{Demostración}
+
+%==============================
+% DEFINICIÓN DE TEOREMAS, LEMAS Y PROPOSICIONES
+%==============================
+\newtheorem{definition}{Definición}[section]
+\newtheorem{axiom}{Axioma}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corolario}[section]
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{proposition}{Proposición}[section]
+\newtheorem{result}{Resultado}[section]
+
+%==============================
+% INFORMACIÓN DEL DOCUMENTO
+%==============================
+\newcommand{\titulo}{XXXX}
+\newcommand{\autor}{Anthonny Flores Rojas}
+\newcommand{\fecha}{\today}  % Fecha automática
+
+\title{\titulo}
+\author{\autor}
+\date{\fecha}  % Fecha automática
+
+%==============================
+% HACER QUE \CHAPTER NO EMPIECE EN PÁGINA IMPAR
+%==============================
+\makeatletter
+\renewcommand{\cleardoublepage}{\clearpage}
+\makeatother
 
 \begin{document}
-\maketitle
-
+	
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{2cm}  
+			\Huge \textbf{\titulo} \\[1.5cm]
+			\Large \autor \\[1cm]
+			\fecha
+		\end{center}
+	\end{titlepage}
+	
+	\tableofcontents
+	\thispagestyle{empty}
+	
+	\newpage
+	\rchaptersstyle
+	\chapter{xxxx}
+	\thispagestyle{empty} 
+	
+	
 \end{document}
