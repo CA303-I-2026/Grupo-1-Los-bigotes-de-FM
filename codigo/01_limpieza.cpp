@@ -44,23 +44,6 @@ int maxLengh(vector<Data>& dt) {
 
 }
 
-// Funcion para partir en letras
-string trim(vector<Data> dt) {
-
-    Data c; // Variable auxiliar
-
-    for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
-        
-        c = dt[i]; // Copiar el elemento actual del vector
-
-        for(size_t j = 0; j < c.password.length(); j++) { // Por cada letra del elemento
-            c.w[i] = c.password[j]; // Se copia la letra
-        }
-        
-    }
-
-}
-
 class cleaner {
 
     vector<Data> datacom;
@@ -75,8 +58,20 @@ class cleaner {
 
     }
 
-    //
-    void toletters() {
+    // Funcion para partir en letras
+    string toletters(vector<Data> dt) {
+
+        Data c; // Variable auxiliar
+
+        for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
+            
+            c = dt[i]; // Copiar el elemento actual del vector
+
+            for(size_t j = 0; j < c.password.length(); j++) { // Por cada letra del elemento
+                c.w[i] = c.password[j]; // Se copia la letra
+            }
+            
+        }
 
     }
 
@@ -85,11 +80,26 @@ class cleaner {
 
     }
 
-    //
-    void txttodata() {
+    // Funcion para pasar de txt a data
+    void txttodata(vector<Data> dt) {
+
         ifstream fLoc("rockyou.txt");
-            string line;
-           
+        string line;
+        
+        while (getline(fLoc, line)) {
+
+            if (!line.empty()) {  
+
+                Data a;
+                a.password = line;
+                dt.push_back(a);
+
+            }
+
+        }
+
+        fLoc.close();
+
     }
 
     //
