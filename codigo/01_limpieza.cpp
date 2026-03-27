@@ -16,7 +16,7 @@ using namespace std;
 // Estructura para manejo de datos por letras
 struct Data {
     string password;
-    char w[8];
+    char w[16];
 };
 
 // Estructura para manejo de datos por chuncks
@@ -44,14 +44,14 @@ size_t maxLengh(vector<Data>& dt) {
 
 }
 
-// Funcion para contar cuantas contraseñas exceden el maximo de 32 caracteres
+// Funcion para contar cuantas contrasennas exceden el maximo de 16 caracteres
 size_t contEx(vector<Data>& dt) {
 
     size_t ex = 0; // Variable de conteo
 
     for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
 
-        if (dt[i].password.length() > 32) { // Si es mas larga de 32 caracteres
+        if (dt[i].password.length() > 16) { // Si es mas larga de n caracteres
 
             ex++; // Se suman al exceso
 
@@ -102,6 +102,30 @@ class cleaner {
         //
         void datatotxt() {
 
+            ofstream fLoc("../datos/procesados/rockyou.txt"); // Buscar direccion
+
+            for (size_t i = 0; i < datacom.size(); i++) {
+
+                fLoc << datacom[i].password; // Escribir la clave
+
+                for (size_t j = 0; j < 16; j++) { // Recorrer w
+
+                    fLoc << ",";
+
+                    if (datacom[i].w[j] != '\0') { // Si no esta vacio
+                        fLoc << datacom[i].w[j];
+                    } else {
+                        fLoc << " "; // Espacio vacio
+                    }
+
+                }
+
+                fLoc << "\n";
+
+            }
+
+            fLoc.close(); // Cierre de apertura de txt
+
         }
 
         // Funcion para pasar de txt a data
@@ -112,7 +136,8 @@ class cleaner {
             
             while (getline(fLoc, line)) { // Mientras allan lineas en el txt
 
-                if (!line.empty()) {  // Si no son vacias
+                if (!line.empty() && line.length() <= 16) {  // Si no son vacias y es menor a la cota eleguida
+
 
                     Data a; // Variable auxiliar
                     a.password = line; // Se copia la clave
@@ -140,9 +165,8 @@ int main() {
 
     datos.txttodata();
     
-    size_t x = maxLengh(datos.datacom);
-    cout << x << endl;
-
+    cout << maxLengh(datos.datacom) << endl;
+    cout << contEx(datos.datacom) << endl;
 
     return 0;
 
