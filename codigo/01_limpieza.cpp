@@ -26,7 +26,7 @@ struct Datac {
 };
 
 // Funcion para encontrar la contrasenna mas larga
-int maxLengh(vector<Data>& dt) {
+size_t maxLengh(vector<Data>& dt) {
 
     size_t maxLen = 0; // Variable de conteo
 
@@ -44,75 +44,105 @@ int maxLengh(vector<Data>& dt) {
 
 }
 
+// Funcion para contar cuantas contraseñas exceden el maximo de 32 caracteres
+size_t maxLengh(vector<Data>& dt) {
+
+    size_t maxLen = 0; // Variable de conteo
+
+    for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
+
+        if (dt[i].password.length() > maxLen) { // Si es mas larga
+
+            maxLen = dt[i].password.length(); // Se copia el largo
+
+        }
+
+    }
+
+    return maxLen;
+
+}
+
+// Clase cleaner
 class cleaner {
 
-    vector<Data> datacom;
+    public:
 
-    //
-    void chunksdetector() {
-
-    }
-
-    //
-    void tochunks() {
-
-    }
-
-    // Funcion para partir en letras
-    string toletters(vector<Data> dt) {
-
-        Data c; // Variable auxiliar
-
-        for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
-            
-            c = dt[i]; // Copiar el elemento actual del vector
-
-            for(size_t j = 0; j < c.password.length(); j++) { // Por cada letra del elemento
-                c.w[i] = c.password[j]; // Se copia la letra
-            }
-            
-        }
-
-    }
-
-    //
-    void datatotxt() {
-
-    }
-
-    // Funcion para pasar de txt a data
-    void txttodata(vector<Data> dt) {
-
-        ifstream fLoc("rockyou.txt");
-        string line;
+        vector<Data> datacom; // Vector para almacenar los datos
         
-        while (getline(fLoc, line)) {
+        //
+        void chunksdetector() {
 
-            if (!line.empty()) {  
+        }
 
-                Data a;
-                a.password = line;
-                dt.push_back(a);
+        //
+        void tochunks() {
 
+        }
+
+        // Funcion para partir en letras
+        void toletters() {
+
+            Data c; // Variable auxiliar
+
+            for(size_t i = 0; i < datacom.size(); i++) { // Recorrer todas las contrasennas
+                
+                c = datacom[i]; // Copiar el elemento actual del vector
+
+                for(size_t j = 0; j < c.password.length(); j++) { // Por cada letra del elemento
+
+                    c.w[i] = c.password[j]; // Se copia la letra
+
+                }
+                
             }
 
         }
 
-        fLoc.close();
+        //
+        void datatotxt() {
 
-    }
+        }
 
-    //
-    void datacleaner() {
+        // Funcion para pasar de txt a data
+        void txttodata() {
 
-    }
+            ifstream fLoc("../datos/originales/rockyou.txt");
+            string line;
+            
+            while (getline(fLoc, line)) {
+
+                if (!line.empty()) {  
+
+                    Data a;
+                    a.password = line;
+                    datacom.push_back(a);
+
+                }
+
+            }
+
+            fLoc.close();
+
+        }
+
+        //
+        void datacleaner() {
+
+        }
 };
 
 //
 int main() {
+
+    cleaner datos;
+
+    datos.txttodata();
     
+    size_t x = maxLengh(datos.datacom);
+    cout << x << endl;
 
 
     return 0;
 
-}
+} 
