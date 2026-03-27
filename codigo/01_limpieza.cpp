@@ -45,21 +45,21 @@ size_t maxLengh(vector<Data>& dt) {
 }
 
 // Funcion para contar cuantas contraseñas exceden el maximo de 32 caracteres
-size_t maxLengh(vector<Data>& dt) {
+size_t contEx(vector<Data>& dt) {
 
-    size_t maxLen = 0; // Variable de conteo
+    size_t ex = 0; // Variable de conteo
 
     for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
 
-        if (dt[i].password.length() > maxLen) { // Si es mas larga
+        if (dt[i].password.length() > 32) { // Si es mas larga de 32 caracteres
 
-            maxLen = dt[i].password.length(); // Se copia el largo
+            ex++; // Se suman al exceso
 
         }
 
     }
 
-    return maxLen;
+    return ex;
 
 }
 
@@ -107,22 +107,22 @@ class cleaner {
         // Funcion para pasar de txt a data
         void txttodata() {
 
-            ifstream fLoc("../datos/originales/rockyou.txt");
-            string line;
+            ifstream fLoc("../datos/originales/rockyou.txt"); // Buscar direccion
+            string line; // Variable auxiliar
             
-            while (getline(fLoc, line)) {
+            while (getline(fLoc, line)) { // Mientras allan lineas en el txt
 
-                if (!line.empty()) {  
+                if (!line.empty()) {  // Si no son vacias
 
-                    Data a;
-                    a.password = line;
-                    datacom.push_back(a);
+                    Data a; // Variable auxiliar
+                    a.password = line; // Se copia la clave
+                    datacom.push_back(a); // Y se almacena
 
                 }
 
             }
 
-            fLoc.close();
+            fLoc.close(); // Cierre de apertura de txt
 
         }
 
@@ -135,6 +135,7 @@ class cleaner {
 //
 int main() {
 
+    // Prubas 
     cleaner datos;
 
     datos.txttodata();
