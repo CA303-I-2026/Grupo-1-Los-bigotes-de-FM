@@ -159,3 +159,51 @@ bibliography: referencias.bib
 \setcounter{page}{1}
 \chapter*{xxxx}
 Bomboclat?
+
+
+\chapter*{Audiencia del proyecto}
+
+ Definan desde ahora a quién va dirigido su trabajo. ¿Es para
+un actuario de seguros? ¿Para la SUGESE? ¿Para una empresa financiera? ¿Para un in
+vestigador académico? Esta definición guiará el tono y nivel de detalle de todo lo que
+escriban. En cada bitácora incluyan una oración que comience: «Esta semana, le diría a
+[mi audiencia] que...
+
+\chapter*{Posicionamiento del equipo}
+
+Escriban un párrafo corto respondiendo: ¿Por qué nosotros
+somos el equipo adecuado para investigar este tema? ¿Qué perspectiva, experiencia o
+interés genuino aportamos que otro grupo no tiene? Este párrafo no necesita ser modesto
+ni exagerado, solo honesto
+
+\chapter*{Pregunta de investigacion}
+
+....
+....
+....
+....
+....
+....
+....
+....
+
+\chapter*{Parte escrita}
+
+\chapter*{Arco narrativo}
+
+\chapter*{Diario aprendizaje}
+
+...
+
+
+
+10-20 ref biblio
+
+
+\chapter*{Rastro de desiciones}
+
+
+\chapter*{Registro de IA}
+
+
+\chapter*{Log de contrbuciones}
