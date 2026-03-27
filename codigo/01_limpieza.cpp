@@ -15,24 +15,26 @@ using namespace std;
 
 // Estructura para manejo de datos por letras
 struct Data {
-    string password, w1, w2, w3, w4, w5, w6, w7, w8;
+    string password;
+    char w[8];
 };
 
 // Estructura para manejo de datos por chuncks
 struct Datac {
-    string password, chunk1, chunk2, chunk3, chunk4, chunk5, chunk6, chunk7, chunk8;
+    string password;
+    string chunks[8];
 };
 
 // Funcion para encontrar la contrasenna mas larga
-int maxLengh(vector<Data> bombo) {
+int maxLengh(vector<Data>& dt) {
 
     size_t maxLen = 0; // Variable de conteo
 
-    for(size_t i; i < bombo.size(); i++) { // Recorrer todas las contrasennas
+    for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
 
-        if (bombo[i].password.length() > maxLen) { // Si es mas larga
+        if (dt[i].password.length() > maxLen) { // Si es mas larga
 
-            maxLen = bombo[i].password.length(); // Se copia el largo
+            maxLen = dt[i].password.length(); // Se copia el largo
 
         }
 
@@ -42,16 +44,21 @@ int maxLengh(vector<Data> bombo) {
 
 }
 
-string trim(const string& s) {
+// Funcion para partir en letras
+string trim(vector<Data> dt) {
 
-    size_t first = s.find_first_not_of(" \n\r\t");
+    Data c; // Variable auxiliar
 
-    if (first == string::npos) return "";
+    for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
+        
+        c = dt[i]; // Copiar el elemento actual del vector
 
-    size_t last = s.find_last_not_of(" \n\r\t");
+        for(size_t j = 0; j < c.password.length(); j++) { // Por cada letra del elemento
+            c.w[i] = c.password[j]; // Se copia la letra
+        }
+        
+    }
 
-    return s.substr(first, (last - first + 1));
-    
 }
 
 class cleaner {
