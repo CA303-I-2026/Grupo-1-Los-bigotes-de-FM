@@ -1,0 +1,161 @@
+---
+title: ""
+lang: es
+
+format:
+  pdf:
+    documentclass: book
+    classoption: [letterpaper, 10pt, oneside]
+    toc: false
+    toc-title: "Contenido"
+    number-sections: true
+    geometry:
+      - left=2.54cm
+      - right=2.54cm
+      - top=2.54cm
+      - bottom=2.54cm
+    fontsize: 10pt
+    linestretch: 1
+    indent: true
+    cite-method: biblatex
+    biblatexoptions: "style=apa, backend=biber, doi=true, isbn=false"
+    header-includes: |
+      \usepackage[T1]{fontenc}
+      \usepackage{textcomp}
+      \usepackage{lmodern}
+      \usepackage{indentfirst}
+      \setlength{\parindent}{2em}
+      \setlength{\parskip}{0pt}
+
+      % Matemáticas
+      \usepackage{amsmath}
+      \usepackage{amsthm}
+      \usepackage{amsfonts}
+      \usepackage{mathtools}
+      \usepackage{nicematrix}
+      \usepackage{xfrac}
+      \usepackage{unicode-math}
+      \setmathfontface\mathsf{Latin Modern Sans}
+      \setmathfontface\mathtt{Latin Modern Mono}
+      \setmathfont{NewCMMath-Book}
+      \usepackage{esint}
+      \usepackage{physics}
+      \usepackage{derivative}
+      \usepackage{siunitx}
+      \usepackage{tensor}
+      \usepackage{mathrsfs}
+      \usepackage{arcs}
+
+      % Conflictos de símbolos
+      \let\oldeth\eth
+      \let\oldsmallsetminus\smallsetminus
+      \let\olddigamma\digamma
+      \let\oldbackepsilon\backepsilon
+      \AtBeginDocument{
+        \renewcommand{\eth}{\oldeth}
+        \renewcommand{\smallsetminus}{\oldsmallsetminus}
+        \renewcommand{\digamma}{\olddigamma}
+        \renewcommand{\backepsilon}{\oldbackepsilon}
+      }
+
+      % Diseño
+      \usepackage{fancyhdr}
+      \usepackage{caption}
+      \usepackage{booktabs}
+      \usepackage{array}
+      \usepackage{enumitem}
+      \usepackage{tcolorbox}
+      \usepackage{mdframed}
+      \tcbset{colframe=blue!50!black, colback=white, boxrule=1pt}
+
+      % Gráficos
+      \usepackage{tikz}
+      \usepackage{pgfplots}
+      \pgfplotsset{compat=1.18}
+      \usepgfplotslibrary{fillbetween}
+      \usepackage{circuitikz}
+      \usetikzlibrary{patterns}
+      \usetikzlibrary{circuits.ee.IEC}
+      \usepackage[dvipsnames]{xcolor}
+
+      % Encabezado
+      \pagestyle{fancy}
+      \fancyhf{}
+      \renewcommand{\headrulewidth}{0pt}
+
+      % Listas
+      \setlist[itemize]{noitemsep, topsep=0pt, leftmargin=1cm}
+      \setlist[enumerate]{label=\arabic*.}
+
+      % Colores personalizados
+      \definecolor{definitioncolor}{HTML}{002c3e}
+      \definecolor{axiomcolor}{HTML}{004c70}
+      \definecolor{theoremcolor}{HTML}{006494}
+      \definecolor{corollarycolor}{HTML}{0096c7}
+      \definecolor{lemacolor}{HTML}{00b4d8}
+      \definecolor{propositioncolor}{HTML}{90e0ef}
+      \definecolor{resultcolor}{HTML}{bdeff8}
+      \definecolor{background}{HTML}{FFFFFF}
+
+      % Entornos matemáticos
+      \newtheorem{definition}{Definición}[section]
+      \newtheorem{axiom}{Axioma}[section]
+      \newtheorem{theorem}{Teorema}[section]
+      \newtheorem{corollary}{Corolario}[section]
+      \newtheorem{lemma}{Lema}[section]
+      \newtheorem{proposition}{Proposición}[section]
+      \newtheorem{result}{Resultado}[section]
+      \renewcommand{\proofname}{Demostración}
+
+      % tcolorbox para entornos
+      \tcolorboxenvironment{definition}{colframe=definitioncolor,colback=background,coltitle=white,fonttitle=\bfseries,boxrule=0.5mm,arc=0.2mm}
+      \tcolorboxenvironment{axiom}{colframe=axiomcolor,colback=background,coltitle=white,fonttitle=\bfseries,boxrule=0.5mm,arc=0.2mm}
+      \tcolorboxenvironment{theorem}{colframe=theoremcolor,colback=background,coltitle=white,fonttitle=\bfseries,boxrule=0.5mm,arc=0.2mm}
+      \tcolorboxenvironment{corollary}{colframe=corollarycolor,colback=background,coltitle=white,fonttitle=\bfseries,boxrule=0.5mm,arc=0.2mm}
+      \tcolorboxenvironment{lemma}{colframe=lemacolor,colback=background,coltitle=white,fonttitle=\bfseries,boxrule=0.5mm,arc=0.2mm}
+      \tcolorboxenvironment{proposition}{colframe=propositioncolor,colback=background,coltitle=white,fonttitle=\bfseries,boxrule=0.5mm,arc=0.2mm}
+      \tcolorboxenvironment{result}{colframe=resultcolor,colback=background,coltitle=white,fonttitle=\bfseries,boxrule=0.5mm,arc=0.2mm}
+
+      % Chapters sin página impar
+      \makeatletter
+      \renewcommand{\cleardoublepage}{\clearpage}
+      \makeatother
+
+      % TOC con puntos
+      \usepackage{tocloft}
+      \renewcommand{\cftchapdotsep}{\cftdotsep}
+      \renewcommand{\cftsecdotsep}{\cftdotsep}
+      \renewcommand{\cftsubsecdotsep}{\cftdotsep}
+
+      % PORTADA ORIGINAL
+      \AtBeginDocument{
+        \begin{titlepage}
+          \begin{center}
+            \Huge Universidad de Costa Rica \\[1.5cm]
+            \huge Escuela de Matemáticas \\[1cm]
+            \LARGE Estadística Actuarial I (CA0303) \\[2cm]
+            \LARGE Bitácora \#1 \\[2cm]
+            \Large Prof: Maikol Solís \\[2cm]
+            \Large Estudiantes: \\[1cm]
+            \Large Anthonny Flores Rojas (C32975) \\[0.75cm]
+            \Large xxxxxxxx (xxxxxx) \\[0.75cm]
+            \Large xxxxxxxx (xxxxxx) \\[0.75cm]
+            \Large xxxxxxxx (xxxxxx) \\[2cm]
+            \Large Fecha: 02/26/26 \\[1cm]
+          \end{center}
+        \end{titlepage}
+      }
+
+bibliography: referencias.bib
+---
+
+\clearpage
+\thispagestyle{empty}
+\tableofcontents
+\thispagestyle{empty}
+
+
+\newpage
+\setcounter{page}{1}
+\chapter*{xxxx}
+Bomboclat?
