@@ -150,11 +150,7 @@ class cleaner {
             fLoc.close(); // Cierre de apertura de txt
 
         }
-
-        //
-        void datacleaner() {
-
-        }
+        
 };
 
 //
