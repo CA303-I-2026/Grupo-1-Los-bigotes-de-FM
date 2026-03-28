@@ -126,7 +126,7 @@ class cleaner {
 
         }
 
-        //
+        // Funcion para encontrar los chunks
         void tochunks() {
 
             vector<string> list;
@@ -160,7 +160,7 @@ class cleaner {
 
         }
 
-        //
+        // Funcion para pasar de data a txt (LETTERS)
         void datatotxt() {
 
             ofstream fLoc("../datos/procesados/rockyou.txt"); // Buscar direccion
@@ -189,6 +189,35 @@ class cleaner {
 
         }
 
+        // Funcion para pasar de data a txt (CHUNKS)
+        void datatotxtc() {
+
+            ofstream fLoc("../datos/procesados/rockyou.txt"); // Buscar direccion
+
+            for (size_t i = 0; i < datacomp.size(); i++) {
+
+                fLoc << datacomp[i].password; // Escribir la clave
+
+                for (size_t j = 0; j < 16; j++) { // Recorrer w
+
+                    fLoc << ",";
+
+                    if (datacomp[i].chunks[j] != "") { // Si no esta vacio
+                        fLoc << datacomp[i].chunks[j];
+                    } else {
+                        fLoc << " "; // Espacio vacio
+                    }
+
+                }
+
+                fLoc << "\n";
+
+            }
+
+            fLoc.close(); // Cierre de apertura de txt
+
+        }
+
         // Funcion para pasar de txt a data
         void txttodata() {
 
@@ -201,8 +230,11 @@ class cleaner {
 
 
                     Data a; // Variable auxiliar
+                    Datac b;
                     a.password = line; // Se copia la clave
+                    b.password = line;
                     datacom.push_back(a); // Y se almacena
+                    datacomp.push_back(b);
 
                 }
 
@@ -219,11 +251,13 @@ int main() {
 
     // Prubas 
     cleaner datos;
-
     datos.txttodata();
+    datos.toletters();
+    datos.tochunks();
+    datos.datatotxt();
+
     
-    cout << maxLengh(datos.datacom) << endl;
-    cout << contEx(datos.datacom) << endl;
+
 
     return 0;
 
