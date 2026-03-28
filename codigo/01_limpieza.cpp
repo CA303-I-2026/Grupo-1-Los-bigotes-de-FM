@@ -8,8 +8,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <unordered_map>
-#include <algorithm>
+#include <cctype>
 
 using namespace std;
 
@@ -70,8 +69,59 @@ class cleaner {
 
         vector<Data> datacom; // Vector para almacenar los datos
         
-        //
-        void chunksdetector() {
+        // Funcion para devolver los chunks de una contraseña
+        vector<string> chunksdetector(string password) {
+
+            vector<string> list;
+            bool indicator = false;
+            size_t j = 0;
+
+            for(int i = 0; i < password.length()-1; i++) {
+
+                if(isdigit(password[i]) && isdigit(password[i+1])) {
+
+                    j = i;
+                    
+                    while(isdigit(password[i])) {
+
+                        i++;
+                        indicator = true;
+                        
+                    }
+
+                    if (indicator) {
+
+                        list.push_back(password.substr(j, i)); 
+                        indicator = false;
+
+                    }
+
+                }
+
+                else if (!isdigit(password[i]) && !isdigit(password[i+1])) {
+
+                    j = i;
+                    
+                    while(!isdigit(password[i])) {
+
+                        i++;
+                        indicator = true;
+                        
+                    }
+
+                    if (indicator) {
+
+                        list.push_back(password.substr(j, i)); 
+                        indicator = false;
+
+                    }
+
+                }
+                
+
+            }
+
+            return list;
 
         }
 
