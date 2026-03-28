@@ -83,7 +83,7 @@ class cleaner {
 
                     j = i;
                     
-                    while(isdigit(password[i])) {
+                    while(i < password.length() && isdigit(password[i])) {
 
                         i++;
                         indicator = true;
@@ -103,7 +103,7 @@ class cleaner {
 
                     j = i;
                     
-                    while(!isdigit(password[i])) {
+                    while(i < password.length() && !isdigit(password[i])) {
 
                         i++;
                         indicator = true;
@@ -135,9 +135,9 @@ class cleaner {
 
                 list = chunksdetector(datacomp[i].password);
 
-                for(size_t j = 0; j < datacomp[i].password.length(); j++) { // copiar cada chunk
+                for(size_t j = 0; j < list.size() && j < 8; j++) { // copiar cada chunk
 
-                    datacomp[i].chunks[i] = datacomp[i].password[j]; // Se copia el chunk
+                    datacomp[i].chunks[i] = list[j]; // Se copia el chunk
 
                 }
                 
@@ -192,7 +192,7 @@ class cleaner {
         // Funcion para pasar de data a txt (CHUNKS)
         void datatotxtc() {
 
-            ofstream fLoc("../datos/procesados/rockyou.txt"); // Buscar direccion
+            ofstream fLoc("../datos/procesados/rockyouchunk.txt"); // Buscar direccion
 
             for (size_t i = 0; i < datacomp.size(); i++) {
 
@@ -246,7 +246,7 @@ class cleaner {
         
 };
 
-//
+// main
 int main() {
 
     // Prubas 
@@ -255,9 +255,6 @@ int main() {
     datos.toletters();
     datos.tochunks();
     datos.datatotxt();
-
-    
-
 
     return 0;
 
