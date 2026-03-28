@@ -15,7 +15,7 @@ using namespace std;
 // Estructura para manejo de datos por letras
 struct Data {
     string password;
-    char w[16];
+    char w[16] = {0};
 };
 
 // Estructura para manejo de datos por chuncks
@@ -74,53 +74,30 @@ class cleaner {
         vector<string> chunksdetector(string password) {
 
             vector<string> list;
-            bool indicator = false;
-            size_t j = 0;
 
-            for(int i = 0; i < password.length()-1; i++) {
+            if (password.empty()) return list;
 
-                if(isdigit(password[i]) && isdigit(password[i+1])) {
+            string current = "";
+            current += password[0];
 
-                    j = i;
-                    
-                    while(i < password.length() && isdigit(password[i])) {
+            for (size_t i = 1; i < password.length(); i++) {
 
-                        i++;
-                        indicator = true;
-                        
-                    }
+                // Si son del mismo tipo 
+                if (isdigit(password[i]) == isdigit(password[i-1])) {
 
-                    if (indicator) {
+                    current += password[i]; // Se agrega al chunk actual
 
-                        list.push_back(password.substr(j, i)); 
-                        indicator = false;
+                } else {
 
-                    }
+                    if (current.length() >= 2) list.push_back(current); // Se guarda el chunk
+                    current = "";
+                    current += password[i]; // Se empieza uno nuevo
 
                 }
-
-                else if (!isdigit(password[i]) && !isdigit(password[i+1])) {
-
-                    j = i;
-                    
-                    while(i < password.length() && !isdigit(password[i])) {
-
-                        i++;
-                        indicator = true;
-                        
-                    }
-
-                    if (indicator) {
-
-                        list.push_back(password.substr(j, i)); 
-                        indicator = false;
-
-                    }
-
-                }
-                
 
             }
+
+            if (current.length() >= 2) list.push_back(current); // Se guarda el ultimo chunk
 
             return list;
 
@@ -137,7 +114,7 @@ class cleaner {
 
                 for(size_t j = 0; j < list.size() && j < 8; j++) { // copiar cada chunk
 
-                    datacomp[i].chunks[i] = list[j]; // Se copia el chunk
+                    datacomp[i].chunks[j] = list[j]; // Se copia el chunk
 
                 }
                 
@@ -198,7 +175,7 @@ class cleaner {
 
                 fLoc << datacomp[i].password; // Escribir la clave
 
-                for (size_t j = 0; j < 16; j++) { // Recorrer w
+                for (size_t j = 0; j < 8; j++) { // Recorrer w
 
                     fLoc << ",";
 
@@ -255,7 +232,7 @@ int main() {
     datos.toletters();
     datos.tochunks();
     datos.datatotxt();
-
+    datos.datatotxtc();
     return 0;
 
 } 
