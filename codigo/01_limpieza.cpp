@@ -135,9 +135,9 @@ class cleaner {
 
                 list = chunksdetector(datacomp[i].password);
 
-                for(size_t j = 0; j < c.password.length(); j++) { // copiar cada chunk
+                for(size_t j = 0; j < datacomp[i].password.length(); j++) { // copiar cada chunk
 
-                    c.w[i] = c.password[j]; // Se copia la letra
+                    datacomp[i].chunks[i] = datacomp[i].password[j]; // Se copia el chunk
 
                 }
                 
