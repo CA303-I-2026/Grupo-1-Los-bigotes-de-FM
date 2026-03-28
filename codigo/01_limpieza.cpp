@@ -62,6 +62,32 @@ size_t contEx(vector<Data>& dt) {
 
 }
 
+// Funcion para contar cuantos caracteres diferentes a los chuunks y contraseñas
+size_t contDif(vector<Datac>& dt) {
+
+    size_t cf = 0; // Variable de conteo
+    int a = 0;
+
+    for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
+
+        for(size_t j = 0; j < 8; j++) {
+
+            a =+ dt[i].chunks[j].length(); // Se suman los largos de los chunks
+            // cout << dt[i].chunks[j] << endl; // Se imprimen los chunks
+            // cout << dt[i].chunks[j].length() << endl; // Se imprimen los chunks
+
+        }
+
+        cf =+ dt[i].password.length(); // Se suman los largos de las contrasennas
+        
+    }
+
+    cf = cf - a; // Se resta el largo total de los chunks
+
+    return cf;
+
+}
+
 // Clase cleaner
 class cleaner {
 
@@ -78,7 +104,7 @@ class cleaner {
             if (password.empty()) return list;
 
             string current = "";
-            current += password[0];
+            current += password[0]; // Se empieza el primer chunk con el primer caracter
 
             for (size_t i = 1; i < password.length(); i++) {
 
@@ -229,10 +255,22 @@ int main() {
     // Prubas 
     cleaner datos;
     datos.txttodata();
-    datos.toletters();
+    // datos.toletters();
     datos.tochunks();
-    datos.datatotxt();
-    datos.datatotxtc();
+    // datos.datatotxt();
+    // datos.datatotxtc();
+    /*
+    se saco aprox menos del 1% de las contraseñas (las mayores a 16 caracteres)
+    en total fueron 125936 que se quedaron afuera
+    */
+
+    cout << contDif(datos.datacomp) << endl;
+    // Diferencia entre caracteres: 11 (caracteres solos)
+    /*
+    No tiene sentido contar los caracteres solos en los chunks, ya que estos normalmente 
+    son remplazos de letras o casos aislados
+    */
+
     return 0;
 
 } 
