@@ -68,6 +68,7 @@ class cleaner {
     public:
 
         vector<Data> datacom; // Vector para almacenar los datos
+        vector<Datac> datacomp; // Vector para almacenar los datos
         
         // Funcion para devolver los chunks de una contraseña
         vector<string> chunksdetector(string password) {
@@ -128,20 +129,30 @@ class cleaner {
         //
         void tochunks() {
 
+            vector<string> list;
+
+            for(size_t i = 0; i < datacomp.size(); i++) { // Recorrer todas las contrasennas+
+
+                list = chunksdetector(datacomp[i].password);
+
+                for(size_t j = 0; j < c.password.length(); j++) { // copiar cada chunk
+
+                    c.w[i] = c.password[j]; // Se copia la letra
+
+                }
+                
+            }
+
         }
 
         // Funcion para partir en letras
         void toletters() {
 
-            Data c; // Variable auxiliar
-
             for(size_t i = 0; i < datacom.size(); i++) { // Recorrer todas las contrasennas
-                
-                c = datacom[i]; // Copiar el elemento actual del vector
 
-                for(size_t j = 0; j < c.password.length(); j++) { // Por cada letra del elemento
+                for(size_t j = 0; j < datacom[i].password.length(); j++) { // Por cada letra del elemento
 
-                    c.w[i] = c.password[j]; // Se copia la letra
+                    datacom[i].w[j] = datacom[i].password[j]; // Se copia la letra
 
                 }
                 
