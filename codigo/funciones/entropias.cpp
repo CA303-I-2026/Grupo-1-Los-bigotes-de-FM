@@ -14,6 +14,7 @@
 
 using namespace std;
 
+// Funcion para calcular la entropia de Shannon
 float entropyShannon(string& password) {
   
   if(password == "") return 0;
@@ -23,7 +24,7 @@ float entropyShannon(string& password) {
   float entropy = 0.0; // Variable auxiliar
   float lenght = password.length();
     
-  for (int i = 0; i < password.length(); i++) { // Por cada caracter
+  for (size_t i = 0; i < password.length(); i++) { // Por cada caracter
 
     chars[password[i]] += 1; // Agregar el conteo del caracter
     pw.insert(password[i]);
@@ -40,18 +41,19 @@ float entropyShannon(string& password) {
 
 }
 
+// Funcion para calcular la entropia de densidad
 float entropyDensity(string& password) {
   
   if(password == "") return 0;
 
   unordered_set<char> pw; // Caracteres unicos
 
-  for (int i = 0; i < password.length(); i++) {
+  for (size_t i = 0; i < password.length(); i++) {
 
     pw.insert(password[i]); 
-    
+
   }
-    
+
   return entropyShannon(password) * log2( pw.size()); // Entropia efectiva
 
 }

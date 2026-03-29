@@ -21,7 +21,7 @@ unordered_map<int, int> contChunks(vector<string>& letters) {
 
     unordered_map<int, int> chars_map;
 
-    for (int i = 0; i < letters.size(); i++) { // Por cada chunk
+    for (size_t i = 0; i < letters.size(); i++) { // Por cada chunk
     
         if (letters[i].empty()) continue; // Si es un espacio vacio
         if (isdigit(letters[i][0])) { // Si el primer caracter es un numero
@@ -40,7 +40,7 @@ unordered_map<char, int> contDis(vector<char>& chars) {
     unordered_map<char, int> chars_map; // Caracteres unicos
     unordered_set<char> pw;
 
-    for (int i = 0; i < chars.size(); i++) { // Por cada caracter
+    for (size_t i = 0; i < chars.size(); i++) { // Por cada caracter
 
         if (chars[i] == 0) continue; // Si es un espacio vacio
         chars_map[chars[i]] += 1; // Agregar el conteo del caracter

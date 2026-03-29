@@ -323,7 +323,7 @@ class cleaner {
 
         }
 
-
+        // Funcion para calcular las entropias
         void makeentropy() {
 
             for (size_t i = 0; i < datacom.size(); i++) {
