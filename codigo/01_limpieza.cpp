@@ -345,7 +345,7 @@ class cleaner {
 
                 vector<char> chars;
 
-                for (size_t i = 0; i < datacom.size(); i++) {
+                for (size_t i = 0; i < 16; i++) {
 
                     chars.push_back(datacom[j].w[i]);
 
@@ -355,6 +355,23 @@ class cleaner {
 
             }
 
+        }
+
+        void makebenford() {
+
+            for (size_t j = 0; j < datacomp.size(); j++) {
+
+                vector<string> chunks;
+
+                for (size_t i = 0; i < 8; i++) {
+
+                    chunks.push_back(datacomp[j].chunks[i]);
+
+                }
+
+                benford.benfC = contChunks(chunks);
+
+            }
         }
 
 };
