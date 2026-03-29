@@ -40,8 +40,12 @@ float entropyShannon(string& password) {
 
 }
 
-float entropyEffective(string& password) {
+float entropyDensity(string& password) {
   
   if(password == "") return 0;
+
+  unordered_set<char> pw; // Caracteres unicos
+    
+  return entropyShannon(password) * log2( pw.size()); // Entropia efectiva
 
 }
