@@ -35,9 +35,9 @@ unordered_map<int, int> contChunks(vector<string>& letters) {
 }
 
 // Funcion para contar la distribucion de los caracteres de las contrasennas
-unordered_map<char, float> contDis(vector<char>& chars) {
+unordered_map<char, int> contDis(vector<char>& chars) {
 
-    unordered_map<char, float> chars_map; // Caracteres unicos
+    unordered_map<char, int> chars_map; // Caracteres unicos
     unordered_set<char> pw;
 
     for (int i = 0; i < chars.size(); i++) { // Por cada caracter

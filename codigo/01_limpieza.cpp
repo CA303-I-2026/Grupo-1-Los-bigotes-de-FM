@@ -31,13 +31,15 @@ struct Datac {
 struct Datact {
     string password;
     float entropyS, entropyD;
-    int dist[16];
 };
 
 // Estructura para de dist de Ley de Benford
-struct Datactp {
-    string password;
+struct Databenf {
     unordered_map<int, int> benfC;
+};
+
+struct Datadist {
+    unordered_map<char, int> map;
 };
 
 // Funcion para encontrar la contrasenna mas larga
@@ -111,6 +113,10 @@ class cleaner {
 
         vector<Data> datacom; // Vector para almacenar los datos
         vector<Datac> datacomp; // Vector para almacenar los datos
+        vector<Datact> newdata;
+        Databenf benford;
+        Datadist distribution;
+        
         
         // Funcion para devolver los chunks de una contraseña
         vector<string> chunksdetector(string password) {
@@ -318,7 +324,20 @@ class cleaner {
         }
 
 
-        
+        void makeentropy() {
+
+            for (size_t i = 0; i < datacom.size(); i++) {
+
+                Datact d;
+                d.password = datacom[i].password;
+                d.entropyS = entropyShannon(datacom[i].password);
+                d.entropyD = entropyDensity(datacom[i].password);
+                newdata.push_back(d);
+
+            }
+
+        }
+
 };
 
 // main
@@ -327,6 +346,9 @@ int main() {
     // Prubas 
     cleaner datos;
     datos.txttodataNew();
+    datos.makeentropy();
+    // datos.makebenford();
+    // datos.makedist();
     // datos.toletters();
     // datos.tochunks();
     // datos.datatotxt();
