@@ -9,6 +9,8 @@
 #include <fstream>
 #include <sstream>
 #include <cctype>
+#include "conteos.h"
+#include "entropias.h"
 
 using namespace std;
 
@@ -246,6 +248,60 @@ class cleaner {
             fLoc.close(); // Cierre de apertura de txt
 
         }
+
+        // Funcion para pasar de txt a data (CREACION DE TABLAS)
+        void txttodataNew() {
+
+            ifstream fLoc("../datos/procesados/rockyou.txt"); // Buscar direccion
+            string line; // Variable auxiliar
+            
+            while (getline(fLoc, line)) { // Mientras allan lineas en el txt
+
+                if (line.empty()) continue;
+
+                stringstream ss(line);
+                string token;
+                Data a;
+
+                getline(ss, a.password, ','); // Leer la password
+
+                for (int i = 0; i < 16; i++) { // Leer cada letra
+                    getline(ss, token, ',');
+                    if (!token.empty() && token[0] != ' ') {
+                        a.w[i] = token[0];
+                    }
+                }
+
+                datacom.push_back(a);
+
+            }
+
+            fLoc.close(); // Cierre de apertura de txt
+
+            ifstream fLocc("../datos/procesados/rockyouchunk.txt");
+
+            while (getline(fLocc, line)) {
+
+                if (line.empty()) continue;
+
+                stringstream ss(line);
+                string token;
+                Datac b;
+
+                getline(ss, b.password, ','); // Leer la password
+
+                for (int i = 0; i < 8; i++) { // Leer cada chunk
+                    getline(ss, token, ',');
+                    if (!token.empty() && token[0] != ' ') {
+                        b.chunks[i] = token;
+                    }
+                }
+
+                datacomp.push_back(b);
+
+            }
+
+        }
         
 };
 
@@ -256,7 +312,7 @@ int main() {
     cleaner datos;
     datos.txttodata();
     // datos.toletters();
-    datos.tochunks();
+    // datos.tochunks();
     // datos.datatotxt();
     // datos.datatotxtc();
     /*
@@ -264,7 +320,7 @@ int main() {
     en total fueron 125936 que se quedaron afuera
     */
 
-    cout << contDif(datos.datacomp) << endl;
+    // cout << contDif(datos.datacomp) << endl;
     // Diferencia entre caracteres: 11 (caracteres solos)
     /*
     No tiene sentido contar los caracteres solos en los chunks, ya que estos normalmente 
