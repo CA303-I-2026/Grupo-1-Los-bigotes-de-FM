@@ -10,7 +10,7 @@
 
 using namespace std;
 
-unordered_map<int, float> contChunks(vector<string>& letters);
-unordered_map<char, float> contDis(vector<char>& chars);
+unordered_map<int, int> contChunks(vector<string>& letters);
+unordered_map<char, int> contDis(vector<char>& chars);
 
 #endif

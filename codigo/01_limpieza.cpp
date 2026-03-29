@@ -338,6 +338,25 @@ class cleaner {
 
         }
 
+        // Funcion para calcular la distribucion de los caracteres
+        void makedist() {
+
+            for (size_t j = 0; j < datacom.size(); j++) {
+
+                vector<char> chars;
+
+                for (size_t i = 0; i < datacom.size(); i++) {
+
+                    chars.push_back(datacom[j].w[i]);
+
+                }
+
+                distribution.map = contDis(chars);
+
+            }
+
+        }
+
 };
 
 // main
