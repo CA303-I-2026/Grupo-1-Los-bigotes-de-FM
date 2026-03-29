@@ -360,26 +360,25 @@ class cleaner {
         // Funcion para calcular la distribucion de los primeros numeros de los chunks
         void makebenford() {
 
-            for (size_t j = 0; j < datacomp.size(); j++) { 
+            for (size_t pos = 0; pos < 8; pos++) { // Por cada posicion de chunk
 
                 vector<string> chunks;
 
-                for (size_t i = 0; i < 8; i++) {
-
-                    chunks.push_back(datacomp[j].chunks[i]);
-
+                for (size_t j = 0; j < datacomp.size(); j++) { // Por cada contrasenna
+                    chunks.push_back(datacomp[j].chunks[pos]);
                 }
 
                 Databenf b;
-                b.benfC = contChunks(chunks); // Se calcula la distribucion de los primeros numeros de los chunks
-                benford.push_back(b); 
+                b.benfC = contChunks(chunks); // Se calcula la distribucion
+                benford.push_back(b);
 
             }
+
         }
 
         // Funcion para pasar de data a txt (CREACION DE TABLAS)
         void datatotxtNew() {
-
+ 
             // Guardar entropias
             ofstream fEnt("../datos/procesados/rockyoue.txt");
             fEnt << "password,entropyS,entropyD\n"; // Header
@@ -390,11 +389,11 @@ class cleaner {
 
             fEnt.close(); // Cierre de apertura de txt
 
-            // Guardar distribucion de caracteres
+            // Guardar distribucion de caracteres por posicion
             ofstream fDist("../datos/procesados/rockyouedist.txt");
 
             fDist << "char"; // Header
-            for (int i = 1; i <= 8; i++) fDist << ",chunk" << i;
+            for (int i = 1; i <= 16; i++) fDist << ",pos" << i;
             fDist << "\n";
 
             unordered_set<char> allChars; // Caracteres unicos
@@ -406,7 +405,7 @@ class cleaner {
 
             for (char c : allChars) { // Por cada char unico una fila
                 fDist << c;
-                for (size_t j = 0; j < distribution.size() && j < 8; j++) {
+                for (size_t j = 0; j < 16; j++) { // Por cada posicion
                     fDist << ",";
                     if (distribution[j].map.count(c)) {
                         fDist << distribution[j].map[c];
@@ -419,7 +418,7 @@ class cleaner {
 
             fDist.close(); // Cierre de apertura de txt
 
-            // Guardar distribucion de Benford
+            // Guardar distribucion de Benford por posicion de chunk
             ofstream fBenf("../datos/procesados/rockyoubenford.txt");
 
             fBenf << "digit"; // Header
@@ -428,7 +427,7 @@ class cleaner {
 
             for (int d = 0; d <= 9; d++) { // Por cada digito del 0 al 9 una fila
                 fBenf << d;
-                for (size_t j = 0; j < benford.size() && j < 8; j++) {
+                for (size_t j = 0; j < 8; j++) { // Por cada posicion de chunk
                     fBenf << ",";
                     if (benford[j].benfC.count(d)) {
                         fBenf << benford[j].benfC[d];
@@ -452,6 +451,8 @@ int main() {
     cleaner datos;
     datos.txttodataNew();
     datos.makeentropy();
+    
+    cout << "termino" << endl;
     datos.makebenford();
     datos.makedist();
     datos.datatotxtNew();
