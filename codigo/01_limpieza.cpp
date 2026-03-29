@@ -341,19 +341,17 @@ class cleaner {
         // Funcion para calcular la distribucion de los caracteres
         void makedist() {
 
-            for (size_t j = 0; j < datacom.size(); j++) {
+            for (size_t pos = 0; pos < 16; pos++) { // Por cada posicion de letra
 
                 vector<char> chars;
 
-                for (size_t i = 0; i < 16; i++) {
-
-                    chars.push_back(datacom[j].w[i]);
-
+                for (size_t j = 0; j < datacom.size(); j++) { // Por cada contrasenna
+                    chars.push_back(datacom[j].w[pos]);
                 }
 
                 Datadist d;
                 d.map = contDis(chars); // Se calcula la distribucion de los caracteres
-                distribution.push_back(d); 
+                distribution.push_back(d);
 
             }
 
@@ -382,7 +380,66 @@ class cleaner {
         // Funcion para pasar de data a txt (CREACION DE TABLAS)
         void datatotxtNew() {
 
+            // Guardar entropias
+            ofstream fEnt("../datos/procesados/rockyoue.txt");
+            fEnt << "password,entropyS,entropyD\n"; // Header
 
+            for (size_t i = 0; i < newdata.size(); i++) { // Por cada contrasenna
+                fEnt << newdata[i].password << "," << newdata[i].entropyS << "," << newdata[i].entropyD << "\n";
+            }
+
+            fEnt.close(); // Cierre de apertura de txt
+
+            // Guardar distribucion de caracteres
+            ofstream fDist("../datos/procesados/rockyouedist.txt");
+
+            fDist << "char"; // Header
+            for (int i = 1; i <= 8; i++) fDist << ",chunk" << i;
+            fDist << "\n";
+
+            unordered_set<char> allChars; // Caracteres unicos
+            for (size_t i = 0; i < distribution.size(); i++) { // Recolectar todos los chars unicos
+                for (auto& pair : distribution[i].map) {
+                    allChars.insert(pair.first);
+                }
+            }
+
+            for (char c : allChars) { // Por cada char unico una fila
+                fDist << c;
+                for (size_t j = 0; j < distribution.size() && j < 8; j++) {
+                    fDist << ",";
+                    if (distribution[j].map.count(c)) {
+                        fDist << distribution[j].map[c];
+                    } else {
+                        fDist << "0"; // Espacio vacio
+                    }
+                }
+                fDist << "\n";
+            }
+
+            fDist.close(); // Cierre de apertura de txt
+
+            // Guardar distribucion de Benford
+            ofstream fBenf("../datos/procesados/rockyoubenford.txt");
+
+            fBenf << "digit"; // Header
+            for (int i = 1; i <= 8; i++) fBenf << ",chunk" << i;
+            fBenf << "\n";
+
+            for (int d = 0; d <= 9; d++) { // Por cada digito del 0 al 9 una fila
+                fBenf << d;
+                for (size_t j = 0; j < benford.size() && j < 8; j++) {
+                    fBenf << ",";
+                    if (benford[j].benfC.count(d)) {
+                        fBenf << benford[j].benfC[d];
+                    } else {
+                        fBenf << "0"; // Espacio vacio
+                    }
+                }
+                fBenf << "\n";
+            }
+
+            fBenf.close(); // Cierre de apertura de txt
 
         }
 
