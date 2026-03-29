@@ -17,15 +17,15 @@
 using namespace std;
 
 // Funcion para contar los primeros numeros de los chunks numericos 
-unordered_map<char, float> contChunks(vector<string>& letters) {
+unordered_map<int, float> contChunks(vector<string>& letters) {
 
-    unordered_map<char, float> chars_map;
+    unordered_map<int, float> chars_map;
 
     for (int i = 0; i < letters.size(); i++) { // Por cada chunk
     
         if (letters[i].empty()) continue; // Si es un espacio vacio
         if (isdigit(letters[i][0])) { // Si el primer caracter es un numero
-            chars_map[letters[i][0]] += 1; // Agregar el conteo del caracter
+            chars_map[letters[i][0] - '0'] += 1; // Agregar el conteo del caracter
         }
     
     }
