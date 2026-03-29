@@ -11,6 +11,7 @@
 #include <cctype>
 #include "conteos.h"
 #include "entropias.h"
+#include <unordered_map>  
 
 using namespace std;
 
@@ -24,6 +25,19 @@ struct Data {
 struct Datac {
     string password;
     string chunks[8];
+};
+
+// Estructura para manejo de datos distribucion y entropia
+struct Datact {
+    string password;
+    float entropyS, entropyD;
+    int dist[16];
+};
+
+// Estructura para de dist de Ley de Benford
+struct Datactp {
+    string password;
+    unordered_map<int, int> benfC;
 };
 
 // Funcion para encontrar la contrasenna mas larga
@@ -302,6 +316,8 @@ class cleaner {
             }
 
         }
+
+
         
 };
 
@@ -310,7 +326,7 @@ int main() {
 
     // Prubas 
     cleaner datos;
-    datos.txttodata();
+    datos.txttodataNew();
     // datos.toletters();
     // datos.tochunks();
     // datos.datatotxt();

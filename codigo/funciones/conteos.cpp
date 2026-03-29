@@ -17,9 +17,9 @@
 using namespace std;
 
 // Funcion para contar los primeros numeros de los chunks numericos 
-unordered_map<int, float> contChunks(vector<string>& letters) {
+unordered_map<int, int> contChunks(vector<string>& letters) {
 
-    unordered_map<int, float> chars_map;
+    unordered_map<int, int> chars_map;
 
     for (int i = 0; i < letters.size(); i++) { // Por cada chunk
     
