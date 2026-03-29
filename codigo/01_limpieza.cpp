@@ -114,8 +114,8 @@ class cleaner {
         vector<Data> datacom; // Vector para almacenar los datos
         vector<Datac> datacomp; // Vector para almacenar los datos
         vector<Datact> newdata;
-        Databenf benford;
-        Datadist distribution;
+        vector<Databenf> benford;
+        vector<Datadist> distribution;
         
         
         // Funcion para devolver los chunks de una contraseña
@@ -351,15 +351,18 @@ class cleaner {
 
                 }
 
-                distribution.map = contDis(chars);
+                Datadist d;
+                d.map = contDis(chars); // Se calcula la distribucion de los caracteres
+                distribution.push_back(d); 
 
             }
 
         }
 
+        // Funcion para calcular la distribucion de los primeros numeros de los chunks
         void makebenford() {
 
-            for (size_t j = 0; j < datacomp.size(); j++) {
+            for (size_t j = 0; j < datacomp.size(); j++) { 
 
                 vector<string> chunks;
 
@@ -369,9 +372,18 @@ class cleaner {
 
                 }
 
-                benford.benfC = contChunks(chunks);
+                Databenf b;
+                b.benfC = contChunks(chunks); // Se calcula la distribucion de los primeros numeros de los chunks
+                benford.push_back(b); 
 
             }
+        }
+
+        // Funcion para pasar de data a txt (CREACION DE TABLAS)
+        void datatotxtNew() {
+
+
+
         }
 
 };
@@ -383,8 +395,9 @@ int main() {
     cleaner datos;
     datos.txttodataNew();
     datos.makeentropy();
-    // datos.makebenford();
-    // datos.makedist();
+    datos.makebenford();
+    datos.makedist();
+    datos.datatotxtNew();
     // datos.toletters();
     // datos.tochunks();
     // datos.datatotxt();
