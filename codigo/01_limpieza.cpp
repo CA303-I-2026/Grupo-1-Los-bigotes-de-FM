@@ -12,6 +12,7 @@
 #include "conteos.h"
 #include "entropias.h"
 #include <unordered_map>  
+#include <thread>
 
 using namespace std;
 
@@ -84,7 +85,7 @@ size_t contEx(vector<Data>& dt) {
 size_t contDif(vector<Datac>& dt) {
 
     size_t cf = 0; // Variable de conteo
-    int a = 0;
+    size_t a = 0;
 
     for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
 
@@ -285,11 +286,16 @@ class cleaner {
 
                 getline(ss, a.password, ','); // Leer la password
 
-                for (int i = 0; i < 16; i++) { // Leer cada letra
+                for (size_t i = 0; i < 16; i++) { // Leer cada letra
+
                     getline(ss, token, ',');
+
                     if (!token.empty() && token[0] != ' ') {
+
                         a.w[i] = token[0];
+
                     }
+
                 }
 
                 datacom.push_back(a);
@@ -310,11 +316,16 @@ class cleaner {
 
                 getline(ss, b.password, ','); // Leer la password
 
-                for (int i = 0; i < 8; i++) { // Leer cada chunk
+                for (size_t i = 0; i < 8; i++) { // Leer cada chunk
+
                     getline(ss, token, ',');
+
                     if (!token.empty() && token[0] != ' ') {
+
                         b.chunks[i] = token;
+
                     }
+
                 }
 
                 datacomp.push_back(b);
@@ -326,15 +337,35 @@ class cleaner {
         // Funcion para calcular las entropias
         void makeentropy() {
 
-            for (size_t i = 0; i < datacom.size(); i++) {
+            newdata.resize(datacom.size());
 
-                Datact d;
-                d.password = datacom[i].password;
-                d.entropyS = entropyShannon(datacom[i].password);
-                d.entropyD = entropyDensity(datacom[i].password);
-                newdata.push_back(d);
+            size_t n = datacom.size();
+            size_t chunks = thread::hardware_concurrency(); // Numero de nucleos
+            size_t sizes = n / chunks; // Tamanno de cada chunk
+
+            vector<thread> threads; // Hilos
+
+            for (size_t t = 0; t < chunks; t++) { // Por cada nucleo
+
+                size_t a = t * sizes; // Inicio del chunk
+                size_t b = (t == chunks - 1) ? n : a + sizes; // Fin del chunk 
+
+                threads.push_back(thread([this, a, b]() { // Lambda para cada hilo
+
+                    for (size_t i = a; i < b; i++) { // Por cada contrasenna del chunk
+
+                        newdata[i].password = datacom[i].password;
+                        newdata[i].entropyS = entropyShannon(datacom[i].password);
+                        newdata[i].entropyD = entropyDensity(datacom[i].password);
+
+                    }
+
+                }));
 
             }
+
+            for (auto& t : threads) t.join(); // Esperar todos los threads y cerrar
+            // Aun con los hilos del proyecto pasado esta cosa esta pesada, cuidado al correrlo
 
         }
 
@@ -346,7 +377,9 @@ class cleaner {
                 vector<char> chars;
 
                 for (size_t j = 0; j < datacom.size(); j++) { // Por cada contrasenna
+
                     chars.push_back(datacom[j].w[pos]);
+
                 }
 
                 Datadist d;
@@ -365,7 +398,9 @@ class cleaner {
                 vector<string> chunks;
 
                 for (size_t j = 0; j < datacomp.size(); j++) { // Por cada contrasenna
+
                     chunks.push_back(datacomp[j].chunks[pos]);
+
                 }
 
                 Databenf b;
@@ -384,7 +419,9 @@ class cleaner {
             fEnt << "password,entropyS,entropyD\n"; // Header
 
             for (size_t i = 0; i < newdata.size(); i++) { // Por cada contrasenna
+
                 fEnt << newdata[i].password << "," << newdata[i].entropyS << "," << newdata[i].entropyD << "\n";
+            
             }
 
             fEnt.close(); // Cierre de apertura de txt
@@ -393,27 +430,40 @@ class cleaner {
             ofstream fDist("../datos/procesados/rockyouedist.txt");
 
             fDist << "char"; // Header
-            for (int i = 1; i <= 16; i++) fDist << ",pos" << i;
+            for (size_t i = 1; i <= 16; i++) fDist << ",pos" << i;
             fDist << "\n";
 
             unordered_set<char> allChars; // Caracteres unicos
             for (size_t i = 0; i < distribution.size(); i++) { // Recolectar todos los chars unicos
+                
                 for (auto& pair : distribution[i].map) {
+                    
                     allChars.insert(pair.first);
+                
                 }
             }
 
             for (char c : allChars) { // Por cada char unico una fila
                 fDist << c;
+
                 for (size_t j = 0; j < 16; j++) { // Por cada posicion
+
                     fDist << ",";
+
                     if (distribution[j].map.count(c)) {
+
                         fDist << distribution[j].map[c];
+
                     } else {
+
                         fDist << "0"; // Espacio vacio
+
                     }
+
                 }
+
                 fDist << "\n";
+
             }
 
             fDist.close(); // Cierre de apertura de txt
@@ -422,20 +472,31 @@ class cleaner {
             ofstream fBenf("../datos/procesados/rockyoubenford.txt");
 
             fBenf << "digit"; // Header
-            for (int i = 1; i <= 8; i++) fBenf << ",chunk" << i;
+            for (size_t i = 1; i <= 8; i++) fBenf << ",chunk" << i;
             fBenf << "\n";
 
-            for (int d = 0; d <= 9; d++) { // Por cada digito del 0 al 9 una fila
+            for (size_t d = 0; d <= 9; d++) { // Por cada digito del 0 al 9 una fila
+
                 fBenf << d;
+
                 for (size_t j = 0; j < 8; j++) { // Por cada posicion de chunk
+
                     fBenf << ",";
+
                     if (benford[j].benfC.count(d)) {
+
                         fBenf << benford[j].benfC[d];
+
                     } else {
+
                         fBenf << "0"; // Espacio vacio
+
                     }
+
                 }
+
                 fBenf << "\n";
+            
             }
 
             fBenf.close(); // Cierre de apertura de txt
@@ -445,7 +506,7 @@ class cleaner {
 };
 
 // main
-int main() {
+size_t main() {
 
     // Prubas 
     cleaner datos;
