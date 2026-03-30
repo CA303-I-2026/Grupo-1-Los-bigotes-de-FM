@@ -12,6 +12,7 @@
 #include "conteos.h"
 #include "entropias.h"
 #include <unordered_map>  
+#include <chrono>
 
 using namespace std;
 
@@ -326,13 +327,25 @@ class cleaner {
         // Funcion para calcular las entropias
         void makeentropy() {
 
-            for (size_t i = 0; i < datacom.size(); i++) {
+            // auto inicio = chrono::steady_clock::now();
 
+            for (size_t i = 0; i < datacom.size(); i++) {
+                
                 Datact d;
                 d.password = datacom[i].password;
                 d.entropyS = entropyShannon(datacom[i].password);
                 d.entropyD = entropyDensity(datacom[i].password);
                 newdata.push_back(d);
+                cout << d.entropyD << endl;
+
+                // auto ahora = chrono::steady_clock::now();
+                // auto duracion = chrono::duration_cast<chrono::nanoseconds>(ahora - inicio);
+
+                // if (duracion.count() >= 1000000) {
+                //     cout << "Se cumplió 1 segundo, deteniendo el ciclo." << endl;
+                //      break;
+                // }
+                // 1 hora y poco mas 
 
             }
 
@@ -379,7 +392,7 @@ class cleaner {
         // Funcion para pasar de data a txt (CREACION DE TABLAS)
         void datatotxtNew() {
  
-            /*
+            
             // Guardar entropias
             ofstream fEnt("../datos/procesados/rockyoue.txt");
             fEnt << "password,entropyS,entropyD\n"; // Header
@@ -389,8 +402,9 @@ class cleaner {
             }
 
             fEnt.close(); // Cierre de apertura de txt
-            */
+            
 
+            /*
             // Guardar distribucion de caracteres por posicion
             ofstream fDist("../datos/procesados/rockyouedist.txt");
 
@@ -442,7 +456,7 @@ class cleaner {
             }
 
             fBenf.close(); // Cierre de apertura de txt
-
+            */
         }
 
 };
@@ -453,12 +467,12 @@ int main() {
     // Prubas 
     cleaner datos;
     datos.txttodataNew();
-    // datos.makeentropy();
+    datos.makeentropy();
     
     cout << "termino" << endl;
-    datos.makebenford();
-    datos.makedist();
-    datos.datatotxtNew();
+    // datos.makebenford();
+    // datos.makedist();
+    // datos.datatotxtNew();
     // datos.toletters();
     // datos.tochunks();
     // datos.datatotxt();
