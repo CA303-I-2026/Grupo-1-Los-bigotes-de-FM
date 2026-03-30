@@ -12,11 +12,8 @@
 #include "conteos.h"
 #include "entropias.h"
 #include <unordered_map>  
-<<<<<<< HEAD
 #include <chrono>
-=======
 #include <thread>
->>>>>>> antho
 
 using namespace std;
 
@@ -341,27 +338,6 @@ class cleaner {
         // Funcion para calcular las entropias
         void makeentropy() {
 
-<<<<<<< HEAD
-            // auto inicio = chrono::steady_clock::now();
-
-            for (size_t i = 0; i < datacom.size(); i++) {
-                
-                Datact d;
-                d.password = datacom[i].password;
-                d.entropyS = entropyShannon(datacom[i].password);
-                d.entropyD = entropyDensity(datacom[i].password);
-                newdata.push_back(d);
-                // cout << d.entropyD << endl;
-
-                // auto ahora = chrono::steady_clock::now();
-                // auto duracion = chrono::duration_cast<chrono::nanoseconds>(ahora - inicio);
-
-                // if (duracion.count() >= 1000000) {
-                //     cout << "Se cumplió 1 segundo, deteniendo el ciclo." << endl;
-                //      break;
-                // }
-                // 1 hora y poco mas 
-=======
             newdata.resize(datacom.size());
 
             size_t n = datacom.size();
@@ -386,7 +362,6 @@ class cleaner {
                     }
 
                 }));
->>>>>>> antho
 
             }
 
