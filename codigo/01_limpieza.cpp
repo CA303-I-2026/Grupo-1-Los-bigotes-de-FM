@@ -336,7 +336,7 @@ class cleaner {
                 d.entropyS = entropyShannon(datacom[i].password);
                 d.entropyD = entropyDensity(datacom[i].password);
                 newdata.push_back(d);
-                cout << d.entropyD << endl;
+                // cout << d.entropyD << endl;
 
                 // auto ahora = chrono::steady_clock::now();
                 // auto duracion = chrono::duration_cast<chrono::nanoseconds>(ahora - inicio);
@@ -472,7 +472,7 @@ int main() {
     cout << "termino" << endl;
     // datos.makebenford();
     // datos.makedist();
-    // datos.datatotxtNew();
+    datos.datatotxtNew();
     // datos.toletters();
     // datos.tochunks();
     // datos.datatotxt();
