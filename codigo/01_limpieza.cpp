@@ -379,6 +379,7 @@ class cleaner {
         // Funcion para pasar de data a txt (CREACION DE TABLAS)
         void datatotxtNew() {
  
+            /*
             // Guardar entropias
             ofstream fEnt("../datos/procesados/rockyoue.txt");
             fEnt << "password,entropyS,entropyD\n"; // Header
@@ -388,6 +389,7 @@ class cleaner {
             }
 
             fEnt.close(); // Cierre de apertura de txt
+            */
 
             // Guardar distribucion de caracteres por posicion
             ofstream fDist("../datos/procesados/rockyouedist.txt");
@@ -404,6 +406,7 @@ class cleaner {
             }
 
             for (char c : allChars) { // Por cada char unico una fila
+                if ((unsigned char)c > 127) continue; // Ignorar caracteres no ASCII
                 fDist << c;
                 for (size_t j = 0; j < 16; j++) { // Por cada posicion
                     fDist << ",";
@@ -450,7 +453,7 @@ int main() {
     // Prubas 
     cleaner datos;
     datos.txttodataNew();
-    datos.makeentropy();
+    // datos.makeentropy();
     
     cout << "termino" << endl;
     datos.makebenford();
