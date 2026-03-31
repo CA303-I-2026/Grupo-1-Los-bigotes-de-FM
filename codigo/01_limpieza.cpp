@@ -509,7 +509,7 @@ class cleaner {
 };
 
 // main
-size_t main() {
+int main() {
 
     // Prubas 
     cleaner datos;
