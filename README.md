@@ -11,7 +11,7 @@
 
 ## Descripción del proyecto
 
-<!-- Describa brevemente el tema, la pregunta de investigación y el objetivo general del proyecto. -->
+<!-- Describa brevemente el tema, la pregunta de investigación y el objetivo general del proyecto. --
 
 ## Estructura del repositorio
 
@@ -60,21 +60,24 @@ proyecto-ca303/
 
 Pasos de limpieza de datos (C++):
 
-Version de copilador de C++: GCC 15.1.0
-Version de c++ soportada: C++23 y soporte experimental para C++26
+Version de copilador de C++: GCC 15.1.0.
+
+Version de c++ soportada: C++23 y soporte experimental para C++26.
+
 Librerias requeridas:
-- #include <iostream>
-- #include <vector>
-- #include <string>
-- #include <fstream>
-- #include <sstream>
-- #include <cctype>
-- #include "conteos.h"
-- #include "entropias.h"
-- #include <unordered_map>
-- #include <unordered_set>
-- #include <chrono>
-- #include <thread>
+
+- iostream
+- vector
+- string
+- fstream
+- sstream
+- cctype
+- conteos.h
+- entropias.h
+- unordered_map
+- unordered_set
+- chrono
+- thread
 
 
 ADVERTENCIA: TENGA CUIDADO A LA HORA DE EJECUTAR EL PROGRAMA (SON 14 MILLONES DE DATOS), EL CORRER EL CALCULO DE LAS ENTROPIAS PUEDE SATURAR LA RAM Y EL PROCESADOR (C++ TIENE ACCESO A TODA LA MEMORIA DEL SISTEMA), SE RECOMIENDA POR LO MENOS 12 GB DE RAM Y UN PROCESADOR DE 6 NUCLEOS. Para la ejecucion de cualquier otra funcion no hay problemas de ram ni de poder computacional.
@@ -83,7 +86,7 @@ Para la ejecucion del programa (si solo incluye los scrips y no el json) tiene q
 
 NO ES UN .EXE CON MENU. Tiene que elegir las funciones que va a ejecutar antes de copilar el .cpp (No se incluye un menu por razones practicas).
 
-<!-- Describa los pasos necesarios para reproducir los resultados: versión de R/Python, paquetes requeridos, orden de ejecución de los scripts, etc. -->
+<!-- Describa los pasos necesarios para reproducir los resultados: versión de R/Python, paquetes requeridos, orden de ejecución de los scripts, etc. --
 
 ## Avance y bitácoras
 
@@ -96,4 +99,4 @@ NO ES UN .EXE CON MENU. Tiene que elegir las funciones que va a ejecutar antes d
 
 ## Referencias principales
 
-<!-- Liste aquí las referencias más importantes del proyecto (formato APA o BibTeX). El archivo completo se encuentra en `referencias/referencias.bib`. -->
+<!-- Liste aquí las referencias más importantes del proyecto (formato APA o BibTeX). El archivo completo se encuentra en `referencias/referencias.bib`. --
