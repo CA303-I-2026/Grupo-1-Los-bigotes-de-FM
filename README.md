@@ -11,7 +11,7 @@
 
 ## Descripción del proyecto
 
-<!-- Describa brevemente el tema, la pregunta de investigación y el objetivo general del proyecto. --
+<!-- Describa brevemente el tema, la pregunta de investigación y el objetivo general del proyecto. -->
 
 ## Estructura del repositorio
 
@@ -52,7 +52,7 @@ proyecto-ca303/
 
 - Nombre del conjunto de datos: RockYou 2009.
 - Institución que los publica: RockYou Inc. (filtración no oficial)
-- URL de descarga: https://github.com/RykerWilder/rockyou.txt
+- URL de descarga: https://github.com/RykerWilder/rockyou.txt.
 - Fecha de acceso: 2026
 - Licencia de uso: Sin licencia oficial. Los datos provienen de una filtración de seguridad ocurrida en diciembre de 2009, donde aproximadamente 32 millones de contraseñas de usuarios fueron expuestas. Su uso es estrictamente académico e investigativo.
 
@@ -86,7 +86,7 @@ Para la ejecucion del programa (si solo incluye los scrips y no el json) tiene q
 
 NO ES UN .EXE CON MENU. Tiene que elegir las funciones que va a ejecutar antes de copilar el .cpp (No se incluye un menu por razones practicas).
 
-<!-- Describa los pasos necesarios para reproducir los resultados: versión de R/Python, paquetes requeridos, orden de ejecución de los scripts, etc. --
+<!-- Describa los pasos necesarios para reproducir los resultados: versión de R/Python, paquetes requeridos, orden de ejecución de los scripts, etc. -->
 
 ## Avance y bitácoras
 
@@ -99,4 +99,4 @@ NO ES UN .EXE CON MENU. Tiene que elegir las funciones que va a ejecutar antes d
 
 ## Referencias principales
 
-<!-- Liste aquí las referencias más importantes del proyecto (formato APA o BibTeX). El archivo completo se encuentra en `referencias/referencias.bib`. --
+<!-- Liste aquí las referencias más importantes del proyecto (formato APA o BibTeX). El archivo completo se encuentra en `referencias/referencias.bib`. -->
