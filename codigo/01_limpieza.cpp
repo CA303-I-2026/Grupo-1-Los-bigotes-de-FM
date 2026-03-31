@@ -428,8 +428,6 @@ class cleaner {
 
             fEnt.close(); // Cierre de apertura de txt
             
-
-            /*
             // Guardar distribucion de caracteres por posicion
             ofstream fDist("../datos/procesados/rockyouedist.txt");
 
@@ -505,7 +503,7 @@ class cleaner {
             }
 
             fBenf.close(); // Cierre de apertura de txt
-            */
+            
         }
 
 };
@@ -519,13 +517,13 @@ size_t main() {
     datos.makeentropy();
     
     cout << "termino" << endl;
-    // datos.makebenford();
-    // datos.makedist();
+    datos.makebenford();
+    datos.makedist();
     datos.datatotxtNew();
-    // datos.toletters();
-    // datos.tochunks();
-    // datos.datatotxt();
-    // datos.datatotxtc();
+    datos.toletters();
+    datos.tochunks();
+    datos.datatotxt();
+    datos.datatotxtc();
     /*
     se saco aprox menos del 1% de las contraseñas (las mayores a 16 caracteres)
     en total fueron 125936 que se quedaron afuera
