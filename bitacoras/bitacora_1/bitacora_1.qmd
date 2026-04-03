@@ -138,7 +138,7 @@ format:
             \Large Prof: Maikol Solís \\[2cm]
             \Large Estudiantes: \\[1cm]
             \Large Anthonny Flores Rojas (C32975) \\[0.75cm]
-            \Large xxxxxxxx (xxxxxx) \\[0.75cm]
+            \Large Andrey González Bastos (C33329) \\[0.75cm]
             \Large xxxxxxxx (xxxxxx) \\[0.75cm]
             \Large xxxxxxxx (xxxxxx) \\[2cm]
             \Large Fecha: 02/26/26 \\[1cm]
