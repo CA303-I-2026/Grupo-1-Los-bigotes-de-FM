@@ -16,6 +16,7 @@ format:
     fontsize: 10pt
     linestretch: 1
     indent: true
+    lang: es
     cite-method: biblatex
     biblatexoptions: "style=apa, backend=biber, doi=true, isbn=false"
     header-includes: |
@@ -48,6 +49,8 @@ format:
       \usepackage{tikz}
       \usepackage{pgfplots}
       \pgfplotsset{compat=1.18}
+      \usepackage{graphicx}
+
 
       % Encabezados
       \usepackage{fancyhdr}
@@ -70,17 +73,19 @@ format:
       \AtBeginDocument{
         \begin{titlepage}
           \begin{center}
-            \Huge Universidad de Costa Rica \\[1.5cm]
-            \huge Escuela de Matemáticas \\[1cm]
-            \LARGE Estadística Actuarial I (CA0303) \\[2cm]
-            \LARGE Bitácora \#1 \\[2cm]
-            \Large Prof: Maikol Solís \\[2cm]
-            \Large Estudiantes: \\[1cm]
-            \Large Anthonny Flores Rojas (C32975) \\[0.75cm]
-            \Large Andrey González Bastos (C33329) \\[0.75cm]
-            \Large Randal Picado Bermúdez (C36024) \\[0.75cm]
-            \Large Leonardo Vega Aragón (C38313) \\[2cm]
-            \Large Fecha: 09/04/26 \\[1cm]
+            \vspace*{-2.5cm}
+            \includegraphics[width=0.8\textwidth]{figuras/UCR.png}
+            \\
+            \LARGE Escuela de Matemáticas \\[1cm]
+            \LARGE Estadística Actuarial I (CA0303) \\[1cm]
+            \large Bitácora \#1 \\[1cm]
+            \large Prof: Maikol Solís \\[2cm]
+            \large Estudiantes: \\[1cm]
+            \large Anthonny Flores Rojas (C32975) \\[0.75cm]
+            \large Andrey González Bastos (C33329) \\[0.75cm]
+            \large Randal Picado Bermúdez (C36024) \\[0.75cm]
+            \large Leonardo Vega Aragón (C38313) \\[2cm]
+            \large Fecha: 09/04/26 \\[1cm]
           \end{center}
         \end{titlepage}
       }
@@ -90,37 +95,53 @@ bibliography: referencias.bib
 
 \clearpage
 \thispagestyle{empty}
-\tableofcontents
+\tableofcontents*
 \thispagestyle{empty}
 
 
 \newpage
 \setcounter{page}{1}
 
-\chapter{Preparación}
+\chapter*{Preparación}
+\addcontentsline{toc}{chapter}{Preparación}
+\markboth{Preparación}{Preparación}
 
-\section{Integrantes del grupo}
-El grupo está conformado por Anthony Flores, Andrey González, Randal Picado y Leonardo Vega.  
+\section*{Rastro de decisiones}
+\addcontentsline{toc}{section}{Rastro de decisiones}
+\markboth{Rastro de decisiones}{Rastro de decisiones}
 
-\section{Rastro de decisiones}
 Acá vamos a poner el rastro de decisiones.
 
-\section{Registro de uso de IA}
+\section*{Registro de uso de IA}
+\addcontentsline{toc}{section}{Registro de uso de IA}
+\markboth{Registro de uso de IA}{Registro de uso de IA}
+
 Acá vamos a poner el resgistro del uso de la IA en el proyecto.
 
-\section{Log de contribuciones}
+\section*{Log de contribuciones}
+\addcontentsline{toc}{section}{Log de contribuciones}
+\markboth{Log de contribuciones}{Log de contribuciones}
+
 Acá vamos a poner la tabla con el nombre y la tarea que se realizó. 
 
-\section{Audiencia del proyecto}
+\section*{Audiencia del proyecto}
+\addcontentsline{toc}{section}{Audiencia del proyecto}
+\markboth{Audiencia del proyecto}{Audiencia del proyecto}
+
 Este trabajo está dirigido a un público actuarial dedicado más a la parte de análisis de datos y ciberseguridad, pues al basar todo el trabajo en el análisis exhasutivo de contraseñas, resulta atractivo para quienes se dedican a esta área llegar a leer este material. 
 
-\section{Posicionamiento del equipo}
+\section*{Posicionamiento del equipo}
+\addcontentsline{toc}{section}{Posicionamiento del equipo}
+\markboth{Posicionamiento del equipo}{Posicionamiento del equipo}
 
 Somos un grupo donde cada uno de sus integrantes posee un amplio interés por el análisis de datos, sector muy reciente para los actuarios cuyo interés históricamente se ha destacado por ir hacia los seguros o pensiones. En nuestro caso creemos que la innovación y explorar nuevos mundos donde el actuario puede ser protagonista con sus modelos puede enriquecer nuestra profesión. Para nosotros, resulta muy interesante el sector tecnológico y los riesgos que este trae consigo como lo son las contraseñas, estas son un buen propulsor para analizar datos ya que traen patrones, distribuciones y muchas cosas interesantes consigo. 
 
 
 
-\chapter{Parte de planificación}
+\chapter*{Parte de planificación}
+\addcontentsline{toc}{chapter}{Parte de planificación}
+\markboth{Parte de planificación}{Parte de planificación}
+\stepcounter{chapter}
 
 \section {Pregunta de investigación}
 \subsection{Definición de la idea}
@@ -144,12 +165,20 @@ Acá van las famosas fichas de literatura.
 
 \section{Construcción de la UVE de Gowin}
 
-\chapter{Parte de escritura}
+\chapter*{Parte de escritura}
+\addcontentsline{toc}{chapter}{Parte de escritura}
+\markboth{Parte de escritura}{Parte de escritura}
+\stepcounter{chapter}
 
-\chapter{Arco narrativo del proyecto}
+\chapter*{Arco narrativo del proyecto}
+\addcontentsline{toc}{chapter}{Arco narrativo del proyecto}
+\markboth{Arco narrativo del proyecto}{Arco narrativo del proyecto}
+\stepcounter{chapter}
 
-\chapter{Diario aprendizaje}
-
+\chapter*{Diario aprendizaje}
+\addcontentsline{toc}{chapter}{Diario aprendizaje}
+\markboth{Diario aprendizaje}{Diario aprendizaje}
+\stepcounter{chapter}
 
 
 
