@@ -120,20 +120,33 @@ Somos un grupo donde cada uno de sus integrantes posee un amplio interés por el
 
 
 
-\chapter{Pregunta de investigacion}
+\chapter{Parte de planificación}
 
-....
-....
-....
-....
-....
-....
-....
-....
+\section {Pregunta de investigación}
+\subsection{Definición de la idea}
+Aquí vamos a poner la definición de la idea.
+\subsection{Conceptualización de la idea}
+Aquí vamos a poner la conceptualización de la idea.
+\subsection{Identificación de tensiones}
+Aquí vamos a poner las tensiones. 
+\subsection{Reformulación de la idea en modo pregunta}
+Aquí vamos a poner esa reformulación.
+\subsection{Argumentación de la pregunta}
+Aquí vamos a poner esa argumentación.
+\subsection{Argumentación a través de los datos}
+Aquí vamos a poner esa argumentación a través de los datos.
 
-\chapter{Parte escrita}
+\section{Revisión bibiográfica}
+\subsection{Búsqueda de bibliografía}
+Aquí se va a hacer esa búsqueda de bibliografía
+\subsection{Construcción de fichas de literatura}
+Acá van las famosas fichas de literatura.
 
-\chapter{Arco narrativo}
+\section{Construcción de la UVE de Gowin}
+
+\chapter{Parte de escritura}
+
+\chapter{Arco narrativo del proyecto}
 
 \chapter{Diario aprendizaje}
 
