@@ -5,9 +5,9 @@
 |     Nombre completo     | Carné  |      Correo institucional       |
 |-------------------------|--------|---------------------------------|
 | Anthonny Flores Rojas   | C32975 | anthonny.flores@ucr.ac.cr       |
-| Andrey Gonzalez Bastos  |        | andrey.gonzalezbastos@ucr.ac.cr |
-| Leonardo Vega Aragon    |        | leonardo.vegaaragon@ucr.ac.cr   |
-| Randall Picado Bermudez |        | randal.picadobermudez@ucr.ac.cr |
+| Andrey Gonzalez Bastos  | C33329 | andrey.gonzalezbastos@ucr.ac.cr |
+| Leonardo Vega Aragon    | C38313 | leonardo.vegaaragon@ucr.ac.cr   |
+| Randall Picado Bermudez | C36024 | randal.picadobermudez@ucr.ac.cr |
 
 ## Descripción del proyecto
 
@@ -52,7 +52,7 @@ proyecto-ca303/
 
 - Nombre del conjunto de datos: RockYou 2009.
 - Institución que los publica: RockYou Inc. (filtración no oficial)
-- URL de descarga: https://github.com/RykerWilder/rockyou.txt.
+- URL de descarga: https://github.com/danielmiessler/SecLists/blob/master/Passwords/Leaked-Databases/rockyou-withcount.txt.tar.gz.
 - Fecha de acceso: 2026
 - Licencia de uso: Sin licencia oficial. Los datos provienen de una filtración de seguridad ocurrida en diciembre de 2009, donde aproximadamente 32 millones de contraseñas de usuarios fueron expuestas. Su uso es estrictamente académico e investigativo.
 
