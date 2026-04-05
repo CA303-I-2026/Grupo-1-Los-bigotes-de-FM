@@ -16,13 +16,13 @@ format:
     fontsize: 10pt
     linestretch: 1
     indent: true
-    lang: es
     cite-method: biblatex
     biblatexoptions: "style=apa, backend=biber, doi=true, isbn=false"
     header-includes: |
       % Fuente y formato
-      \usepackage[T1]{fontenc}
-      \usepackage{lmodern}
+      \usepackage{fontspec}
+      \setmainfont{Latin Modern Roman}
+      \usepackage[spanish]{babel}
       \usepackage{textcomp}
       \usepackage{indentfirst}
 
@@ -149,9 +149,36 @@ Aquí vamos a poner la definición de la idea.
 \subsection{Conceptualización de la idea}
 Aquí vamos a poner la conceptualización de la idea.
 \subsection{Identificación de tensiones}
-Aquí vamos a poner las tensiones. 
+
+La primera limitación y más lógica que se puede ocurrir para este trabajo es la de cómo establecer las reglas del juego para determinar si una contraseña está creada por un ser humano o un robot, esto porque cada vez las inteligencias artificiales están más sofisticadas imitando el pensamiento y actuar humano, lo cual dificulta la tarea de separar su trabajo con el de los humanos. 
+
+Haciendo un recorrido por bibliografía y consultándolo con el profesor, se notó que se pueden caracterizar y distinguir contraseñas usando diferentes distribuciones. Sin embargo, este es el génesis de una nueva tensión, ya que ante el abundante mundo de distribuciones puede resultar complicado y laborioso el hecho de identificar cuales son las distribuciones a emplear para los fines de esta investigación. 
+
+Otra limitación que se encuentra para este trabajo es el hecho de encontrar contraseñas reales y empleadas en sistemas oficiales de diferentes entidades, por ejemplo resulta imposible encontrar una base de datos con contraseñas por ejemplo de cuentas de Banco como el BCR, las cuales sería sumamente atractivo analizar si las crea un humano o no y poder verificar la seguridad de las mismas. 
+
+Básicamente por la misma naturaleza de confidencialidad de las contraseñas resulta muy complicado obtener bases de datos reales que se usen en ambientes cotidianos como lo sería un banco, una aplicación o un correo electrónico. 
+
+Otra tensión evidente es la capacidad de carga de datos de los computadores de los integrantes del grupo. Esto anterior debido a que las longitudes de las contraseñas suelen variar mucho y algunas son extremadamente largas (hasta 30 caracteres o más), las contraseñas no suelen ser cortas como lo solemos pensar con la típica 1234. Esto añadido a que los modelos ocupan bastante información para ser entrenados o arrojar algún resultado, el procesamiento de estos datos puede tardar días o semanas según la capacidad computacional limitada que cada uno tenga, perdiendo mucho tiempo en la ejecución del proyecto. 
+
+
+
 \subsection{Reformulación de la idea en modo pregunta}
-Aquí vamos a poner esa reformulación.
+
+\begin {itemize}
+
+\item ¿Qué diferencia una contraseña creada por un robot a una establecida por un ser humano?
+
+\item ¿Cómo emplear modelos de distribución para diferenciar entre una contraseña establecida por un ser humano o creada por un robot?
+
+\item ¿Dónde se encuentran bases de datos confiables de contraseñas empleadas para ? 
+
+\item ¿Realmente se puede establecer un criterio técnico para distinguir quién hizo la contraseña? 
+
+\end {itemize}
+
+Luego un profundo análisis, se decidió que la pregunta de investigación será: ¿Cómo emplear modelos de distribución para diferenciar entre una contraseña establecida por un ser humano o creada por un robot?. Las otras tres se descartaron ya que se consideró que esta pregunta más general puede llegar a abarcar y responder a la vez las otras tres al mismo tiempo, aumentando el alcance de la investigación y haciendo así más interesante el trabajo de indagar toda esa información sobre el tema. 
+
+
 \subsection{Argumentación de la pregunta}
 Aquí vamos a poner esa argumentación.
 \subsection{Argumentación a través de los datos}
