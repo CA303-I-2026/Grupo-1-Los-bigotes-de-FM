@@ -170,7 +170,7 @@ Otra tensión evidente es la capacidad de carga de datos de los computadores de 
 
 \item ¿Cómo emplear modelos de distribución para diferenciar entre una contraseña establecida por un ser humano o creada por un robot?
 
-\item ¿Dónde se encuentran bases de datos confiables de contraseñas empleadas para ? 
+\item ¿Dónde se encuentran bases de datos confiables de contraseñas empleadas para proteger cuentas, aplicaciones, etc? 
 
 \item ¿Realmente se puede establecer un criterio técnico para distinguir quién hizo la contraseña? 
 
