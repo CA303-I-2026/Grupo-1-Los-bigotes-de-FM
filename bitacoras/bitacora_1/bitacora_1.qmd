@@ -179,8 +179,93 @@ Otra tensión evidente es la capacidad de carga de datos de los computadores de 
 Luego un profundo análisis, se decidió que la pregunta de investigación será: ¿Cómo emplear modelos de distribución para diferenciar entre una contraseña establecida por un ser humano o creada por un robot?. Las otras tres se descartaron ya que se consideró que esta pregunta más general puede llegar a abarcar y responder a la vez las otras tres al mismo tiempo, aumentando el alcance de la investigación y haciendo así más interesante el trabajo de indagar toda esa información sobre el tema. 
 
 
-\subsection{Argumentación de la pregunta}
-Aquí vamos a poner esa argumentación.
+\subsection{Argumentación de las preguntas}
+En este apartado, para cada una de las preguntas planteadas, se generarar argumentos y contraargumentos, con el fin de ver qué tan viables son. Este análisis se hará tomando en cuenta tres aspectos: el lógico, relacionado con el sustento científico; el ético, que busca asegurar la claridad y coherencia del análisis; y el emocional, que muestre la capacidad de presentar los resultados de manera que reflejen la realidad del problema y resulten significativos para la población involucrada.
+
+\subsubsection{¿Qué diferencia una contraseña creada por un robot a una establecida por un ser humano?}
+**Contrargumentos**
+
+**Logica**
+Texto
+**Ética**
+Texto
+**Emocional**
+Texto
+
+**Argumentos**
+
+**Logica**
+Texto
+**Ética**
+Texto
+**Emocional**
+Texto
+**Concluya**
+Texto
+
+\subsubsection{¿Cómo emplear modelos de distribución para diferenciar entre una contraseña establecida por un ser humano o creada por un robot?}
+**Contrargumentos**
+
+**Logica**
+Texto
+**Ética**
+Texto
+**Emocional**
+Texto
+
+**Argumentos**
+
+**Logica**
+Texto
+**Ética**
+Texto
+**Emocional**
+Texto
+**Concluya**
+Texto
+
+\subsubsection{¿Dónde se encuentran bases de datos confiables de contraseñas empleadas para proteger cuentas, aplicaciones, etc?}
+**Contrargumentos**
+
+**Logica**
+Texto
+**Ética**
+Texto
+**Emocional**
+Texto
+
+**Argumentos**
+
+**Logica**
+Texto
+**Ética**
+Texto
+**Emocional**
+Texto
+**Concluya**
+Texto
+
+\subsubsection{¿Realmente se puede establecer un criterio técnico para distinguir quién hizo la contraseña?}
+**Contrargumentos**
+
+**Logica**
+Texto
+**Ética**
+Texto
+**Emocional**
+Texto
+
+**Argumentos**
+
+**Logica**
+Texto
+**Ética**
+Texto
+**Emocional**
+Texto
+**Concluya**
+Texto
+
 
 \subsection{Argumentación a través de los datos}
 
