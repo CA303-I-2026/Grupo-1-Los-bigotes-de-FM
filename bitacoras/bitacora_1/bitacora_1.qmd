@@ -192,6 +192,13 @@ Los datos fueron obtenidos del repositorio: https://github.com/danielmiessler/Se
  
 Los datos se filtraron en diciembre de 2009 debido a una vulnerabilidad de la seguridad de las bases de datos de la compañia RockYou, esta misma permitio que un hacker recolectara la creación de contraseñas de finales de la década de 2000. El origen de los mismos es California, Estados Unidos, pero el impacto fue global al afectar a millones de usuarios internacionales de redes sociales como Facebook y MySpace que utilizaban widgets y aplicaciones sociales dentro de estas propias redes sociales.
 
+\subsubsection{Facilidad de obtener la información.} 
+
+Dado que es una filtración, los datos se encuentran en diferentes repositorios de github. A pesar de la ilegalidad teórica y practica de los mismos, estos se encuentran literalmente al publico en dichos repositorios. 
+
+\subsubsection{Población de estudio.} 
+
+Usuarios de redes sociales: Específicamente personas con cuentas activas en plataformas como Facebook, MySpace, Hi5 y Bebo a finales de la década de 2000. Y consumidores de aplicaciones de terceros: Individuos que instalaron y se registraron en juegos o widgets (como Zoo World) desarrollados por la empresa RockYou Inc. entre 2006 y 2009.
 
 \section{Revisión bibiográfica}
 \subsection{Búsqueda de bibliografía}
