@@ -204,6 +204,16 @@ Usuarios de redes sociales: Específicamente personas con cuentas activas en pla
 
 Consiste en 32,603,388 registros de usuarios que fueron extraídos directamente de la base de datos de RockYou tras el hackeo. De estos solo se usa  la lista más utilizada en ciberseguridad (rockyou.txt), que contiene 14,344,386 contraseñas únicas tras eliminar duplicados y limpiar caracteres no válidos.
 
+\subsubsection{Unidad estadística o individuos.}
+
+Cada contraseña única registrada en el archivo de texto (línea por línea). Mas especificamente se trata de una cadena de caracteres (string) creada por un usuario real para acceder a una aplicación o juego de la plataforma RockYou.
+
+\subsubsection{Descripción de las variables de la tabla.} 
+
+Contraseña (Variable Principal): Es una variable cualitativa nominal que contiene la cadena de caracteres (string) creada por el usuario. 
+
+Frecuencia (Variable Implícita): Es una variable cuantitativa discreta que indica cuántas veces aparece esa clave en la filtración original (el archivo esta ordenado de mayor a menor frecuencia). 
+
 \section{Revisión bibiográfica}
 \subsection{Búsqueda de bibliografía}
 Aquí se va a hacer esa búsqueda de bibliografía
