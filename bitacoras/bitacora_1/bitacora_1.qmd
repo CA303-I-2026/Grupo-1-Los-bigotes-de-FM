@@ -181,8 +181,12 @@ Luego un profundo análisis, se decidió que la pregunta de investigación será
 
 \subsection{Argumentación de la pregunta}
 Aquí vamos a poner esa argumentación.
+
 \subsection{Argumentación a través de los datos}
-Aquí vamos a poner esa argumentación a través de los datos.
+\subsubsection{Fuente de información.}
+
+Los datos fueron obtenidos del repositorio: https://github.com/danielmiessler/SecLists/blob/master/Passwords/Leaked-Databases/rockyou.txt.tar.gz. Estos mismos son provenientes del experto en ciberseguridad Daniel Miessler, el cual recolecta filtraciones de datos masivos en el proyecto SecLits
+
 
 \section{Revisión bibiográfica}
 \subsection{Búsqueda de bibliografía}
