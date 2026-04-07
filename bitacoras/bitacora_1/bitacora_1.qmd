@@ -213,6 +213,11 @@ Cada contraseña única registrada en el archivo de texto (línea por línea). M
 Contraseña (Variable Principal): Es una variable cualitativa nominal que contiene la cadena de caracteres (string) creada por el usuario. 
 
 Frecuencia (Variable Implícita): Es una variable cuantitativa discreta que indica cuántas veces aparece esa clave en la filtración original (el archivo esta ordenado de mayor a menor frecuencia). 
+Longitud (Variable Derivada): Es una variable cuantitativa discreta que mide el número total de caracteres de cada contraseña, fundamental para calcular la entropía. 
+
+\subsubsection{Descripcion detallada}
+
+En el conjunto de datos de RockYou (2009), cada fila representa una observación individual (una contraseña única elegida por un usuario), cuya posición en la lista actúa como un indicador de su popularidad o frecuencia en la población. La columna principal contiene la cadena de caracteres (string), la cual funciona como la variable cruda de donde extraerás datos cuantitativos, como su longitud o la presencia de dígitos.
 
 \section{Revisión bibiográfica}
 \subsection{Búsqueda de bibliografía}
