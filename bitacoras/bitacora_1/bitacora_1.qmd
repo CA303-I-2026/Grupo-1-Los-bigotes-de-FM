@@ -200,6 +200,10 @@ Dado que es una filtración, los datos se encuentran en diferentes repositorios 
 
 Usuarios de redes sociales: Específicamente personas con cuentas activas en plataformas como Facebook, MySpace, Hi5 y Bebo a finales de la década de 2000. Y consumidores de aplicaciones de terceros: Individuos que instalaron y se registraron en juegos o widgets (como Zoo World) desarrollados por la empresa RockYou Inc. entre 2006 y 2009.
 
+\subsubsection{Muestra observada.}
+
+Consiste en 32,603,388 registros de usuarios que fueron extraídos directamente de la base de datos de RockYou tras el hackeo. De estos solo se usa  la lista más utilizada en ciberseguridad (rockyou.txt), que contiene 14,344,386 contraseñas únicas tras eliminar duplicados y limpiar caracteres no válidos.
+
 \section{Revisión bibiográfica}
 \subsection{Búsqueda de bibliografía}
 Aquí se va a hacer esa búsqueda de bibliografía
