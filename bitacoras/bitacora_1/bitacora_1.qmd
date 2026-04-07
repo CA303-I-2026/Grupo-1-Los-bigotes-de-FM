@@ -183,9 +183,14 @@ Luego un profundo análisis, se decidió que la pregunta de investigación será
 Aquí vamos a poner esa argumentación.
 
 \subsection{Argumentación a través de los datos}
+
 \subsubsection{Fuente de información.}
 
 Los datos fueron obtenidos del repositorio: https://github.com/danielmiessler/SecLists/blob/master/Passwords/Leaked-Databases/rockyou.txt.tar.gz. Estos mismos son provenientes del experto en ciberseguridad Daniel Miessler, el cual recolecta filtraciones de datos masivos en el proyecto SecLits
+
+\subsubsection{Contexto temporal y espacial de los datos.}
+ 
+Los datos se filtraron en diciembre de 2009 debido a una vulnerabilidad de la seguridad de las bases de datos de la compañia RockYou, esta misma permitio que un hacker recolectara la creación de contraseñas de finales de la década de 2000. El origen de los mismos es California, Estados Unidos, pero el impacto fue global al afectar a millones de usuarios internacionales de redes sociales como Facebook y MySpace que utilizaban widgets y aplicaciones sociales dentro de estas propias redes sociales.
 
 
 \section{Revisión bibiográfica}
