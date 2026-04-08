@@ -285,22 +285,25 @@ El acceso a bases de datos confiables y correctamente anonimizadas es fundamenta
 **Contrargumentos**
 
 **Logica**
-Texto
+Establecer un criterio técnico definitivo puede ser sumamente complejo y arbitrario. No se trata solamente de establecer una función que retorne si la contraseña fue hecha por un bot o no, sino que dar con esa información llega a ser imposible a nivel computacional por la capacidad de carga de datos de los computadores actuales y dependerá totalmente de la longitud de las contraseñas, limitando así el criterio, haciéndolo específico y no general.
+
 **Ética**
-Texto
+Resulta complicado en el sector de la filosofía y la computación el hecho de diferenciar las capacidades de un bot a las de un ser humano, esto se ve reflejado en que aún no existen legislaciones para establecer, por ejemplo, derechos de autor a las inteligencias artificiales, lo cual cualquier ser humano puede pasar como suyo un trabajo hecho por un bot o incluso viceversa, lo cual amplía mucho el debate entre las diferencias entre lo hecho por IA y lo trabajado por la mente humana. 
+
 **Emocional**
-Texto
+Estableber un criterio técnico general es algo demasiado ambicioso para un trabajo académico de este estilo, un descubrimiento de este tipo sería un hallazgo sumamente importante en la computación y un gran paso en la implementación de las inteligencias artificiales en la vida humana. Todo esto, se sale de las manos de un trabajo académico por más profundo que llegue el análisis con los recursos actuales. 
 
 **Argumentos**
 
 **Logica**
-Texto
+Con el análisis adecuado de las distribuciones de los caracteres en las contraseñas, combinado con conceptos de probabilidad y estadística, sin dejar de lado la optimización de código, se puede crear un criterio técnico lo suficientemente preciso para detectar contraseñas creadas por humanos o creadas por bots. 
 **Ética**
-Texto
+Con bases de datos de contraseñas filtradas y divulgadas, se garantiza un análisis exhaustivo de las contraseñas aplicando conceptos neutrales sin ninguna intención de manipular los datos para llegar al criterio técnico deseado. 
 **Emocional**
-Texto
+Dar con un criterio ético para la diferenciación de una creación humana a una de un bot en el campo de la ciberseguridad y contraseñas puede ser sumamente beneficioso para su aplicación a futuro cuando se requiera total transparencia y honestidad en cuanto a la creación de contraseñas para diferentes aplicaciones o servicios, para así evitar clonaciones o falsificaciones de las mismas mediante bots.
+
 **Concluya**
-Texto
+Se puede crear un criterio técnico lo suficientemente preciso mediante el uso de modelos de probabilidad y estadística. El uso de este puede resultar fundamental en la aspiración de diferenciar contraseñas creadas por un bot o un sere humano.  
 
 
 \subsection{Argumentación a través de los datos}
