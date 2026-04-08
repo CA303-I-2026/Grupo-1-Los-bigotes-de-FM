@@ -150,7 +150,19 @@ por contraseñas generadas tanto por personas como por bots, permita distinguir 
 una contraseña fue generada por un ser humano o no. Para lograr esto último, se podría
 analizar la distribución de caracteres según la posición del caracter, esto con el 
 de probar que dichas distribuciones varían entre personas y bots.\subsection{Conceptualización de la idea}
-Aquí vamos a poner la conceptualización de la idea.
+ntes de continuar con el desarrollo de la idea expuesta anteriormente, es necesario 
+exponer las palabras claves que conforman dicha idea junto con su significado.
+En primer lugar, Hayes (2026) define la distribución de probabilidad como el medio con el que se 
+puede describir la dispersión de los posibles resultados de un experimento
+estadístico, al mismo tiempo que se le otorga un valor a la probabilidad de que
+suceda cada resultado. 
+
+Otro concepto relevante es el de las pruebas no paramétricas, las cuales se pueden definir
+como métodos de análisis estadísticos que no requieren de una distribución para
+contar con las hipótesis necesarias para comenzar con el análisis. Esto último es especialmente
+útil cuando el conjunto de datos no se distribuye de manera normal. (Taylor, 2020).
+
+
 \subsection{Identificación de tensiones}
 
 La primera limitación y más lógica que se puede ocurrir para este trabajo es la de cómo establecer las reglas del juego para determinar si una contraseña está creada por un ser humano o un robot, esto porque cada vez las inteligencias artificiales están más sofisticadas imitando el pensamiento y actuar humano, lo cual dificulta la tarea de separar su trabajo con el de los humanos. 
