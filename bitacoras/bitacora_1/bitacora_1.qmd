@@ -113,13 +113,21 @@ bibliography: referencias.bib
 \addcontentsline{toc}{section}{Rastro de decisiones}
 \markboth{Rastro de decisiones}{Rastro de decisiones}
 
-Acá vamos a poner el rastro de decisiones.
+La primera decisión que se tomó para este proyecto fue la idea principal. Primeramente se consideró el tema de emplear diferentes tipos de intervalos de confianza para estimar la precisión en retornos financieros, sin embargo, esta idea se descartó pues los retornos financieros están ligados a un momento dado en el tiempo, haciendo de estos una serie temporal, lo cual es todavía ajeno a los alcances del curso, por lo que se descartó la idea de usar retornos financieros o cualquier tema ligado a series de tiempo por recomendación del profesor. 
+
+Luego, se pensó en enfocar más la investigación en el análisis de datos, lo que llevó al tema de la ciberseguridad y al análisis de contraseñas, tema que quedó finalmente escogido. Durante la elaboración de la bitácora, se tomaron decisiones con la elección de ciertas distribuciones para mejorar la calidad del criterio que decide si la contraseña fue creada por un bot o por un humano. 
 
 \section*{Registro de uso de IA}
 \addcontentsline{toc}{section}{Registro de uso de IA}
 \markboth{Registro de uso de IA}{Registro de uso de IA}
 
-Acá vamos a poner el resgistro del uso de la IA en el proyecto.
+La IA en esta bitácora fue usada mayormente para el formato de la misma y cosas gráficas. Primeramente, fue bastamente utilizada para el formato LaTeX de la misma y para combinarlo con el qmd y el git y que todo funcionase de la mejor manera para que los integrantes pudieran añadir su información de forma fluida y eficiente. 
+
+Luego, para detalles gráficos como el dibujo de la V de Gowin también fue utilizada. Por otro lado, también fue utilizada para pedirle sinónimos de palabras para enriquecer y variar el léxico utilizado en la presente investigación.
+
+La herramienta de inteligencia artificial más usada fue ChatGPT y Copilot, con prompts sencillos con los errores que arrojaba el LaTeX o el qmd y se tomó la mejor y más eficiente solución que brindara, lo mismo con el dibujo de la V y los sinónimos de palabras. 
+
+Luego de emplear estas inteligencias artificiales, se refrescaron conocimientos de Quartos en R y su conexión con repositorios, además de ampliar el conocimiento en más paquetes de R necesarios para que renderizara correctamente, así como una amplia mejora en el vocabulario de los integrantes. 
 
 \section*{Log de contribuciones}
 \addcontentsline{toc}{section}{Log de contribuciones}
