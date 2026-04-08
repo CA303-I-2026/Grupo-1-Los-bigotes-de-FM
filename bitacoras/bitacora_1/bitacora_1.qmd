@@ -166,9 +166,9 @@ Otra tensión evidente es la capacidad de carga de datos de los computadores de 
 
 \begin {itemize}
 
-\item ¿Qué diferencia una contraseña creada por un robot a una establecida por un ser humano?
+\item ¿Qué diferencia una contraseña creada por un bot a una establecida por un ser humano?
 
-\item ¿Cómo emplear modelos de distribución para diferenciar entre una contraseña establecida por un ser humano o creada por un robot?
+\item ¿Cómo emplear las distribución obtenidas para diferenciar entre una contraseña establecida por un ser humano o creada por un bot?
 
 \item ¿Dónde se encuentran bases de datos confiables de contraseñas empleadas para proteger cuentas, aplicaciones, etc? 
 
@@ -182,28 +182,35 @@ Luego un profundo análisis, se decidió que la pregunta de investigación será
 \subsection{Argumentación de las preguntas}
 En este apartado, para cada una de las preguntas planteadas, se generarar argumentos y contraargumentos, con el fin de ver qué tan viables son. Este análisis se hará tomando en cuenta tres aspectos: el lógico, relacionado con el sustento científico; el ético, que busca asegurar la claridad y coherencia del análisis; y el emocional, que muestre la capacidad de presentar los resultados de manera que reflejen la realidad del problema y resulten significativos para la población involucrada.
 
-\subsubsection{¿Qué diferencia una contraseña creada por un robot a una establecida por un ser humano?}
+\subsubsection{¿Qué diferencia una contraseña creada por un bot a una establecida por un ser humano?}
 **Contrargumentos**
 
 **Logica**
-Texto
+Diferenciar una contraseña creada por un humano de una generada por un bot no es algo que se pueda hacer completamente preciso, ya que ambos pueden crear combinaciones de caracteres similares. Con el uso de algunas herramientas, las personas pueden crear contraseñas aleatorias y algunos algoritmos pueden generar patrones que imitan comportamientos humanos, lo que puede hacer difícil encontrar diferencias claras entre estas.
+
 **Ética**
-Texto
+El análisis de contraseñas implica el uso de datos sensibles, lo que lleva a un riesgo en términos de privacidad y seguridad. Incluso si se utilizan bases de datos filtradas, existe la posibilidad de comprometer información personal, lo que lleva a cuestionamientos éticos sobre el uso y manejo de este tipo de información para fines de investigación.
+
 **Emocional**
-Texto
+Desde una perspectiva humana, la diferencia entre una contraseña creada por una persona o un bot puede no ser relevante para el usuario promedio, ya que lo más importante suele ser la seguridad de su cuenta. Esto puede hacer que el problema planteado no genere un impacto directo o interés en quienes no están familiarizados con el ámbito de la ciberseguridad.
+
 
 **Argumentos**
 
 **Logica**
-Texto
-**Ética**
-Texto
-**Emocional**
-Texto
-**Concluya**
-Texto
+Las contraseñas creadas por humanos suelen presentar patrones predecibles, como el uso de palabras comunes como nombres y fechas, mientras que las generadas por bots suelen basarse en procesos aleatorios, lo cual permite tener distribuciones de caracteres más uniformes. Mediante el análisis estadístico de estas, es posible identificar tendencias que permitan diferenciar ambos tipos de contraseñas con cierto grado de precisión.
 
-\subsubsection{¿Cómo emplear modelos de distribución para diferenciar entre una contraseña establecida por un ser humano o creada por un robot?}
+**Ética**
+Si se emplean bases de datos públicas y anónimas, es posible realizar un análisis responsable sin comprometer la privacidad de los usuarios. Además, este tipo de estudios puede contribuir a mejorar las prácticas de seguridad, promoviendo la creación de contraseñas más seguras y reduciendo riesgos en sistemas digitales.
+
+**Emocional**
+Comprender las diferencias entre contraseñas humanas y generadas por bots puede tener un impacto positivo, ya que permite concientizar a las personas sobre la importancia de crear contraseñas seguras. Esto puede llevar a una mayor protección de la información personal y una reducción de ataques cibernéticos que afectan la vida diaria de los usuarios.
+
+**Concluya**
+El análisis de las diferencias entre contraseñas creadas por humanos y aquellas generadas por bots permite obtener una comprensión más precisa de los patrones utilizados en la seguridad digital. Esto contribuye al desarrollo de mejores prácticas en la creación de contraseñas y al fortalecimiento de los sistemas de protección de información. En el contexto de la ciberseguridad, este tipo de estudio puede influir en la implementación de herramientas más eficientes para prevenir accesos no autorizados y proteger los datos de las personas.
+
+
+\subsubsection{¿Cómo emplear las distribución obtenidas para diferenciar entre una contraseña establecida por un ser humano o creada por un bot?}
 **Contrargumentos**
 
 **Logica**
