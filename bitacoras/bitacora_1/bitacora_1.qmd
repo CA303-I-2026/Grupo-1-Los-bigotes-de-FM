@@ -176,7 +176,7 @@ Otra tensión evidente es la capacidad de carga de datos de los computadores de 
 
 \end {itemize}
 
-Luego un profundo análisis, se decidió que la pregunta de investigación será: ¿Cómo emplear modelos de distribución para diferenciar entre una contraseña establecida por un ser humano o creada por un robot?. Las otras tres se descartaron ya que se consideró que esta pregunta más general puede llegar a abarcar y responder a la vez las otras tres al mismo tiempo, aumentando el alcance de la investigación y haciendo así más interesante el trabajo de indagar toda esa información sobre el tema. 
+Luego un profundo análisis, se decidió que la pregunta de investigación será: ¿Cómo emplear las distribución obtenidas para diferenciar entre una contraseña establecida por un ser humano o creada por un bot?. Las otras tres se descartaron ya que se consideró que esta pregunta más general puede llegar a abarcar y responder a la vez las otras tres al mismo tiempo, aumentando el alcance de la investigación y haciendo así más interesante el trabajo de indagar toda esa información sobre el tema. 
 
 
 \subsection{Argumentación de las preguntas}
@@ -214,22 +214,28 @@ El análisis de las diferencias entre contraseñas creadas por humanos y aquella
 **Contrargumentos**
 
 **Logica**
-Texto
+El uso de distribuciones obtenidas puede no ser completamente confiable para diferenciar contraseñas, ya que los patrones identificados pueden variar según del conjunto de datos utilizado. Además, tanto los humanos como los bots pueden generar contraseñas con características similares, lo que reduce la precisión de cualquier clasificación basada únicamente en estas distribuciones.
+
 **Ética**
-Texto
+Las distribuciones utilizadas provienen de datos que deben ser manejados con cuidado, ya que podrían estar relacionados con información sensible. Existe el riesgo de que los resultados sean mal interpretados o utilizados fuera de contexto, especialmente si no se garantiza que los datos sean confiables y que el análisis no sea manipulado para obtener conclusiones deseadas.
+
 **Emocional**
-Texto
+Para el usuario promedio, el uso de distribuciones puede parecer un concepto abstracto y poco relevante, lo que dificulta que comprenda su utilidad. Esto puede generar desinterés si no se logra conectar el análisis con beneficios concretos en la protección de su información personal.
 
 **Argumentos**
 
 **Logica**
-Texto
+Las distribuciones obtenidas permiten analizar la frecuencia de los caracteres en las contraseñas, identificando patrones. Al comparar estas distribuciones, es posible establecer criterios que permitan diferenciar ambos tipos de contraseñas con un nivel razonable de precisión.
+
 **Ética**
-Texto
+Si las distribuciones se construyen a partir de datos anonimos y fuentes confiables, su uso es válido y contribuye al desarrollo de mejores prácticas en ciberseguridad. Además, un análisis transparente y sin alteraciones garantiza que los resultados obtenidos reflejen de manera fiel la realidad estudiada.
+
 **Emocional**
-Texto
+El uso de estas distribuciones puede ayudar a las personas a entender de forma más clara qué hace que una contraseña sea segura o vulnerable. Esto permite que los usuarios tomen decisiones más informadas al crear sus contraseñas, reduciendo el riesgo de que su información personal sea comprometida.
+
 **Concluya**
-Texto
+El uso de las distribuciones obtenidas permite identificar patrones clave en la creación de contraseñas, facilitando la separación entre aquellas generadas por humanos y por bots. Este enfoque aporta herramientas útiles para mejorar la seguridad digital, ya que permite diseñar estrategias más efectivas para la protección de la información y fomentar en los usuarios la creación de contraseñas más seguras.
+
 
 \subsubsection{¿Dónde se encuentran bases de datos confiables de contraseñas empleadas para proteger cuentas, aplicaciones, etc?}
 **Contrargumentos**
