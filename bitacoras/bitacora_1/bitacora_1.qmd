@@ -241,22 +241,27 @@ El uso de las distribuciones obtenidas permite identificar patrones clave en la 
 **Contrargumentos**
 
 **Logica**
-Texto
+Encontrar bases de datos completamente confiables de contraseñas es complicado, ya que muchas de las disponibles provienen de filtraciones o problemas de seguridad. Esto implica que los datos pueden no mostrar bien el comportamiento real de los usuarios en condiciones normales, lo que limita su utilidad para análisis precisos.
+
 **Ética**
-Texto
+El uso de bases de datos de contraseñas lleva a importantes preocupaciones, ya que muchas contienen información obtenida sin el consentimiento de los usuarios. Incluso si los datos están disponibles públicamente, su uso puede implicar riesgos para la privacidad si no se manejan de forma adecuada y responsable.
+
 **Emocional**
-Texto
+Para los usuarios, saber que sus contraseñas podrían formar parte de bases de datos accesibles puede generar desconfianza en los sistemas digitales. Esto puede afectar el pensamiento que se tiene sobre la seguridad y provocar temor ante posibles vulneraciones de su información personal.
 
 **Argumentos**
 
 **Logica**
-Texto
+Existen bases de datos confiables y utilizadas con fines académicos o de investigación en ciberseguridad. Estas fuentes permiten analizar patrones en la creación de contraseñas sin comprometer la identidad de los usuarios, facilitando estudios sobre seguridad y comportamiento.
+
 **Ética**
-Texto
+El uso de bases de datos confiables es posible cuando estas provienen de fuentes fiables, en las cuales se elimina la información sensible y se utilizan exclusivamente con fines de investigación. Además, un manejo responsable garantiza que los resultados obtenidos no sean manipulados y reflejen de manera objetiva la realidad analizada.
+
 **Emocional**
-Texto
+El acceso a bases de datos confiables permite desarrollar herramientas y estrategias que mejoran la seguridad de los usuarios, reduciendo el riesgo de ataques y pérdidas de información. Esto genera mayor confianza en los sistemas digitales y tranquilidad en el manejo de datos personales.
+
 **Concluya**
-Texto
+El acceso a bases de datos confiables y correctamente anonimizadas es fundamental para el análisis de contraseñas y el desarrollo de soluciones en ciberseguridad. Su uso responsable permite obtener información valiosa para mejorar la protección de cuentas y aplicaciones, contribuyendo a generar mayor confianza y seguridad en los entornos digitales.
 
 \subsubsection{¿Realmente se puede establecer un criterio técnico para distinguir quién hizo la contraseña?}
 **Contrargumentos**
