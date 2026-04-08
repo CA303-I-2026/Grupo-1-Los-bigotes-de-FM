@@ -26,6 +26,9 @@ format:
       \usepackage{textcomp}
       \usepackage{indentfirst}
 
+      \usepackage{tikz}
+      \usetikzlibrary{positioning,babel,calc}
+
       \setlength{\parindent}{2em}
       \setlength{\parskip}{0pt}
 
@@ -344,6 +347,155 @@ Aquí se va a hacer esa búsqueda de bibliografía
 Acá van las famosas fichas de literatura.
 
 \section{Construcción de la UVE de Gowin}
+
+\begin{center}
+\begin{tikzpicture}[>=stealth,thick]
+\selectlanguage{english}
+
+  % Parámetros simétricos
+  \def\ancho{7.5}  % ancho total de la V
+  \def\alto{9}
+
+  % Coordenadas base (simétricas respecto a 0)
+  \coordinate (V) at (0,0);
+  \coordinate (L) at (-\ancho/2,\alto);
+  \coordinate (R) at ( \ancho/2,\alto);
+
+  % Extensiones horizontales hacia los márgenes
+  \draw (L) -- ++(-3,0); % izquierda
+  \draw (R) -- ++( 3,0); % derecha
+
+  % V central
+  \draw (L) -- (V) -- (R);
+
+  % Texto del vértice
+  \node[above=300pt] at (V) {Pregunta central};
+  
+  
+  \node[below=6pt] at (V) {Objeto de estudio};
+
+  
+
+     \node[draw, rectangle, align=left, anchor=north west,
+      inner sep=4pt]  % margen interno
+  at (-5.7,-1.2) {%
+   La distribución de probabilidad que describe 
+   la selección\\ de caracteres en contraseñas generadas por seres humanos. };
+
+
+  % Dominio conceptual
+  \node[anchor=south] at ($(L)+(-1,0.5)$) {Dominio Teórico};
+
+  \node[anchor=north west, align=left]
+    at ($(L)+(-4,-5)$)
+    {\textbf{Teorías y principios}\\
+     };
+
+     \node[draw, rectangle, align=left, anchor=north west,
+      inner sep=4pt]  % margen interno
+  at (-8,3.2) {%
+   $\bullet$ Ley de Benford\\
+   $\bullet$ Entropía (Estadística)\\
+   };
+
+   \node[anchor=north west, align=left]
+    at ($(L)+(-3.9,-1.7)$)
+    {\textbf{Conceptos Básicos}\\
+     };
+
+     \node[draw, rectangle, align=left, anchor=north west,
+      inner sep=4pt]  % margen interno
+  at (-9,6.5) {%
+   $\bullet$ Distribución de Probabilidad\\
+   $\bullet$ Contraseña\\
+   $\bullet$ Bots\\};
+
+  % Dominio metodologico
+  \node[anchor=south] at ($(R)+(1,0.5)$) {Dominio Metodológico};
+
+  \node[anchor=north east, align=left]
+    at ($(R)+(2.7,-2)$)
+    {\textbf{Metodología}};
+
+     \node[draw, rectangle, align=left, anchor=north west,
+      inner sep=4pt]  % margen interno
+  at (2.7,6.3) {%
+   $\bullet$ Registros\\
+   $\bullet$ Transformaciones\\
+   $\bullet$ Test Kolmogorov-Smirnov
+   };
+
+\selectlanguage{spanish}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Conceptos Básicos}
+\begin{enumerate}
+    \item \textbf{Distribución de Probabilidad:} Medio con el que se 
+puede describir la dispersión de los posibles resultados de un experimento
+estadístico, al mismo tiempo que se le otorga un valor a la probabilidad de que
+suceda cada resultado.
+    \item \textbf{Contraseña:} Cadena de caracteres que suele ser utilizada durante el
+    un proceso autenticación con el fin de que
+    un dispositivo o plataforma pueda verificar la identidad de un usuario. La combinación de 
+    elementos que conforman la contraseña están diseñadas para ser conocidas únicamente por el usuario en cuestión. (Awati, 2025). Para fines 
+    del presente proyecto de investigación, se usarán contraseñas que contengan tanto caracteres alfanúmeros (alfabeto inglés o números arábicos) como caracteres especiales.
+    \item \textbf{Bots:} Según Molinaro (2022), se define un bot como ``[...] una aplicación de software programada para ejecutar tareas a través de la automatización robótica de procesos". Para fines de 
+    la investigación, no se abundará con mayor detalle el funcionamiento general de un bot, sino que solo se desea 
+    analizar y comprender, de manera básica, la forma en la que un bot puede generar contraseñas ``aleatorias", pues 
+    esto otorgará ciertos criterios que permitan distinguir las contraseñas generadas por bots de aquellas generadas por humanos.
+ 
+     %referencia bots: https://www.avast.com/es-es/c-what-is-a-bot
+    %referencia contraseñas: https://www.computerweekly.com/es/definicion/Que-es-una-contrasena
+\end{enumerate}
+
+\subsection{Teorías y Principios}
+
+\begin{enumerate}
+    \item \textbf{Ley de Benford:} Según Sarkar (2025), la Ley de Benford establece que 
+    los primeros números que se encuentran en una base de datos dada varían su cantidad de apariciones según los dígitos 
+    que los conforman. En síntesis, el número uno suele aparecer más frecuentemente, seguido por el dos, luego por el tres y así
+    sucesivamente. Sin embargo, Marrero (2019) expone la limitación de que esta ley solo es válida cuando la muestra de números es variada, 
+    abarca diversos órdenes de magnitud, se encuentra libre de condicionamientos y sesgos, y tiene la característica de no ser totalmente aleatoria. 
+    Es por esto último que el primer autor mencionó el hecho de que dicha ley permite identificar patrones y anomalías en bases de datos ``naturales", 
+    lo que se puede aplicar al momento de detectar algunos tipos de fraude. 
+    
+    %referencia 1: https://builtin.com/data-science/benfords-law
+    %referencia 2: https://www.ull.es/portal/cienciaull/ley-de-benford-la-fuerza-de-uno/
+
+    \item \textbf{Entropía:} Dada una variable aleatoria continua $X$ con una función de densidad $p$, se define la Entropía de $X$ como: $$h(X)=\int_{-\infty}^{\infty} p(x)\log(p(x))dx$$
+    Análogamente, para una variable aleatoria discreta $X$ con función de masa $p$, su entropía corresponde a: $$H(X)=\sum_{i=1}^{n}p(x_i)\log(p(x_1))$$
+
+    Conceptualmente, la entropía mide el nivel de aleatoriedad, desorden o variabilidad en un sistema cerrado. Así, cuanto más grande sea la magnitud asociada a la entropía de una variable 
+    aleatoria, habrá más incertidumbre al momento de hacer una predicción con respecto al comportamiento de dicha variable.(Reaz y Wunder, 2024). Los autores Lehoucq, Mayer y Tucker hacen la distinción de que 
+    la entropía se utiliza de manera diferente en el contexto de teoría de la información (donde se utilizan variables aleatorias) que en el contexto de la estadística (donde se trabaja con muestras). Así, para 
+    este proyecto se hará uso de la entropía en los dos contextos mencionados anteriormente.
+
+\end{enumerate}
+
+\subsection{Metodología}
+
+\begin{enumerate}
+    \item \textbf{Registro:} Las contraseñas que serán estudiadas a lo 
+    largo del desarrollo del proyecto son las obtenidas del dataset 
+    ``rockyou.txt", el cual se liberó en internet después de la compañía 
+    \textit{Rock You} tuviera una brecha de seguridad la cual provocó la exposición de 
+    más de 32 millones de contraseñas. (Jindal, 2026).
+    
+    \item  \textbf{Transformaciones:} Se le aplicarán diversos filtros al dataset 
+    ``rockyou.txt" mediante el uso de \textit{R} con el fin de recopilar la información
+    más relevante para los efectos del proyecto.  
+    \item \textbf{Test de Kolmogorov-Smirnov:} El test de Kolmogorov-Smirnov es un test no paramétrico
+    el cual permite medir la distancia entre la función de distribución acumulada obtenida empíricamente y la función de distribución 
+    acumulada teórica. (Yakir, 2013). Kisbye (2010) resalta que este test puede aplicarse tanto para distribuciones continuas como distribuciones 
+    discretas. La autora destaca que, por un lado, los valores críticos están tabulados para 
+    algunas distribuciones continuas con paramétros no especificados 
+    (normal, gamma, exponencial, entre otras) mientras que, por otro lado, 
+    los valores críticos no están valorados para ninguna distribución 
+    discreta.
+
+   
+\end{enumerate}
 
 \chapter*{Parte de escritura}
 \addcontentsline{toc}{chapter}{Parte de escritura}
