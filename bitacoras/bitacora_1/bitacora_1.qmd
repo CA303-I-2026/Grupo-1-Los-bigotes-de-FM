@@ -21,7 +21,7 @@ format:
     header-includes: |
       % Fuente y formato
       \usepackage{fontspec}
-      \setmainfont{Latin Modern Roman}
+      %\setmainfont{Latin Modern Roman}
       \usepackage[spanish]{babel}
       \usepackage{textcomp}
       \usepackage{indentfirst}
@@ -145,8 +145,11 @@ Somos un grupo donde cada uno de sus integrantes posee un amplio interés por el
 
 \section {Pregunta de investigación}
 \subsection{Definición de la idea}
-Aquí vamos a poner la definición de la idea.
-\subsection{Conceptualización de la idea}
+Utilizar herramientas vistas en el curso, como las pruebas no paramétricas, en conjunto a métodos de obtención de distribuciones para desarrollar un criterio que, dada una base de datos conformada 
+por contraseñas generadas tanto por personas como por bots, permita distinguir si 
+una contraseña fue generada por un ser humano o no. Para lograr esto último, se podría
+analizar la distribución de caracteres según la posición del caracter, esto con el 
+de probar que dichas distribuciones varían entre personas y bots.\subsection{Conceptualización de la idea}
 Aquí vamos a poner la conceptualización de la idea.
 \subsection{Identificación de tensiones}
 
