@@ -666,6 +666,23 @@ suceda cada resultado.
 \chapter*{Parte de escritura}
 \addcontentsline{toc}{chapter}{Parte de escritura}
 \markboth{Parte de escritura}{Parte de escritura}
+
+\subsubsection{El problema central.}
+Las contraseñas representan hoy el mecanismo de autenticación más extendido, pero su efectividad depende totalmente de qué tan impredecibles resulten. El problema radica en que los seres humanos no se comportan de manera aleatoria al elegirlas; por el contrario, siguen patrones cognitivos que los llevan a preferir ciertas combinaciones y estructuras repetitivas. Esto provoca que la distribución de las contraseñas humanas sea, en términos estadísticos, predecible.
+En contraste, los bots (programas automatizados para la generación masiva de claves) operan bajo una lógica algorítmica, sin sesgos humanos. Esto genera distribuciones de caracteres con propiedades muy distintas. La pregunta central de este proyecto es si dicha diferencia es lo suficientemente sistemática como para construir un criterio estadístico formal que permita clasificar una contraseña como humana o generada por un bot.
+\subsubsection{El comportamiento humano en las contraseñas.}
+La literatura especializada documenta que los usuarios siguen estrategias predecibles al crear sus claves. Una de las más comunes es la repetición: para cumplir con requisitos de longitud, se suelen repetir subcadenas cortas en lugar de introducir variedad real. Esta práctica genera contraseñas que parecen complejas, pero que internamente poseen una entropía muy baja.
+Además, los caracteres elegidos por humanos no siguen la distribución del lenguaje natural ni una distribución aleatoria teórica. Existe una concentración asimétrica en ciertos valores; por ejemplo, los dígitos 0, 1 y 2 aparecen con una frecuencia desproporcionada debido al uso constante de fechas y números telefónicos como base.
+\subsubsection{Distribuciones de referencia y la Ley de Benford.}
+Para comparar estos comportamientos, se requiere una distribución de referencia. Una de las más útiles para este análisis es la Ley de Benford, que establece que en conjuntos de datos naturales, los dígitos menores aparecen como primer dígito con mucha mayor frecuencia que los mayores. Según esta ley, el dígito 1 debería aparecer cerca del 30% de las veces, mientras que el 9 apenas alcanzaría el 4.6%.
+La relevancia de esta ley para el proyecto es que las contraseñas humanas la violan de forma medible. El dígito 9, por ejemplo, presenta una frecuencia inusualmente alta por el uso de años como 1999 o 2009. Esta desviación no ocurre en contraseñas generadas algorítmicamente por bots, por lo que la distancia respecto a la distribución de Benford puede funcionar como una variable discriminante fundamental.
+\subsubsection{El desafío estadístico.}
+Al trabajar con corpus de datos masivos, existe el riesgo de confundir la distribución empírica observada con la distribución real de la población. Un volumen de datos muy grande puede sobreestimar la concentración de ciertos valores, lo que llevaría a conclusiones erróneas sobre la predictibilidad general de las claves.
+Para mitigar este riesgo, se deben aplicar métodos inferenciales que establezcan cotas de confianza. El criterio de clasificación no puede basarse en frecuencias brutas, sino en herramientas que garanticen que las diferencias son estadísticamente significativas. En este sentido, el Test de Kolmogorov-Smirnov resulta ideal, ya que permite medir la distancia entre distribuciones sin imponer formas paramétricas previas, adaptándose a la irregularidad de los datos analizados.
+\subsubsection{El aporte del proyecto.}
+Si bien se conoce el comportamiento humano y existen herramientas estadísticas, no se ha abordado de forma directa una comparación formal entre humanos y bots utilizando modelos de distribución con criterios inferenciales rigurosos. Es por lo anterior que el presente proyecto utilizará el corpus \textit{rockyou} como fuente humana con el fin de generar un criterio técnico y reproducible para distinguir el origen de una contraseña con solidez estadística.
+
+
 \stepcounter{chapter}
 
 \chapter*{Arco narrativo del proyecto}
