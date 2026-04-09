@@ -25,7 +25,7 @@ format:
       \usepackage[spanish]{babel}
       \usepackage{textcomp}
       \usepackage{indentfirst}
-
+      \usepackage{float}
       \usepackage{tikz}
       \usetikzlibrary{positioning,babel,calc}
 
@@ -133,7 +133,54 @@ Luego de emplear estas inteligencias artificiales, se refrescaron conocimientos 
 \addcontentsline{toc}{section}{Log de contribuciones}
 \markboth{Log de contribuciones}{Log de contribuciones}
 
-Acá vamos a poner la tabla con el nombre y la tarea que se realizó. 
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3} % Espaciado entre filas
+\setlength{\tabcolsep}{10pt} % Espaciado entre columnas
+\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} >{\raggedright\arraybackslash}p{10cm}}
+\toprule
+\textbf{Integrante} & \textbf{Contribuciones a Bitácora 1} \\
+\midrule
+Anthony Flores Rojas (C32975) &
+\begin{itemize}[leftmargin=*]
+  \item Construcción de fichas de literatura
+  \item Búsqueda de bibliografía
+  \item Argumentación a través de datos
+  \item Búsqueda y limpieza de datos
+  \item Colaboración con parte de escritura
+  \item Estructura del repositorio
+\end{itemize} \\
+\midrule
+Andrey González Bastos (C33329) &
+\begin{itemize}[leftmargin=*]
+  \item Redacción de parte de Preparación
+  \item Contribución en parte de Planificación con tensiones y argumentación de preguntas
+  \item Colaboración con fichas de literatura
+  \item Parte de escritura
+  \item Arco narrativo del proyecto
+  \item Diario de aprendizaje
+\end{itemize} \\
+\midrule
+Randal Picado Bermúdez (C36024) &
+\begin{itemize}[leftmargin=*]
+  \item Argumentación de preguntas
+  \item Colaboración en fichas de literatura
+  \item Colaboración con V de Gowin
+  \item Colaboración con búsqueda bibliográfica
+\end{itemize} \\
+\midrule
+Leonardo Vega Aragón (C38313) &
+\begin{itemize}[leftmargin=*]
+  \item Construcción de V de Gowin
+  \item Contribuciones en parte de Planificación
+  \item Colaboración con búsqueda bibliográfica
+  \item Colaboración con fichas de literatura
+\end{itemize} \\
+\bottomrule
+\end{tabular}
+\caption{Distribución de contribuciones de los integrantes en Bitácora 1}
+\end{table}
+
 
 \section*{Audiencia del proyecto}
 \addcontentsline{toc}{section}{Audiencia del proyecto}
