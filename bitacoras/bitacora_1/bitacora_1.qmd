@@ -175,6 +175,7 @@ Leonardo Vega Aragón (C38313) &
   \item Contribuciones en parte de Planificación
   \item Colaboración con búsqueda bibliográfica
   \item Colaboración con fichas de literatura
+  \item Elaboración de referencias
 \end{itemize} \\
 \bottomrule
 \end{tabular}
@@ -186,7 +187,7 @@ Leonardo Vega Aragón (C38313) &
 \addcontentsline{toc}{section}{Audiencia del proyecto}
 \markboth{Audiencia del proyecto}{Audiencia del proyecto}
 
-Este trabajo está dirigido a un público actuarial dedicado más a la parte de análisis de datos y ciberseguridad, pues al basar todo el trabajo en el análisis exhasutivo de contraseñas, resulta atractivo para quienes se dedican a esta área llegar a leer este material. 
+Este trabajo está dirigido a un público actuarial dedicado más a la parte de análisis de datos y ciberseguridad, pues al basar todo el trabajo en el análisis exhaustivo de contraseñas, resulta atractivo para quienes se dedican a esta área llegar a leer este material. 
 
 \section*{Posicionamiento del equipo}
 \addcontentsline{toc}{section}{Posicionamiento del equipo}
@@ -401,8 +402,115 @@ En el conjunto de datos de RockYou (2009), cada fila representa una observación
 \section{Revisión bibiográfica}
 \subsection{Búsqueda de bibliografía}
 Aquí se va a hacer esa búsqueda de bibliografía
+
+
 \subsection{Construcción de fichas de literatura}
-Acá van las famosas fichas de literatura.
+
+\section*{Ficha de A Study of Probabilistic Password Models.}
+
+\subsubsection*{Nivel descriptivo}
+
+Título: A Study of Probabilistic Password Models.
+
+Autor(es): Jerry Ma, Weining Yang, Min Luo y Ninghui Li.
+
+Año: 2014.
+
+Nombre del tema: Evaluación sistemática de modelos probabilísticos para la estimación de la fuerza de contraseñas.
+
+Clasificación: Metodológica; los autores comparan modelos de Markov frente a gramáticas probabilísticas, integrando métodos de suavizado y normalización del procesamiento de lenguaje natural.
+
+Resumen en una oración: Los investigadores demuestran que los modelos de Markov bien normalizados superan al estado del arte en la predicción de fuerza de contraseñas.
+
+Argumento central: Los autores sostienen que los modelos probabilísticos se benefician de técnicas estadísticas de lenguaje, logrando predicciones exactas al asignar valores de probabilidad a cada cadena de manera determinista.
+
+Problemas con el argumento o el tema: Los investigadores identifican que las gráficas de número de intentos son computacionalmente costosas para modelos complejos, lo que limita la comparación efectiva entre algoritmos en tiempo real.
+
+\subsubsection*{Nivel analítico}
+
+Conexión con mi proyecto: Los autores utilizan RockYou como dataset de entrenamiento. Sus planteamientos sobre suavizado y normalización son críticos para este proyecto, ya que evitan obtener valores de entropía de Shannon sesgados por frecuencias de aparición cero en secuencias no observadas.
+
+Lo que NO dicen los autores: Los investigadores no analizan cómo la entropía varía bajo ataques que usan reglas de transformación heurística en comparación con el modelo de n-gramas, ni abordan la detección de anomalías para identificar bots.
+
+Contraste con otra fuente: Mientras que un estudio busca establecer límites teóricos rigurosos para proteger al usuario, estos autores se centran en la implementación técnica de modelos de lenguaje para optimizar la precisión predictiva desde la perspectiva del ataque.
+
+Evaluación de aplicabilidad (escala 1–5): 4.
+Justificación: Los autores emplean modelos de Markov de orden n reproducibles en C++ para procesar RockYou, permitiendo comparar la entropía teórica calculada con la frecuencia empírica observada.
+
+Pregunta que le haría al autor: ¿Cómo variaría la eficiencia de sus modelos si se pre-procesara el dataset para normalizar patrones de teclado o caracteres Unicode antes de la tokenización estadística?
+
+Resumen argumentativo: Los autores intentan resolver la ineficiencia de los modelos de gramática estructural. Su solución basada en suavizado funciona al proporcionar una base sólida para calcular probabilidades de forma determinista. Se aplicará su metodología de normalización para asegurar que los cálculos de entropía no ignoren la cola larga de contraseñas únicas, garantizando una comparativa justa entre humanos y robots.
+
+
+\section*{Ficha de User Password Repetitive Patterns Analysis and Visualization.}
+
+\subsubsection*{Nivel descriptivo}
+
+Título: User Password Repetitive Patterns Analysis and Visualization.
+
+Autor(es): Xiaoying Yu y Qi Liao.
+
+Año: 2015.
+
+Nombre del tema: Análisis de patrones repetitivos en contraseñas humanas mediante algoritmos y visualización sobre el corpus RockYou.
+
+Clasificación: Metodológica; los autores formalizan algoritmos específicos como SHORTREPEAT y COMPARE para cuantificar la repetición estructural en lugar de solo describir el fenómeno.
+
+Resumen en una oración: Los investigadores demuestran que los usuarios repiten subcadenas cortas para construir contraseñas largas, debilitando las políticas de longitud.
+
+Argumento central: Los autores sostienen que las contraseñas humanas presentan patrones repetitivos unidireccionales y bidireccionales que invalidan la premisa de que mayor longitud equivale a mayor entropía, ya que los usuarios compensan la complejidad con repetición mecánica.
+
+Problemas con el argumento o el tema: Los investigadores señalan que RockYou (2009) tiene políticas laxas que podrían sesgar los resultados actuales. Además, admiten que la complejidad algorítmica limita el procesamiento de corpus masivos sin paralelización.
+
+\subsubsection*{Nivel analítico}
+
+Conexión con mi proyecto: Los autores utilizan RockYou 2009 para caracterizar la distribución de subcadenas. Sus hallazgos sobre el dominio de caracteres del mismo tipo en patrones repetitivos son variables de entrada directas para discriminar estadísticamente entre contraseñas de origen humano y las generadas por bots.
+
+Lo que NO dicen los autores: Los investigadores no realizan comparativas con contraseñas generadas automáticamente ni ajustan modelos paramétricos como Zipf o Pareto. La ausencia de un modelo formal de distribución limita la capacidad de separar ambas poblaciones de forma inferencial.
+
+Contraste con otra fuente: Mientras que un estudio busca límites teóricos rigurosos bajo un marco estadístico, estos autores se mantienen en un plano descriptivo-algorítmico de los datos empíricos. La primera investigación aporta el rigor de probabilidad que le falta a este conteo de frecuencias.
+
+Evaluación de aplicabilidad (escala 1–5): 4.
+Justificación: Los autores emplean el mismo corpus de trabajo. Sus algoritmos de conteo son replicables en C++ con bajo costo computacional, aunque se limitan por ser descriptivos y no proveer un marco de prueba de hipótesis.
+
+Pregunta que le haría al autor: ¿Consideran los autores que existe alguna métrica cuantitativa, como una entropía de repetición, que permita separar poblaciones humanas de robóticas basándose en sus algoritmos?
+
+Resumen argumentativo: Los autores intentan resolver la falta de herramientas para identificar patrones repetitivos que las métricas de entropía estándar omiten. Su solución funciona para describir el comportamiento en RockYou, pero carece de un modelo inferencial. Se utilizarán sus hallazgos para definir variables de interés (frecuencia de subcadenas, tipos de caracteres) que luego se integrarán en modelos de distribución formal para construir el criterio discriminante entre humanos y bots.
+
+\section*{Ficha de Towards a Rigorous Statistical Analysis of Empirical Password Datasets.}
+
+\subsubsection*{Nivel descriptivo}
+
+Título: Towards a Rigorous Statistical Analysis of Empirical Password Datasets.
+
+Autor(es): Jeremiah Blocki y Peiyuan Liu.
+
+Año: 2022.
+
+Nombre del tema: Marco estadístico para acotar la curva de adivinación óptima en auditorías de contraseñas.
+
+Clasificación: Metodológica; los autores desarrollan un esquema de programación lineal y técnicas de remuestreo para establecer cotas de confianza sobre la probabilidad $\lambda_{G}$, evitando estimaciones sesgadas.
+
+Resumen en una oración: Los investigadores proponen algoritmos para calcular límites de éxito de un atacante con alto rigor estadístico.
+
+Argumento central: Los autores plantean que las métricas basadas en conteos directos o en la distribución de Zipf fallan al predecir la vulnerabilidad real, por lo que introducen un método para hallar límites superiores e inferiores que respetan el principio de Kerckhoffs.
+
+Problemas con el argumento o el tema: Los investigadores admiten que, dado que la distribución de la población es inaccesible, el estimador empírico estándar colapsa cuando el atacante realiza más intentos de los que existen en la muestra recolectada.
+
+\subsubsection*{Nivel analítico}
+
+Conexión con mi proyecto: Los autores definen la variable de éxito $\lambda_{G}$ como el indicador crítico de seguridad. Para este proyecto, su enfoque es vital porque permite validar si las frecuencias observadas en RockYou 2009 son suficientes para inferir el comportamiento de una población humana real o si el modelo de discriminación humano-bot está operando sobre ruido estadístico.
+
+Lo que NO dicen los autores: Los investigadores omiten cualquier análisis sobre la composición interna de los strings o patrones de teclado; su metodología trata a las contraseñas como valores atómicos en una distribución, lo que impide usar su técnica para entender por qué una estructura específica (como repeticiones) es de origen humano.
+
+Contraste con otra fuente: Mientras que un estudio previo se enfoca en algoritmos de detección de subcadenas y patrones visuales, estos autores priorizan la inferencia de la probabilidad total de quiebre. Los primeros proporcionan la anatomía del dato, mientras que estos entregan el marco de probabilidad para asegurar que el análisis de RockYou sea estadísticamente significativo.
+
+Evaluación de aplicabilidad (escala 1–5): 5.
+Justificación: Los autores utilizan una técnica de partición de datos que se puede integrar directamente en los scripts de C++ para evaluar la convergencia de la entropía. Es el respaldo matemático necesario para garantizar que el modelo de riesgo no sea una simple observación de un leak específico.
+
+Pregunta que le haría al autor: ¿Cómo se comportarían sus límites de confianza si se aplicaran a un dataset donde una fracción de los datos ha sido inyectada artificialmente por scripts, rompiendo el supuesto de independencia de la muestra?
+
+Resumen argumentativo: Los autores abordan la falta de herramientas para medir la seguridad de forma independiente a la potencia del software de cracking. Su propuesta de usar programación lineal para encontrar distribuciones consistentes con el dataset resuelve el problema de la incertidumbre en la "cola larga" de la distribución. Para este trabajo, se tomará su técnica de validación mediante submuestras para blindar el análisis estadístico de RockYou.
 
 \section{Construcción de la UVE de Gowin}
 
@@ -565,12 +673,26 @@ suceda cada resultado.
 \markboth{Arco narrativo del proyecto}{Arco narrativo del proyecto}
 \stepcounter{chapter}
 
+\section {El problema no resuelto}
+
+El problema que nadie ha resuelto completamente aún es si existe un criterio técnico general que permita distinguir una contraseña creada por un ser humano o un bot. 
+
 \chapter*{Diario aprendizaje}
 \addcontentsline{toc}{chapter}{Diario aprendizaje}
 \markboth{Diario aprendizaje}{Diario aprendizaje}
 \stepcounter{chapter}
 
+\section {¿Qué aprendimos?}
 
+\begin {itemize}
 
+\item Ahora sabemos construir mejores preguntas de investigación mediante argumentos y contra argumentos de cada una. 
 
+\item Ahora sabemos construir fichas de literatura, lo que nos permite analizar mejor cualquier material académico. 
+
+\item Ahora sabemos construir una V de Gowin que permite entender mejor el tema a investigar y los pasos a seguir. 
+
+\item Ahora sabemos como utilizar la IA de una manera más eficiente y menos dependiente para realizar investigaciones. 
+
+\end {itemize}
 
