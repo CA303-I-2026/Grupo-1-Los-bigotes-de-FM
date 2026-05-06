@@ -98,7 +98,8 @@ format:
         \end{titlepage}
       }
 
-bibliography: referencias.bib
+bibliography: ../../referencias/referencias.bib
+
 csl: apa.csl   
 reference-section-title: "Bibliografía"
 ---
@@ -283,7 +284,12 @@ Joseph Bonneau \\ \hline
 
 Aqui las referencias conectadas con el archivo .bib
 
-\text{[@smith2020]} Tenemos que hacer las citas dummy si no las usamos, las que si usen, pongan el texto ese con el nombre del autor principal creo que es
+\text{[@smith2020]} Tenemos que hacer las citas dummy si no las usamos, las que si usen, pongan el texto ese con el nombre del autor principal creo que es 
+
+
 
 cita dummy 
 \text{\textbackslash nocite{smith2020}}
+
+```{=latex}
+\nocite{*}
