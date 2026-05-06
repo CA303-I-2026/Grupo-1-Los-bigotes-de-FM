@@ -272,7 +272,7 @@ Joseph Bonneau \\ \hline
 \markboth{Arco narrativo del proyecto}{Arco narrativo del proyecto}
 \stepcounter{chapter}
 
-
+\textit{«Al explorar los datos, descubrimos que, a pesar de ser el cero el primer carácter más frecuente tanto en las contraseñas completas como en el primer chunk de números (dos o más números juntos), esto no contradice la ley de Benford, pero de igual forma nos revela un patrón propio de las contraseñas, lo que nos obliga a repensar cómo abordaremos el problema.»}
 
 \chapter*{Diario aprendizaje}
 \addcontentsline{toc}{chapter}{Diario aprendizaje}
