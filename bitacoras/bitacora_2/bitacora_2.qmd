@@ -340,6 +340,63 @@ Resumen argumentativo: El libro intenta mostrar que muchos datos reales siguen p
 
 \newpage
 
+\begin{center}
+    \vspace{0.8cm}
+    {\Large \bfseries ABOUT PASSWORDS} \\
+    \vspace{0.4cm}
+\end{center}
+
+\vspace{1.5cm}
+
+\noindent
+\textbf{Nivel descriptivo} \newline
+
+\noindent
+Título: About Passwords \newline
+
+\noindent
+Autor: András Keszthelyi \newline
+
+\noindent
+Año: 2013 \newline
+
+\noindent
+Nombre del tema: Reflexión práctica sobre el uso, la creación y la seguridad de las contraseñas. \newline
+
+\noindent
+Clasificación: Divulgativa y aplicada; el texto presenta observaciones y recomendaciones generales sobre cómo elegir contraseñas más seguras.\newline
+
+\noindent
+Resumen en una oración: El autor expone principios básicos para crear contraseñas que sean más resistentes al ataque y, al mismo tiempo, manejables para el usuario. \newline
+
+\noindent
+Argumento central: Keszthelyi sostiene que una buena contraseña debe equilibrar la seguridad con la facilidad de recordación, evitando tanto claves demasiado simples como combinaciones imposibles de memorizar.\newline
+
+\noindent
+Problemas con el argumento: El texto es útil como orientación general, pero no desarrolla un modelo estadístico o matemático profundo. Por eso, algunas de sus ideas pueden resultar demasiado generales cuando se quiere analizar contraseñas de manera más rigurosa.
+\newpage 
+
+\noindent
+\textbf{Nivel analítico} \newline
+
+\noindent
+Conexión con mi proyecto: Este texto sirve para contextualizar el problema de las contraseñas desde una perspectiva práctica, especialmente porque permite entender por qué los usuarios suelen preferir contraseñas que puedan recordar fácilmente.\newline
+
+\noindent
+Lo que NO dice el autor: El autor no construye un modelo formal de predicción ni estudia la distribución de contraseñas dentro de grandes bases de datos. \newline
+
+\noindent
+Contraste con otra fuente: A diferencia de investigaciones como las de Ma et al. o Bonneau, este texto no busca medir la seguridad mediante técnicas estadísticas complejas, sino ofrecer una visión más directa sobre el uso cotidiano de contraseñas.   \newline 
+
+\noindent
+Evaluación de aplicabilidad: 3. Aporta contexto y observaciones útiles, pero no proporciona herramientas metodológicas fuertes para el análisis cuantitativo del proyecto. \newline
+
+\noindent
+Preguntas que le haría al autor: ¿Cómo adaptarían sus recomendaciones a entornos donde se usan gestores de contraseñas o autenticación multifactor? \newline
+
+\noindent
+Resumen argumentativo: El texto intenta explicar de manera práctica por qué las personas eligen contraseñas como las eligen. Su valor principal es que ayuda a conectar la teoría de la seguridad con el comportamiento real de los usuarios, aunque no es suficiente por sí solo para un análisis estadístico profundo.
+
 \chapter*{Diario aprendizaje}
 \addcontentsline{toc}{chapter}{Diario aprendizaje}
 \markboth{Diario aprendizaje}{Diario aprendizaje}
