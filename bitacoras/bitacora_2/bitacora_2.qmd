@@ -147,7 +147,9 @@ Este trabajo está dirigido a un público actuarial dedicado más a la parte de 
 \markboth{Parte de planificación}{Parte de planificación}
 \stepcounter{chapter}
 
-\section{Ordenamiento de literatura} 
+\section*{Ordenamiento de literatura}
+\addcontentsline{toc}{section}{Ordenamiento de literatura}
+\markboth{Nuevas fichas}{Ordenamiento de literatura}
 
 En esta sección se propone ordenar los elementos de la bibliografía y tenerlos resumidos en un cuadro para poder tener mayor orden y facilidad de acceso a las fuentes según sea necesario para redactar el grueso del trabajo más adelante. Se decidió agrupar bajo los siguientes tres grandes grupos:
 
@@ -274,6 +276,69 @@ Joseph Bonneau \\ \hline
 \stepcounter{chapter}
 
 \textit{«Al explorar los datos, descubrimos que, a pesar de ser el cero el primer carácter más frecuente tanto en las contraseñas completas como en el primer chunk de números (dos o más números juntos), esto no contradice la ley de Benford, pero de igual forma nos revela un patrón propio de las contraseñas, lo que nos obliga a repensar cómo abordaremos el problema.»}
+
+\section*{Nuevas fichas}
+\addcontentsline{toc}{section}{Nuevas fichas}
+\markboth{Nuevas fichas}{Nuevas fichas}
+
+\begin{center}
+    \vspace{0.8cm}
+    {\Large \bfseries BENFORD'S LAW: THEORY AND APPLICATIONS} \\
+    \vspace{0.4cm}
+\end{center}
+
+\vspace{1.5cm}
+
+\noindent
+\textbf{Nivel descriptivo} \newline
+
+\noindent
+Título: Benford's Law: Theory and Applications \newline
+
+\noindent
+Autor: Steven J. Miller \newline
+
+\noindent
+Año: 2015 \newline
+
+\noindent
+Nombre del tema: Estudio matemático y aplicado de la Ley de Benford. \newline
+
+\noindent
+Clasificación: Teórica y aplicada; el libro desarrolla los fundamentos de la Ley de Benford y muestra cómo puede usarse para detectar patrones no uniformes en datos reales.\newline
+
+\noindent
+Resumen en una oración: El libro explica por qué muchos conjuntos de datos naturales no distribuyen sus dígitos iniciales de forma uniforme. \newline
+
+\noindent
+Argumento central: Miller sostiene que la Ley de Benford aparece con frecuencia en datos reales y que puede ser usada como herramienta para analizar la estructura de ciertos conjuntos numéricos.\newline
+
+\noindent
+Problemas con el argumento: La ley no funciona en todos los casos, así que su aplicación depende mucho del tipo de datos estudiados. Si el conjunto no tiene una estructura adecuada, la distribución benfordiana puede no ser representativa.
+
+\noindent
+\textbf{Nivel analítico} \newline
+
+\noindent
+Conexión con mi proyecto: Aunque no trata directamente sobre contraseñas, este texto resulta útil porque introduce una forma de pensar en distribuciones no uniformes que podría inspirar el análisis de patrones dentro de secuencias de contraseñas.\newline
+
+\noindent
+Lo que NO dice el autor: El libro no estudia seguridad informática, ni analiza cómo se comportan las contraseñas humanas, ni ofrece métodos para medir entropía de contraseñas. \newline
+
+\noindent
+Contraste con otra fuente: Frente a trabajos centrados en la predicción de contraseñas, aquí el interés está en una ley estadística general que puede aplicarse a diversos tipos de datos, no a un problema de ciberseguridad en particular.   \newline 
+
+\noindent
+Evaluación de aplicabilidad: 2. Es una fuente útil como apoyo conceptual, pero su relación con el proyecto es indirecta y requiere una adaptación considerable. \newline
+
+\noindent
+Preguntas que le haría al autor: ¿Cree que la lógica estadística de la Ley de Benford podría servir como inspiración para analizar frecuencias de caracteres o posiciones dentro de contraseñas? \newline
+
+\noindent
+Resumen argumentativo: El libro intenta mostrar que muchos datos reales siguen patrones numéricos sorprendentes y no uniformes. Para el proyecto, su aporte principal no está en el contenido específico, sino en la idea de que una distribución empírica puede revelar regularidades útiles para interpretar datos complejos.
+
+
+\newpage
 
 \chapter*{Diario aprendizaje}
 \addcontentsline{toc}{chapter}{Diario aprendizaje}
