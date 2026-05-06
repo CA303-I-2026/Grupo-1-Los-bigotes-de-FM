@@ -28,7 +28,9 @@ format:
       \usepackage{float}
       \usepackage{tikz}
       \usetikzlibrary{positioning,babel,calc}
-
+      \usepackage{tabularx}
+      \usepackage{geometry}
+      \geometry{margin=2.5cm}
       \setlength{\parindent}{2em}
       \setlength{\parskip}{0pt}
 
@@ -37,6 +39,9 @@ format:
       \usepackage{amsthm}
       \usepackage{amsfonts}
       \usepackage{mathtools}
+      \usepackage{setspace}
+      \usepackage{ltablex}
+      \keepXColumns
 
       % Tablas
       \usepackage{booktabs}
@@ -53,7 +58,7 @@ format:
       \usepackage{pgfplots}
       \pgfplotsset{compat=1.18}
       \usepackage{graphicx}
-
+      \usepackage{longtable}
 
       % Encabezados
       \usepackage{fancyhdr}
@@ -140,6 +145,119 @@ Este trabajo está dirigido a un público actuarial dedicado más a la parte de 
 \addcontentsline{toc}{chapter}{Parte de planificación}
 \markboth{Parte de planificación}{Parte de planificación}
 \stepcounter{chapter}
+
+\section{Ordenamiento de literatura} 
+
+En esta sección se propone ordenar los elementos de la bibliografía y tenerlos resumidos en un cuadro para poder tener mayor orden y facilidad de acceso a las fuentes según sea necesario para redactar el grueso del trabajo más adelante. Se decidió agrupar bajo los siguientes tres grandes grupos:
+
+\textbf{Metodológico:} En este grupo se pueden encontrar las fuentes que proponen metodologías útiles relacionadas con las contraseñas. 
+
+\textbf{Teórico:} En este grupo se encuentran las fuentes que dan un repaso a la teoría necesaria para poder entender y plantar las bases conceptuales para la elaboración de la investigación. 
+
+\textbf{Divulgativo:} En este grupo están presentes las fuentes que presentan un material más informativo o divulgativo hacia un público más general, sin embargo, también son importantes ya que permiten entender mejor la teoría. 
+
+En este apartado se toman en cuenta las fuentes de la bitácora número uno, además de las nuevas que se han ido agregando. 
+
+\small
+\renewcommand{\arraystretch}{1.2}
+
+\begin{tabularx}{\textwidth}{|p{2.3cm}|p{3cm}|p{2.5cm}|X|p{1cm}|p{2.2cm}|}
+\hline
+\multicolumn{6}{|c|}{\textbf{Agrupación de la Bibliografía}} \\ \hline
+
+\textbf{Tipo de Grupo} & 
+\textbf{Nombre del Grupo} & 
+\textbf{Nombre del Tema} & 
+\textbf{Título} & 
+\textbf{Año} & 
+\textbf{Autores} \\ \hline
+\endfirsthead
+
+\hline
+\multicolumn{6}{|c|}{\textbf{Agrupación de la Bibliografía (continuación)}} \\ \hline
+
+\textbf{Tipo de Grupo} & 
+\textbf{Nombre del Grupo} & 
+\textbf{Nombre del Tema} & 
+\textbf{Título} & 
+\textbf{Año} & 
+\textbf{Autores} \\ \hline
+\endhead
+
+Metodológico &
+Modelos criptográficos &
+Evaluación sistemática de modelos probabilísticos para la estimación de fuerza de contraseñas &
+A Study of Probabilistic Password Models &
+2014 &
+Jerry Ma, Weining Yang, Min Luo y Ninghui Li \\ \hline
+
+Metodológico &
+Modelos criptográficos &
+Análisis de patrones repetitivos en contraseñas humanas mediante algoritmos y visualización sobre el corpus RockYou &
+User Password Repetitive Patterns Analysis and Visualization &
+2015 &
+Xiaoying y Qi Liao \\ \hline
+
+Metodológico &
+Modelos criptográficos &
+Marco estadístico para acotar la curva de adivinación óptima en auditorías de contraseñas &
+Towards a Rigorous Statistical Analysis of Empirical Password Datasets &
+2022 &
+Jeremiah Blocki y Peiyuan Liu \\ \hline
+
+Teórico &
+Teoría abstracta &
+Ley de Benford: Explicación y Aplicaciones &
+LEY DE BENFORD &
+2019 &
+María Caputi Zunini \\ \hline
+
+Metodológico &
+Modelos criptográficos &
+Estudiando la distribución de contraseñas mediante la distribución de Zipf &
+Zipf's Law in Passwords &
+2017 &
+Ding Wang, Haibo Cheng, Ping Wang, Xinyi Huang y Gaopeng Jian \\ \hline
+
+Metodológico &
+Modelos criptográficos &
+Entrenamiento de redes neuronales para crear y vulnerar contraseñas &
+A Machine Learning Approach to Predicting Passwords &
+2018 &
+Christoffer Olsen \\ \hline
+
+Teórico &
+Teoría Abstracta &
+Nonparametric tests: Kolmogorov-Smirnov and Peacock &
+Extremes in Random Fields: A Theory and Its Applications &
+2013 &
+Benjamin Yakir \\ \hline
+
+Teórico &
+Teoría aplicada &
+Estudio matemático y aplicado de la Ley de Benford &
+Benford's Law: Theory and Applications &
+2015 &
+Steven J. Miller \\ \hline
+
+Divulgativa &
+Observaciones sobre contraseñas &
+Reflexión práctica sobre el uso, la creación y la seguridad de las contraseñas &
+About Passwords & 
+2013 &
+András Keszthelyi\\ \hline
+
+Metodológico &
+Modelos criptográficos &
+Análisis estadístico de un gran corpus de contraseñas y estudio de su adivinabilidad &
+The Science of Guessing: Analyzing an Anonymized Corpus of 70 Million Passwords & 
+2012 &
+Joseph Bonneau \\ \hline
+
+
+\end{tabularx}
+
+
 
 \chapter*{Análisis estadísticos}
 \addcontentsline{toc}{chapter}{Análisis estadísticos}
