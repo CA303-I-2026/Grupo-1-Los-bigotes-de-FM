@@ -656,8 +656,59 @@ Para asegurar una buena legibilidad de las figuras en el documento final, se def
 La identidad visual definida para el proyecto recibirá el nombre de \textbf{Estilo Bigotes}. Este estilo será utilizado de manera consistente en todas las figuras y visualizaciones desarrolladas durante el análisis de datos.
 
 
+\section*{Análisis descriptivo}
+\addcontentsline{toc}{section}{Análisis descriptivo}
+\markboth{Análisis descriptivo}{Análisis descriptivo}
 
+\textbf{Análisis descriptivo} \newline
 
+Para el desarrollo del análisis descriptivo de la presente bitácora, se parte de la base de datos original rockyou, la cual contiene 14,344,386 contraseñas únicas provenientes de la filtración de RockYou (2009). A partir de esta fuente primaria, se construyeron dos bases de datos derivadas que serán el insumo principal del análisis: rockyoubenford y rockyouedist.
+rockyoubenford fue construida a partir de una base intermedia llamada rockyouchunk, la cual divide cada contraseña en segmentos (chunks) según su longitud. En rockyoubenford, cada fila corresponde a un dígito del 0 al 9, y las columnas chunk1 a chunk8 indican cuántas veces aparece ese dígito como primer carácter en contraseñas de cada segmento de longitud. Esta estructura permite analizar si la distribución de primeros dígitos en las contraseñas humanas sigue o viola la Ley de Benford, que es una de las variables discriminantes centrales del proyecto.
+rockyouedist registra, para cada carácter posible, su frecuencia de aparición en cada posición dentro de la contraseña (columnas pos1 a pos16). Esto permite estudiar cómo varía la distribución de caracteres según la posición, lo cual es clave para identificar patrones propios de contraseñas humanas en comparación a generadas por bots.
+Ambas bases fueron construidas durante la etapa de limpieza y transformación de datos, y serán cargadas en Python para el análisis descriptivo y la visualización que se desarrolla a continuación.
+\newline
+
+\textbf{Formato tidy} \newline
+
+se verificó que los datos estuvieran 
+en formato tidy. Un dato está en formato tidy cuando cada variable ocupa una columna, 
+cada observación ocupa una fila y cada celda contiene un único valor.
+
+Al revisar las bases rockyoubenford y rockyouedist, se encontró que ambas estaban 
+en formato ancho (wide), lo cual significa que había información distribuida en múltiples 
+columnas que en realidad representaban una misma variable. En el caso de rockyoubenford, 
+cada chunk de longitud era una columna distinta, y en rockyouedist, cada posición dentro 
+de la contraseña también ocupaba su propia columna. Este formato no es ideal para el 
+análisis ni para la visualización.
+
+Para resolver esto, se utilizó la función melt() de pandas, que es el equivalente en 
+Python de pivot_longer en R. Esta función toma todas las columnas que representan una 
+misma variable y las convierte en dos columnas: una con el nombre de la categoría y otra 
+con el valor correspondiente. De esta forma, cada fila quedó representando una única 
+observación.
+
+Luego de la transformación, benford_tidy quedó con 80 filas y 3 columnas 
+(digit, chunk, frecuencia), y edist_tidy quedó con 1504 filas y 4 columnas 
+(char, posicion, frecuencia, posicion_num). Esta última columna adicional se 
+creó extrayendo el número de cada posición (por ejemplo, convirtiendo "pos1" en 1), 
+con el fin de poder ordenar correctamente los ejes al momento de graficar.
+se muestran las primeras filas de cada base ya en formato tidy:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../proyecto_final/figuras/benford_tidy_muestra.png}
+    \caption{rockyoubenford en formato tidy}
+    \label{fig:benford_tidy}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../../proyecto_final/figuras/edist_tidy_muestra.png}
+    \caption{rockyouedist en formato tidy}
+    \label{fig:edist_tidy}
+\end{figure}
+
+\textbf{Cuadros de resumen} \newline
 
 \chapter*{Diario aprendizaje}
 \addcontentsline{toc}{chapter}{Diario aprendizaje}
