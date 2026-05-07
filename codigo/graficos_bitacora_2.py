@@ -105,7 +105,7 @@ tabla_a_png(cuadro3, "../bitacoras/bitacora_2/figuras/cuadro3_top10.png", "Cuadr
 digitos = [str(d) for d in range(10)]
 letras  = list("abcdefghijklmnopqrstuvwxyz")
 
-# --- Gráfico 1: Frecuencia del primer dígito vs. Ley de Benford ---
+# Gráfico 1: Frecuencia del primer dígito vs. Ley de Benford 
 chunk1 = benford_tidy[benford_tidy["chunk"] == "chunk1"].copy()
 total_chunk1 = chunk1["frecuencia"].sum()
 chunk1["pct_observado"] = chunk1["frecuencia"] / total_chunk1 * 100
@@ -132,7 +132,7 @@ plt.tight_layout()
 plt.savefig("../bitacoras/bitacora_2/figuras/grafico1_benford.png", dpi=150)
 plt.close()
 
-# --- Gráfico 2: Proporción de letras, dígitos y otros por posición ---
+# Gráfico 2: Proporción de letras, dígitos y otros por posición 
 otros = [c for c in edist_tidy["char"].unique() if c not in letras and c not in digitos]
 
 def clasificar(char):
@@ -161,7 +161,7 @@ plt.tight_layout()
 plt.savefig("../bitacoras/bitacora_2/figuras/grafico2_prop_tipo_posicion.png", dpi=150)
 plt.close()
 
-# --- Gráfico 3: Top 10 caracteres más frecuentes en la segunda posición ---
+# Gráfico 3: Top 10 caracteres más frecuentes en la segunda posición 
 g3 = edist_tidy[edist_tidy["posicion_num"] == 2].nlargest(10, "frecuencia")
 plt.figure(figsize=(10, 6))
 sns.barplot(data=g3, y="char", x="frecuencia",
@@ -173,7 +173,7 @@ plt.tight_layout()
 plt.savefig("../bitacoras/bitacora_2/figuras/grafico3_top10_pos2.png", dpi=150)
 plt.close()
 
-# --- Gráfico 4: Top 10 caracteres más frecuentes en la primera posición ---
+# Gráfico 4: Top 10 caracteres más frecuentes en la primera posición
 g4 = edist_tidy[edist_tidy["posicion_num"] == 1].nlargest(10, "frecuencia")
 plt.figure(figsize=(10, 6))
 sns.barplot(data=g4, y="char", x="frecuencia",
@@ -185,7 +185,7 @@ plt.tight_layout()
 plt.savefig("../bitacoras/bitacora_2/figuras/grafico4_top10_pos1.png", dpi=150)
 plt.close()
 
-# --- Gráfico 5: Composición relativa de dígitos por chunk (normalizado) ---
+# Gráfico 5: Composición relativa de dígitos por chunk (normalizado) 
 benford_tidy["chunk_num"] = benford_tidy["chunk"].str.extract(r"(\d+)").astype(int)
 total_por_chunk            = benford_tidy.groupby("chunk_num")["frecuencia"].transform("sum")
 benford_tidy["pct"]        = benford_tidy["frecuencia"] / total_por_chunk * 100
@@ -202,7 +202,7 @@ plt.tight_layout()
 plt.savefig("../bitacoras/bitacora_2/figuras/grafico5_chunks_norm.png", dpi=150)
 plt.close()
 
-# --- Gráfico 6a: Evolución por posición — top 3 letras ---
+# Gráfico 6a: Evolución por posición — top 3 letras 
 top3_letras = (
     edist_tidy[edist_tidy["char"].isin(letras)]
     .groupby("char")["frecuencia"].sum()
@@ -221,7 +221,7 @@ plt.tight_layout()
 plt.savefig("../bitacoras/bitacora_2/figuras/grafico6a_top3_letras.png", dpi=150)
 plt.close()
 
-# --- Gráfico 6b: Evolución por posición — top 3 dígitos ---
+# Gráfico 6b: Evolución por posición — top 3 dígitos 
 top3_digitos = (
     edist_tidy[edist_tidy["char"].isin(digitos)]
     .groupby("char")["frecuencia"].sum()
@@ -239,5 +239,3 @@ plt.legend(title="Dígito", bbox_to_anchor=(1.05, 1), loc="upper left")
 plt.tight_layout()
 plt.savefig("../bitacoras/bitacora_2/figuras/grafico6b_top3_digitos.png", dpi=150)
 plt.close()
-
-print("Gráficos guardados ✓")
