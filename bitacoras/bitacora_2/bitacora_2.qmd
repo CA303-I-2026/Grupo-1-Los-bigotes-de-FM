@@ -105,13 +105,8 @@ csl: apa.csl
 reference-section-title: "Bibliografía"
 ---
 
-\clearpage
-\thispagestyle{empty}
-\tableofcontents*
-\thispagestyle{empty}
 
 
-\newpage
 \setcounter{page}{1}
 
 \chapter*{Preparación}
@@ -124,12 +119,15 @@ reference-section-title: "Bibliografía"
 
 Hola, acá va la vara de rastro de decisiones. 
 
+<<<<<<< HEAD
 \section*{Registro de uso de IA}
 \addcontentsline{toc}{section}{Registro de uso de IA}
 \markboth{Registro de uso de IA}{Registro de uso de IA}
 
 Hola, acá va la vara de la IA.
 
+=======
+>>>>>>> 06d53bd9520559e2ab59b3a0851b3d9abbf7fdf3
 \section*{Log de contribuciones}
 \addcontentsline{toc}{section}{Log de contribuciones}
 \markboth{Log de contribuciones}{Log de contribuciones}
@@ -319,6 +317,379 @@ András Keszthelyi\\ \hline
 
 \end{tabularx}
 
+\section*{Enlaces de literatura}
+\addcontentsline{toc}{section}{Enlaces de literatura}
+\markboth{Enlaces de literaturas}{Enlaces de literatura}
+
+\subsection*{Párrafos pegados en el orden establecido. \newline \textnormal{Seguimos la instrucción:} Copie todos los
+párrafos de sus fichas literarias en un texto corrido en el orden establecido anteriormente}
+
+
+\subsubsection*{A Study of Probabilistic Password Models}
+
+\textbf{Nivel descriptivo}
+
+Título: A Study of Probabilistic Password Models.
+Autor(es): Jerry Ma, Weining Yang, Min Luo y Ninghui Li. Año: 2014.Nombre del tema: Evaluación sistemática de modelos probabilísticos para la estimación de la fuerza de contraseñas. Clasificación: Metodológica; los autores comparan modelos de Markov frente a gramáticas probabilísticas, integrando métodos de suavizado y normalización del procesamiento de lenguaje natural.Resumen en una oración: Los investigadores demuestran que los modelos de Markov bien normalizados superan al estado del arte en la predicción de fuerza de contraseñas.Argumento central: Los autores sostienen que los modelos probabilísticos se benefician de técnicas estadísticas de lenguaje, logrando predicciones exactas al asignar valores de probabilidad a cada cadena de manera determinista.Problemas con el argumento o el tema: Los investigadores identifican que las gráficas de número de intentos son computacionalmente costosas para modelos complejos, lo que limita la comparación efectiva entre algoritmos en tiempo real.
+
+\textbf{Nivel analítico}
+
+Conexión con mi proyecto: Los autores utilizan RockYou como dataset de entrenamiento. Sus planteamientos sobre suavizado y normalización son críticos para este proyecto, ya que evitan obtener valores de entropía de Shannon sesgados por frecuencias de aparición cero en secuencias no observadas.Lo que NO dicen los autores: Los investigadores no analizan cómo la entropía varía bajo ataques que usan reglas de transformación heurística en comparación con el modelo de n-gramas, ni abordan la detección de anomalías para identificar bots.Contraste con otra fuente: Mientras que un estudio busca establecer límites teóricos rigurosos para proteger al usuario, estos autores se centran en la implementación técnica de modelos de lenguaje para optimizar la precisión predictiva desde la perspectiva del ataque. Evaluación de aplicabilidad (escala 1–5): 4. Justificación: Los autores emplean modelos de Markov de orden n reproducibles en C++ para procesar RockYou, permitiendo comparar la entropía teórica calculada con la frecuencia empírica observada. Pregunta que le haría al autor: ¿Cómo variaría la eficiencia de sus modelos si se pre-procesara el dataset para normalizar patrones de teclado o caracteres Unicode antes de la tokenización estadística? Resumen argumentativo: Los autores intentan resolver la ineficiencia de los modelos de gramática estructural. Su solución basada en suavizado funciona al proporcionar una base sólida para calcular probabilidades de forma determinista. Se aplicará su metodología de normalización para asegurar que los cálculos de entropía no ignoren la cola larga de contraseñas únicas, garantizando una comparativa justa entre humanos y robots.
+
+
+
+\subsubsection*{User password repetitive patterns analysis and visualization}
+
+
+\textbf{Nivel descriptivo}
+
+Título: User Password Repetitive Patterns Analysis and Visualization.
+Autor(es): Xiaoying Yu y Qi Liao.
+Año: 2015.
+Nombre del tema: Análisis de patrones repetitivos en contraseñas humanas mediante algoritmos y visualización sobre el corpus RockYou.
+Clasificación: Metodológica; los autores formalizan algoritmos específicos como SHORTREPEAT y COMPARE para cuantificar la repetición estructural en lugar de solo describir el fenómeno.
+Resumen en una oración: Los investigadores demuestran que los usuarios repiten subcadenas cortas para construir contraseñas largas, debilitando las políticas de longitud.
+Argumento central: Los autores sostienen que las contraseñas humanas presentan patrones repetitivos unidireccionales y bidireccionales que invalidan la premisa de que mayor longitud equivale a mayor entropía, ya que los usuarios compensan la complejidad con repetición mecánica.
+Problemas con el argumento o el tema: Los investigadores señalan que RockYou (2009) tiene políticas laxas que podrían sesgar los resultados actuales. Además, admiten que la complejidad algorítmica limita el procesamiento de corpus masivos sin paralelización.
+
+\textbf{Nivel analítico}
+
+Conexión con mi proyecto: Los autores utilizan RockYou 2009 para caracterizar la distribución de subcadenas. Sus hallazgos sobre el dominio de caracteres del mismo tipo en patrones repetitivos son variables de entrada directas para discriminar estadísticamente entre contraseñas de origen humano y las generadas por bots. Lo que NO dicen los autores: Los investigadores no realizan comparativas con contraseñas generadas automáticamente ni ajustan modelos paramétricos como Zipf o Pareto. La ausencia de un modelo formal de distribución limita la capacidad de separar ambas poblaciones de forma inferencial. Contraste con otra fuente: Mientras que un estudio busca límites teóricos rigurosos bajo un marco estadístico, estos autores se mantienen en un plano descriptivo-algorítmico de los datos empíricos. La primera investigación aporta el rigor de probabilidad que le falta a este conteo de frecuencias. Evaluación de aplicabilidad (escala 1–5): 4. Justificación: Los autores emplean el mismo corpus de trabajo. Sus algoritmos de conteo son replicables en C++ con bajo costo computacional, aunque se limitan por ser descriptivos y no proveer un marco de prueba de hipótesis. Pregunta que le haría al autor: ¿Consideran los autores que existe alguna métrica cuantitativa, como una entropía de repetición, que permita separar poblaciones humanas de robóticas basándose en sus algoritmos? Resumen argumentativo: Los autores intentan resolver la falta de herramientas para identificar patrones repetitivos que las métricas de entropía estándar omiten. Su solución funciona para describir el comportamiento en RockYou, pero carece de un modelo inferencial. Se utilizarán sus hallazgos para definir variables de interés (frecuencia de subcadenas, tipos de caracteres) que luego se integrarán en modelos de distribución formal para construir el criterio discriminante entre humanos y bots.
+
+
+\subsubsection*{Towards a Rigorous Statistical Analysis of Empirical Password Datasets}
+
+
+\textbf{Nivel descriptivo}
+
+Título: Towards a Rigorous Statistical Analysis of Empirical Password Datasets. Autor(es): Jeremiah Blocki y Peiyuan Liu. Año: 2022. Nombre del tema: Marco estadístico para acotar la curva de adivinación óptima en auditorías de contraseñas. Clasificación: Metodológica; los autores desarrollan un esquema de programación lineal y técnicas de remuestreo para establecer cotas de confianza sobre la probabilidad $\lambda_{G}$, evitando estimaciones sesgadas. Resumen en una oración: Los investigadores proponen algoritmos para calcular límites de éxito de un atacante con alto rigor estadístico. Argumento central: Los autores plantean que las métricas basadas en conteos directos o en la distribución de Zipf fallan al predecir la vulnerabilidad real, por lo que introducen un método para hallar límites superiores e inferiores que respetan el principio de Kerckhoffs. Problemas con el argumento o el tema: Los investigadores admiten que, dado que la distribución de la población es inaccesible, el estimador empírico estándar colapsa cuando el atacante realiza más intentos de los que existen en la muestra recolectada.
+
+\textbf{Nivel analítico}
+
+Conexión con mi proyecto: Los autores definen la variable de éxito $\lambda_{G}$ como el indicador crítico de seguridad. Para este proyecto, su enfoque es vital porque permite validar si las frecuencias observadas en RockYou 2009 son suficientes para inferir el comportamiento de una población humana real o si el modelo de discriminación humano-bot está operando sobre ruido estadístico. Lo que NO dicen los autores: Los investigadores omiten cualquier análisis sobre la composición interna de los strings o patrones de teclado; su metodología trata a las contraseñas como valores atómicos en una distribución, lo que impide usar su técnica para entender por qué una estructura específica (como repeticiones) es de origen humano. Contraste con otra fuente: Mientras que un estudio previo se enfoca en algoritmos de detección de subcadenas y patrones visuales, estos autores priorizan la inferencia de la probabilidad total de quiebre. Los primeros proporcionan la anatomía del dato, mientras que estos entregan el marco de probabilidad para asegurar que el análisis de RockYou sea estadísticamente significativo. Evaluación de aplicabilidad (escala 1–5): 5. Justificación: Los autores utilizan una técnica de partición de datos que se puede integrar directamente en los scripts de C++ para evaluar la convergencia de la entropía. Es el respaldo matemático necesario para garantizar que el modelo de riesgo no sea una simple observación de un leak específico. Pregunta que le haría al autor: ¿Cómo se comportarían sus límites de confianza si se aplicaran a un dataset donde una fracción de los datos ha sido inyectada artificialmente por scripts, rompiendo el supuesto de independencia de la muestra? Resumen argumentativo: Los autores abordan la falta de herramientas para medir la seguridad de forma independiente a la potencia del software de cracking. Su propuesta de usar programación lineal para encontrar distribuciones consistentes con el dataset resuelve el problema de la incertidumbre en la "cola larga" de la distribución. Para este trabajo, se tomará su técnica de validación mediante submuestras para blindar el análisis estadístico de RockYou.
+
+
+\subsubsection*{Zipf’s Law in Passwords}
+
+
+\textbf{Nivel descriptivo} 
+
+
+Título: Zipf’s Law in Passwords 
+Autor: Ding Wang, Haibo Cheng, Ping Wang, Xinyi Huang, y Gaopeng Jian. 
+Año: 2017. 
+Nombre del tema: Análisis de la distribución de contraseñas mediante la distribución de Zipf. 
+Clasificación: Metodológica; Los autores desarrollan dos modelos Zipf para caracterizar la distribución de contraseñas dentro de ciertas bases de datos.
+Resumen en una oración: Bajo ciertas hipótesis, la distribución de las contraseñas parece asemejarse a una distribución de zipf. 
+Argumento central: Aplicación ley de Zipf.
+Problemas con el argumento: Los autores encontraron problemas al momento de querer ajustar los parámetros de su modelo para obtener la distribución de las contraseñas más raras. También, los autores mencionaron que los resultados no fueron los esperados debido a la falta de poder computacional. Por último, los autores destacaron, a manera de conclusión, que no existe una distribución que se ajuste a todas las posibles distribuciones de contraseñas.
+
+
+
+\textbf{Nivel analítico} 
+
+
+Conexión con mi proyecto: Los autores intentaron encontrar un modelo que permita obtener la distribución que siguen las contraseñas generadas por humanos, similar a lo que se desea en el presente proyecto.
+Lo que NO dice el autor: La relación que tienen las contraseñas más frecuentes con los caracteres que las conforman.
+Contraste con otra fuente: Mientras que el trabajo de Olsen (\textit{A Machine Learning Approach to
+Predicting Passwords}) se enfoca en estudiar las contraseñas sin hacer mucha distinción del contexto de 
+donde surgen (veáse las páginas asociadas a las contraseñas), los autores de esta investigación reconocen que la estructura de un conjunto de contraseñas (longitud, caracteres que las conforman, etc) varía en gran medida según los sitios a los que están asociados (lo cual puede deberse a los intereses de los dueños del servicio, entre otros).  
+Evaluación de aplicabilidad: 3. Gran parte del trabajo se centró en la elaboración de un modelo que los miembros del presente grupo no son capaces de utilizar o comprender por el momento. A su vez, los autores usaron teoría estadística que aún no se ha abarcado en el curso. Sin embargo, los hallazgos relacionados
+a la distribución de la longitud de las contraseñas, junto a la forma en la que varían las contraseñas según su contexto, da un nuevo margen de conocimiento para los fines de la investigación (lo que permite delimitar mejor los objetos de estudio). Además, la conclusión que hacen los autores acerca de que no existe una distribución que se ajuste a la distribución de todas las contraseñas, permite comprender las limitaciones técnicas que tiene el problema que se está buscando resolver. Finalmente, 
+los autores mostraron, mediante experimentación, que la ley de Zipf se cumple para las contraseñas (lo cual otorga una posible herramienta útil para considerar durante la elaboración del proyecto).
+Preguntas que le haría al autor: ¿Creen que se podría adaptar su modelo para estudiar la forma en la que se distribuyen los caracteres de las contraseñas más comunes según su posición? Dados los resultados de sus experimentos ¿Ven posible que los caracteres de una contraseña también se comporten de acuerdo a la ley de Zipf? 
+Resumen argumentativo: Los autores intentan encontrar una distribución para las contraseñas recolectadas en ciertas bases de datos. La solución a la que ellos llegaron no funciona para el presente proyecto, por el momento, debido a que ellos trabajan con contraseñas completas (mientras que nosotros deseamos trabajar con los caracteres que las conforman). Se usará la idea
+de analizar las contraseñas según sus contextos, para poder asignarles mayor probabilidad de aparición a aquellos caracteres que sean más utilizados por la población a la que se dirije, a su vez de estar conscientes que las páginas asociadas a las contraseñas podrían manipularlas para satisfacer sus propios fines (por ejemplo, al obligar a sus usuarios a usar números, mayúsculas, caracteres especiales, etcétera). A su vez, se podría usar los resultados obtenidos 
+por los autores relacionados a la distribución que sigue la longitud de las contraseñas, pues esto podría indicar que hay ciertas posiciones en una contraseña donde es más probable que hayan caracteres relacionados al final de una contraseña (varias fuentes han mostrado, empíricamente, que las últimas posiciones quedan reservadas para caracteres especiales, por ejemplo).
+
+
+\subsubsection*{A Machine Learning Approach to
+Predicting Passwords}
+
+
+
+\textbf{Nivel descriptivo} 
+
+
+Título: A Machine Learning Approach to
+Predicting Passwords. 
+Autor: Christoﬀer Olsen. 
+Año: 2018. 
+Nombre del tema: Entrenamiento de redes neuronales para crear y vulnerar contraseñas. 
+Clasificación: Metodológica; El autor usa la teoría y el trabajo de otras personas para crear un modelo con el fin de que cumpla una tarea en cuestión.
+Resumen en una oración: El autor explica las herramientas con las que creo y entrenó un modelo
+con el fin de crear y vulnerar contraseñas basado en la distribución (empírica) que siguen los caracteres de las
+contraseñas humanas según la posición en la que están. 
+Argumento central: Las redes neuronales son capaces de ser entrenadas para estudiar eficientemente ciertas bases de datos masivas con contraseñas de personas.
+Problemas con el argumento: El autor reconoce la nnsuficiencia de capacidad computacional (tanto para generar contraseñas como para almacenarlas y ordenarlas) como un problema que limitó el alcance de su modelo.
+ 
+
+\textbf{Nivel analítico} 
+
+
+Conexión con mi proyecto: El autor utiliza la base de datos RockYou como dataset de entrenamiento.
+Lo que NO dice el autor: Pese a que el autor menciona la capacidad del modelo para predecir el i-ésimo caracter de una contraseña, no indaga acerca de la posible distribución que 
+siguen dichos caractéres.
+Contraste con otra fuente: Tanto el modelo desarrollado por Olsen 
+como el modelo realizado por los autores del trabajo \textit{Zipf’s Law in Passwords}se vieron limitados por la capacidad computacional de los instrumentos con los que estaban realizando sus experimentos. Además, ambos abarcan el problema de maneras muy diferentes, pues Olsen lo hace "a fuerza bruta" mientras que los otros autores utilizan conceptos más relacionados a la probabilidad, como la distribución de Zipf.  
+Evaluación de aplicabilidad: 3. Justificación: El autor centra gran parte de su trabajo a la forma en la que entrenó su modelo, lo que en 
+principio se escapa del eje del presente proyecto. Sin embargo, el autor brindó información muy útil para el desarrollo de nuestro proyecto, como el hecho de que 
+mediante redes neuronales se puede empezar a predecir caractéres de una contraseña (lo que permite conjeturar que existe una distribución de dichos caracteres), a su vez de que 
+explicó las posibles formas en las que una computadora puede generar contraseñas (pues el autor generaba sus contraseñas con caracteres distribuidos de manera unirfome), los métodos más eficientes para vulnerar contraseñas y la relación que 
+puede tener la predictibilidad de contraseñas con el tipo de página al que están asociadas (por ejemplo, el autor menciona que si existe un correo asociado a una contraseña, se podrían agrupar las contraseñas según los dominios de los correos asociados), lo que revela un panorama que no se había considerado previamente en la elaboración del proyecto.
+Preguntas que le haría al autor: ¿Cree que es posible usar su modelo para aproximar la distribución que siguen los caracteres de una posición dada en una contraseña?
+Resumen argumentativo: El autor intenta crear un modelo con redes neuronales 
+capaz de medir que tan resistente es una contraseña, generar contraseñas 
+nuevas y vulnerarlas. La propuesta funciona pues revela información teórica 
+útil, a su vez que abre la alternativa de usar modelos de redes neuronales 
+para analizar las distribuciones de caracteres en la iésima posición de una 
+contraseña. Para nuestro proyecto, se usará la información referente a los 
+métodos para vulnerar contraseñas (mencionados al principio del documento) 
+y el hecho de que la distribución de caracteres de una contraseña pueden 
+variar según el tipo de página (y correos) a los que estén asociadas.
+
+
+\subsubsection*{The science of guessing: analyzing an anonymized corpus of 70 million passwords}
+
+
+
+\textbf{Nivel descriptivo} 
+
+
+Título: The Science of Guessing: Analyzing an Anonymized Corpus of 70 Million Passwords. Autor: Joseph Bonneau. Año: 2012. Nombre del tema: Análisis estadístico de un gran corpus de contraseñas y estudio de su adivinabilidad. Clasificación: Empírica y metodológica; el autor examina una gran colección anonimizada de contraseñas para estudiar su estructura, frecuencia y dificultad de ataque. Resumen en una oración: El trabajo demuestra que las contraseñas no pueden evaluarse correctamente usando solo medidas simples como la entropía de Shannon. Argumento central: Bonneau sostiene que la fuerza de una contraseña debe evaluarse con modelos que reflejen el comportamiento real de los atacantes y no solo con aproximaciones teóricas generales. Problemas con el argumento: El estudio se apoya en datos anonimizados, lo cual limita el acceso a la forma exacta de cada contraseña. Además, aunque el corpus es muy grande, sigue representando solo ciertos contextos de uso y no todos los ambientes posibles.
+
+
+
+\textbf{Nivel analítico} 
+
+
+Conexión con mi proyecto: Este artículo es muy importante para mi proyecto porque cuestiona el uso directo de la entropía como medida única de seguridad y propone una visión más realista sobre la dificultad de adivinar contraseñas. Lo que NO dice el autor: El autor no estudia en detalle la relación entre la estructura interna de una contraseña y los caracteres específicos que la componen, ni analiza cómo cambian las contraseñas cuando se someten a reglas heurísticas de transformación. Contraste con otra fuente: En comparación con trabajos enfocados en modelar ataques automatizados, aquí el interés principal está en construir una base científica para medir contraseñas de forma más rigurosa y no asumir que toda distribución puede resumirse con una sola cifra. Evaluación de aplicabilidad: 5. Es una de las fuentes más útiles para el proyecto porque establece límites claros a las métricas tradicionales y ofrece una perspectiva sólida para justificar un análisis más cuidadoso de las contraseñas. Preguntas que le haría al autor: ¿Qué cambiaría en sus conclusiones si el corpus estuviera separado por contexto de uso, tipo de servicio o perfil de usuario?.Resumen argumentativo: El autor intenta demostrar que la seguridad de una contraseña no puede entenderse únicamente con medidas abstractas. Su trabajo es especialmente útil porque obliga a mirar la dificultad real de ataque y no solo las propiedades matemáticas ideales. Para este proyecto, sirve como apoyo fuerte para justificar que las contraseñas deben analizarse según su contexto y según el comportamiento de los atacantes.
+
+
+
+\subsubsection*{LEY DE BENFORD}
+
+
+\textbf{Nivel descriptivo} 
+Título: LEY DE BENFORD. Autor: María Caputi Zunini. Año: 2019. Nombre del tema: Ley de Benford: Explicación y Aplicaciones. Clasificación: Teórica; El autor explica la teoría relacionada a la ley de Benford y explica formas de aplicarla (desde la teoría). Resumen en una oración: Explicación de que es la ley de Benford y forma de aplicarla para analizar patrones en una base de datos dada. Argumento central: Explicación ley de Benford. Problemas con el argumento: Al ser un artículo que se dedica a explicar una teoría, este rubro no aplica.
+
+\textbf{Nivel analítico} 
+
+
+Conexión con mi proyecto: El autor explica la ley de Benford, que fue uno de los conceptos clave al momento de insipirar la elaboración del presente proyecto. Lo que NO dice el autor: El autor, en su sección de aplicaciones, no menciona un ejemplo que tenga relación al análisis de conjuntos de letras. Contraste con otra fuente: Por un lado, Olsen en su investigación \textit{A Machine Learning Approach to
+Predicting Passwords} aplicó la ley de Benford únicamente para el primer dígito, por otro lado Caputi menciona brevemente la existencia de la ley de Benford para los últimos dos dígitos. Evaluación de aplicabilidad: 4. El respaldo teórico que proporciona esta referencia permite aplicar de mejor manera la ley de Benford y sus aplicaciones en el estudio de la forma en la que se distribuyen los caracteres de un conjunto de contraseñas dado. Preguntas que le haría al autor: ¿Existen investigaciones que intenten generalizar la ley de Benford para los primeros $n$ dígitos? Resumen argumentativo: El "problema" que Capiti abarca en este texto es el de explicar la ley de Benford y algunas de sus aplicaciones. La "solución" (explicación) que otorga la autora funciona para el presente proyecto pues expone la teoría de manera completa y suficientemente simple para que el grupo la pueda comprender. Nosotros usaremos la teoría vista en el trabajo de Caputi para sustentar y justificar cada avance que se haga en el proyecto.
+
+
+
+\subsubsection*{Benford’s Law Theory and Applications}
+
+
+
+\textbf{Nivel descriptivo} 
+
+
+Título: Benford's Law: Theory and Applications. Autor: Steven J. Miller. Año: 2015. Nombre del tema: Estudio matemático y aplicado de la Ley de Benford. Clasificación: Teórica y aplicada; el libro desarrolla los fundamentos de la Ley de Benford y muestra cómo puede usarse para detectar patrones no uniformes en datos reales. Resumen en una oración: El libro explica por qué muchos conjuntos de datos naturales no distribuyen sus dígitos iniciales de forma uniforme. Argumento central: Miller sostiene que la Ley de Benford aparece con frecuencia en datos reales y que puede ser usada como herramienta para analizar la estructura de ciertos conjuntos numéricos. Problemas con el argumento: La ley no funciona en todos los casos, así que su aplicación depende mucho del tipo de datos estudiados. Si el conjunto no tiene una estructura adecuada, la distribución benfordiana puede no ser representativa.
+
+
+\textbf{Nivel analítico} 
+
+
+Conexión con mi proyecto: Aunque no trata directamente sobre contraseñas, este texto resulta útil porque introduce una forma de pensar en distribuciones no uniformes que podría inspirar el análisis de patrones dentro de secuencias de contraseñas. Lo que NO dice el autor: El libro no estudia seguridad informática, ni analiza cómo se comportan las contraseñas humanas, ni ofrece métodos para medir entropía de contraseñas. Contraste con otra fuente: Frente a trabajos centrados en la predicción de contraseñas, aquí el interés está en una ley estadística general que puede aplicarse a diversos tipos de datos, no a un problema de ciberseguridad en particular. Evaluación de aplicabilidad: 2. Es una fuente útil como apoyo conceptual, pero su relación con el proyecto es indirecta y requiere una adaptación considerable. Preguntas que le haría al autor: ¿Cree que la lógica estadística de la Ley de Benford podría servir como inspiración para analizar frecuencias de caracteres o posiciones dentro de contraseñas? Resumen argumentativo: El libro intenta mostrar que muchos datos reales siguen patrones numéricos sorprendentes y no uniformes. Para el proyecto, su aporte principal no está en el contenido específico, sino en la idea de que una distribución empírica puede revelar regularidades útiles para interpretar datos complejos.
+
+
+
+
+\subsubsection*{Extremes in
+Random Fields
+A Theory and its Applications}
+
+
+\textbf{Nivel descriptivo} 
+
+
+Título: Extremes in Random Fields : A Theory and Its Applications.
+Autor: Benjamin Yakir. 
+Año: 2013. 
+Nombre del tema: Nonparametric tests: Kolmogorov–Smirnov and
+Peacock. 
+Clasificación: Teórica; El autor explica la teoría relacionada a las pruebas no paramétricas. 
+Resumen en una oración: Explicación de la fundamentación matemática de ciertas pruebas no paramétricas y contextos en los que cada una resalta. 
+Argumento central: Uso de pruebas no paramétricas.
+Problemas con el argumento: Al ser un artículo que se dedica a explicar una teoría, este rubro no aplica.
+ 
+
+
+\textbf{Nivel analítico} 
+
+
+Conexión con mi proyecto: El autor explica las pruebas paramétricas y su uso, las cuales son parte de las herramientas fundamentales que se desean utilizar para la elaboración del presente proyecto.
+Lo que NO dice el autor: El autor no abarca ejemplos prácticos en los que se usen las pruebas no paramétricas que expuso.
+Contraste con otra fuente: Hasta el momento de la redacción de esta ficha de literatura, se tiene que este es el único autor que menciona y explica la utilidad de las pruebas no paramétricas en el contexto de modelación de distribuciones de probabilidad, lo que complementa lo desarrollado por el resto de autores pues otorga una nueva herramienta no muy utilizada anteriormente,  
+Evaluación de aplicabilidad: 4. El respaldo teórico que proporciona esta referencia permite aplicar de mejor manera las pruebas no paramétricas y sus aplicaciones en el estudio de la forma en la que se distribuyen los caracteres de un conjunto de contraseñas dado.
+Preguntas que le haría al autor: Dados el contexto de nuesta investigación, cuáles pruebas no paramétricas cree que se podrían acoplar mejor a nuestro proyecto?
+Resumen argumentativo: El "problema" que Yakir abarca en este texto es el de explicar la 
+las pruebas paramétricas y sus alcances. La "solución" (explicación) 
+que otorga el autor funciona para el presente proyecto pues expone la 
+teoría de manera completa y suficientemente simple para que el grupo la 
+pueda comprender. Nosotros usaremos la teoría vista en el trabajo de Yakir para 
+sustentar y justificar cada avance que se haga en el proyecto.
+
+
+
+
+
+\subsubsection*{About Passwords}
+
+
+
+\textbf{Nivel descriptivo} 
+
+
+Título: About Passwords. Autor: András Keszthelyi. Año: 2013. Nombre del tema: Reflexión práctica sobre el uso, la creación y la seguridad de las contraseñas. Clasificación: Divulgativa y aplicada; el texto presenta observaciones y recomendaciones generales sobre cómo elegir contraseñas más seguras. Resumen en una oración: El autor expone principios básicos para crear contraseñas que sean más resistentes al ataque y, al mismo tiempo, manejables para el usuario. Argumento central: Keszthelyi sostiene que una buena contraseña debe equilibrar la seguridad con la facilidad de recordación, evitando tanto claves demasiado simples como combinaciones imposibles de memorizar. Problemas con el argumento: El texto es útil como orientación general, pero no desarrolla un modelo estadístico o matemático profundo. Por eso, algunas de sus ideas pueden resultar demasiado generales cuando se quiere analizar contraseñas de manera más rigurosa.
+
+
+
+\textbf{Nivel analítico} 
+
+Conexión con mi proyecto: Este texto sirve para contextualizar el problema de las contraseñas desde una perspectiva práctica, especialmente porque permite entender por qué los usuarios suelen preferir contraseñas que puedan recordar fácilmente. Lo que NO dice el autor: El autor no construye un modelo formal de predicción ni estudia la distribución de contraseñas dentro de grandes bases de datos. Contraste con otra fuente: A diferencia de investigaciones como las de Ma et al. o Bonneau, este texto no busca medir la seguridad mediante técnicas estadísticas complejas, sino ofrecer una visión más directa sobre el uso cotidiano de contraseñas. Evaluación de aplicabilidad: 3. Aporta contexto y observaciones útiles, pero no proporciona herramientas metodológicas fuertes para el análisis cuantitativo del proyecto. Preguntas que le haría al autor: ¿Cómo adaptarían sus recomendaciones a entornos donde se usan gestores de contraseñas o autenticación multifactor? Resumen argumentativo: El texto intenta explicar de manera práctica por qué las personas eligen contraseñas como las eligen. Su valor principal es que ayuda a conectar la teoría de la seguridad con el comportamiento real de los usuarios, aunque no es suficiente por sí solo para un análisis estadístico profundo.
+
+
+\subsection*{Contraste. \textnormal{Seguimos la instrucción:} Con cada párrafo reescríbalo usando la siguiente
+plantilla (Resumen, Contraste, Conclusión Propia). Repitan el punto anterior con cada
+uno de sus párrafos.}
+
+
+\textbf{A Study of Probabilistic Password Models}
+
+
+
+\textbf{Resumen:} El artículo realiza un estudio empírico amplio de modelos probabilísticos para contraseñas utilizando seis bases de datos reales con cerca de 60 millones de contraseñas, y propone como alternativa metodológica a las curvas clásicas de número de intentos los \textit{probability-threshold graphs}, que relacionan umbrales de probabilidad con el porcentaje de contraseñas cubiertas y permiten evaluar conjuntos completos con mucho menor costo computacional. Se inicia definiendo formalmente un modelo probabilístico de contraseñas como una función $p(s)$ sobre el conjunto de cadenas permitidas, y seguidamente se introducen tres métricas de evaluación principales: las \textit{guess-number graphs}, las nuevas curvas de umbral de probabilidad y el \textit{Average Negative Log-Likelihood} (ANLL), interpretado como el área a la izquierda de la curva de probabilidad y estrechamente relacionado con la perplejidad empírica. Luego se estudia un amplio espacio de diseño de modelos, distinguiendo entre modelos de Markov de cadena completa (\textit{whole-string}) y modelos basados en plantillas (\textit{template-based}), junto con decisiones de normalización, orden del modelo, suavizado, tratamiento de escasez de datos, agrupamiento de símbolos y esquemas de \textit{backoff}, además de algoritmos de generación eficiente de conjeturas ordenadas por probabilidad. Finalmente, los resultados experimentales muestran que los modelos de Markov de cadena completa bien construidos, especialmente cuando combinan normalización con símbolo final y \textit{backoff}, superan de forma consistente al modelo PCFGW, en particular más allá del primer millón de intentos, lo que lleva a concluir que estos enfoques ofrecen una representación más eficaz del comportamiento real de elección de contraseñas y una base más sólida para comparar fortaleza y capacidad de cracking.
+\newline
+\textbf{Contraste:} Este autor realizó su investigación de la fortaleza de las contraseñas mediante conceptos del área de probabilidad, mientras que el autor del artículo \textit{A Machine Learning Approach to Predicting Passwords} utiliza un modelo con redes neuronales para estudiar la misma cualidad, sin hacer uso (aparentemente) de conceptos probabilísticos complejos.
+\newline
+\textbf{Conclusión propia:} Pese a que el presente proyecto se piensa realizar con un enfoque parecido al visto en la investigación \textit{A Study of Probabilistic Password Models}, se reconoce que el artículo \textit{A Machine Learning Approach to Predicting Passwords} presenta ideas que podrían complementar el desarrollo del trabajo, como el de desarrollar un modelo que permita generar contraseñas similares a las de un humano. Esto sería de gran utilidad una vez que se haya obtenido distribución que se desea encontrar, pues podría ponerse a prueba con varias bases de datos brindadas por el modelo.
+
+
+
+\textbf{User password repetitive patterns analysis and visualization}
+
+
+\textbf{Resumen:} El artículo estudia si los usuarios reutilizan sistemáticamente subcadenas al crear contraseñas largas y cómo estos patrones de repetición debilitan las políticas actuales de seguridad basadas en longitud y complejidad. Se formalizan varios tipos de patrones repetitivos dentro de una misma contraseña (caracteres individuales, pares y subcadenas de tres a diez caracteres, en orden unidireccional y bidireccional) y se diseñan algoritmos en tiempo polinómico para detectarlos eficientemente sobre grandes conjuntos de datos filtrados de fugas reales como RockYou. Además, se implementa una herramienta web ligera, basada en D3, con cuatro vistas de visualización: gráficos de frecuencia de caracteres (CFC), mapas de calor de repeticiones cortas (SRH), coordenadas paralelas para repeticiones largas (LRPC) y nubes de palabras de subcadenas repetidas (RWC), que permiten a administradores explorar interactivamente repeticiones y filtrar por longitud, tipo de carácter y dirección. Los estudios de caso muestran que las contraseñas de los usuarios exhiben fuertemente repeticiones de caracteres del mismo tipo (dígitos, minúsculas o mayúsculas), que muchas contraseñas largas se construyen repitiendo subcadenas cortas significativas (p. ej. “love”, “haha”, “1212”) o patrones bidireccionales, y que estas estrategias de memorización hacen que exigir contraseñas más largas no garantice mayor seguridad, proporcionando solo una ilusión de robustez.
+\newline
+\textbf{Contraste:} La conclusión de que las personas tienden a repetir patrones en sus contraseñas (en especial con las contraseñas más largas) podría ser una posible explicación a una de las conclusiones obtenidas en \textit{The Science of Guessing}, específicamente aquella que dictaba que aunque se le motive a una persona a usar contraseñas seguras (bajo los criterios usuales), la vulnerabilidad de dichas contraseñas no varía mucho de la de una persona que no se esfuerza activamente en crear contraseñas seguras. 
+\newline
+\textbf{Conclusión propia:} Las conclusiones vistas en \textit{User password repetitive patterns analysis and visualization} resulta de gran relevancia para el presente proyecto, pues muestra que es bastante probable que contraseñas recolectadas de una base de datos dada compartan ciertos patrones ayuden a deducir la probabilidad de que un cierto caracter esté en la i-ésima posición de una contraseña. 
+
+
+
+\textbf{Towards a Rigorous Statistical Analysis of Empirical Password Datasets}
+
+
+\textbf{Resumen:} El texto desarrolla un marco estadístico riguroso para acotar, por arriba y por abajo, la curva de adivinación $\lambda_G$ de un atacante ideal que conoce exactamente la distribución de contraseñas de los usuarios, sin asumir a priori ninguna forma específica para dicha distribución y trabajando solo con muestras i.i.d. de contraseñas filtradas de fugas o recolectadas de forma privada. En lugar de depender de un modelo concreto de cracking (redes neuronales, PCFG, Markov, reglas en JtR/Hashcat) o de la heurística del  "mínimo número de intentos", los autores proponen cotas de alta confianza basadas en: (i) la distribución empírica (que funciona bien mientras $G$ no sea demasiado grande), (ii) técnicas de programación lineal inspiradas en Valiant \& Valiant para el régimen $G$ grande, y (iii) esquemas de muestreo y "muestreo híbrido" donde se combina una partición de la muestra con cualquier modelo de cracking existente. Con estos métodos muestran en ocho grandes datasets reales (Yahoo!, RockYou, 000webhost, Neopets, etc.) que la distribución empírica $\hat{\lambda}_G$ aproxima bien la curva real solo cuando $G \leq N$, y que para $G$ grandes tanto $\hat{\lambda}_G$ como ajustes tipo Zipf tienden a sobreestimar de forma sustancial la tasa de éxito del atacante ideal. Sus resultados empíricos indican además que $\lambda_G$ suele situarse muy por encima de las curvas de los mejores modelos actuales (Markov, PCFG, redes neuronales, JtR, Hashcat), lo que prueba que todavía hay un amplio margen para mejorar la eficiencia de adivinación y, en consecuencia, refuerza la conveniencia de basar las decisiones de política (coste del hash, límites de intentos, reglas de composición) en cotas sobre $\lambda_G$ en lugar de en un modelo concreto. Finalmente, el trabajo ilustra cómo usar estas cotas para cuantificar beneficios de endurecer el bloqueo de cuentas, ajustar el factor de ``key stretching'' y evaluar políticas de composición de contraseñas (por ejemplo, mínimas de longitud o políticas basadas en frecuencia estimada mediante count-min sketch).
+\newline
+\textbf{Contraste:}  Mientras que el autor de \textit{User password repetitive patterns analysis and visualization} se enfoca en algoritmos de detección de subcadenas y patrones visuales, estos autores priorizan la inferencia de la probabilidad total de quiebre. Los primeros proporcionan la anatomía del dato, mientras que estos entregan el marco de probabilidad para asegurar que el análisis de RockYou sea estadísticamente significativo.
+\newline
+\textbf{Conclusión propia:} Los dos enfoques mencionados en el contraste pueden combinarse para dar lugar a una investigación más completa, pues de esa manera se puede sacar bastante información de la muestra que a su vez será de gran utilidad para sostener el desarrollo del marco de probabilidad sobre el que se quiere trabajar.
+
+
+
+
+\textbf{Zipf’s Law in Passwords}
+
+
+
+\textbf{Resumen:} El artículo analiza empíricamente la distribución de contraseñas de usuarios a gran escala y muestra que se ajusta notablemente bien a modelos tipo ley de Zipf.  A partir de 14 conjuntos de datos reales con 113,3 millones de contraseñas, los autores proponen dos modelos Zipf-like: PDF-Zipf, que describe la frecuencia de las contraseñas populares y alcanza coeficientes de determinación superiores a 0,97, y CDF-Zipf, que ajusta prácticamente todo el rango de la distribución con desviaciones máximas entre la CDF empírica y la teórica de 0,49\% a 4,59\% (media$\approx$1,85\%).  Sobre esta base, introducen una nueva métrica de fuerza de conjuntos de contraseñas derivada de los parámetros Zipf, y muestran mediante experimentos que dicha métrica es estable y aplicable a distintos sitios y políticas, permitiendo comparar con rigor qué tan “seguro” es el universo de contraseñas de un servicio independientemente del medidor ad hoc que se use en la interfaz.  El trabajo discute además implicaciones para el diseño y evaluación de políticas de creación de contraseñas, subrayando que comprender la distribución subyacente (y su carácter Zipfiano) es clave para resolver las inconsistencias entre medidores de fuerza y para prever el impacto de reglas más estrictas sobre la seguridad y la usabilidad.
+\newline
+\textbf{Contraste:} El artículo anterior se dedicó mayormente a estudiar las contraseñas como objetos concretos, sin abundar con mayor detalle en los caracteres o las subcadenas de caracteres que pueden presentar. Esto ofrece un enfoque diferente al presentado en  \textit{User password repetitive patterns analysis and visualization}, el cual si estudia las contraseñas como objetos compuestos por subcadenas que tienden a repetirse.
+\newline
+\textbf{Conclusión propia:} Pese a que el artículo abarcó el estudio de las contraseñas de manera diferente a lo que se tiene planteado en la presente investigación (el cual es más parecido al enfoque usado en \textit{User password repetitive patterns analysis and visualization}), se reconoce que introdujo herramientas que podrían ser de gran ayuda para la elaboración del proyecto, como lo son las distribuciones de Zipf. Esto último se justifica pues los resultados obtenidos en \textit{Zipf’s Law in Passwords} muestran que dichas distribuciones son capaces de llegar a resultados interesantes en el contexto del problema.
+
+
+
+\textbf{A Machine Learning Approach to
+Predicting Passwords}
+
+
+
+\textbf{Resumen:} La tesis explora el uso de modelos de aprendizaje automático para predecir secuencias de contraseñas humanas a partir de filtraciones públicas y compararlos con técnicas estándar de cracking basadas en hashcat.  Tras repasar ataques de diccionario, diccionario+reglas, diccionarios masivos y fuerza bruta sobre contraseñas MD5 de XSplit, se muestra que los diccionarios ordenados por frecuencia (rockyou.txt) son muy eficientes en las primeras conjeturas, que combinar reglas casi duplica la tasa de éxito a costa de muchos más intentos, que listas enormes cubren casi todos los hashes y que la fuerza bruta es exhaustiva pero extremadamente ineficiente.  El trabajo propone luego una red neuronal con capas convolucionales 1D y densas, entrenada en 150 000 contraseñas de OwnedCore, para estimar la probabilidad del siguiente carácter dada la secuencia previa, logrando una exactitud de validación de alrededor de 41\% en predicción de carácter y permitiendo asignar a cada contraseña una probabilidad interpretable como medida de fortaleza (contraseñas comunes como “oblivion” o “asdf1234” reciben alta probabilidad; cadenas aleatorias como “xy2zx9nm”, probabilidades ínfimas).  Mediante muestreo sobre la distribución de salida, la red genera listas de contraseñas plausibles que, usadas como diccionario en hashcat, logran romper alrededor de 1\% de 100 000 hashes con menos de un millón de conjeturas, cifra razonable dado que el diccionario contiene menos de un millón de contraseñas únicas, aunque claramente por debajo del rendimiento de rockyou.txt; aplicar reglas sobre estas contraseñas generadas mejora los resultados pero sigue sin alcanzar a los diccionarios artesanales.  El autor concluye que las redes neuronales son útiles para modelar el comportamiento de elección de contraseñas, generar diccionarios especializados y ordenar listas por probabilidad (especialmente relevante con hashes costosos como bcrypt), pero que, en su implementación actual, la generación es lenta, el modelo aún está por detrás de las listas tradicionales en cracking y sería necesario investigar arquitecturas avanzadas (GAN, LSTM) y mejores representaciones para hacerlo competitivo.
+\newline
+\textbf{Contraste:} Tanto el modelo desarrollado por Olsen 
+como el modelo realizado por los autores del trabajo \textit{Zipf’s Law in Passwords}se vieron limitados por la capacidad computacional de los instrumentos con los que estaban realizando sus experimentos. Además, ambos abarcan el problema de maneras muy diferentes, pues Olsen lo hace “a fuerza bruta” mientras que los otros autores utilizan conceptos más relacionados a la probabilidad, como la distribución de Zipf. 
+\newline
+\textbf{Conclusión propia:} Pese a que por el momento no se ha planteado el uso de una red neuronal para el proyecto, esta investigación muestra que un modelo como el que realizó el autor combinado con el suficiente poder computacional podría ser de gran ayuda al momento de estar buscando cierta distribución asociada a una base de datos específica.
+
+
+
+\textbf{The science of guessing: analyzing an anonymized corpus of 70 million passwords}
+
+
+
+\textbf{Resumen:} El artículo presenta un análisis estadístico riguroso del mayor corpus anonimizado de contraseñas estudiado hasta ese momento, correspondiente a casi 70 millones de usuarios de Yahoo!, y lo utiliza para replantear la forma en que se mide la dificultad de adivinación de contraseñas elegidas por humanos. Se inicia criticando métricas tradicionales como la entropía de Shannon y la \textit{guessing entropy}, por no ser apropiadas ni estimables con muestras realistas, y en su lugar introduce métricas de adivinación parcial como $\lambda_\beta$, $\mu_\alpha$ y especialmente la nueva $\alpha$-\textit{guesswork}, pensadas para modelar ataques prácticos con distinta tasa deseada de éxito. Seguidamente, el trabajo propone un mecanismo de recolección que preserva la privacidad, basado en histogramas de contraseñas cifradas con un nonce secreto destruido antes del análisis, lo que permite estudiar subpoblaciones demográficas y de uso sin exponer contraseñas individuales ni facilitar ataques fuera de línea. Luego se aborda el problema del tamaño muestral, mostrando que incluso con decenas de millones de observaciones muchas métricas siguen subestimándose por la gran masa de contraseñas raras, y se adapta un modelo paramétrico de tipo Sichel (mezcla Poisson-generalized inverse Gaussian) para extrapolar la cola de la distribución y estimar con mayor estabilidad curvas de adivinación y factores de trabajo efectivos. Finalmente, al comparar numerosos subgrupos por edad, género, idioma, historial de cambios, uso de servicios y otros atributos, se concluye que la seguridad de las contraseñas varía sorprendentemente poco entre poblaciones: en general ofrecen menos de $10$ bits de seguridad frente a ataques \textit{online} y alrededor de $20$ bits frente a ataques óptimos \textit{offline}, lo que sugiere que incluso usuarios aparentemente más motivados siguen eligiendo contraseñas débilmente distribuidas y que los diccionarios globales funcionan casi tan bien como los específicos para cada grupo.
+\newline
+\textbf{Contraste:} Tanto este trabajo como el de los autores de \textit{Zipf’s Law in Passwords} se enfrentaron al problema de que las contraseñas poco comunes eran capaces de desestablizar gran parte de los cálculos que se realizaban. Sin embargo, mientras que los autores del otro artículo solo se limitaron a trabajar con contraseñas comunes, los autores de este texto usaron técnicas de linguística computacional con el fin de solventar, en mayor o menor medida, este problema.
+\newline
+\textbf{Conclusión propia:} Gracias a lo desarrollado en \textit{The science of guessing: analyzing an anonymized corpus of 70 million passwords}, se pudo comprobar que existen maneras de manejar las contraseñas atípicas para que no interrumpan de manera crítica la investigación. 
+
+
+
+\textbf{LEY DE BENFORD}
+
+
+\textbf{Resumen:} El artículo presenta de forma sintética la Ley de Benford, que describe cómo, en muchos conjuntos de datos numéricos reales, el primer dígito significativo no se distribuye de manera uniforme, sino según la fórmula $P(D_1=d)=\log_{10}(1+\frac{1}{d})$, lo que implica que el $1$ aparece alrededor del $30\ \%$ de las veces y el $9$ menos del $5\ \%$. Se repasan los antecedentes históricos desde las observaciones de Newcomb (1881) y Benford (1938), hasta la popularización de la ley por Nigrini en los años noventa en el contexto de la detección de fraude fiscal. Luego se expone la ley general de Hill para los primeros $k$ dígitos significativos en base $10$, se muestra que los dígitos sucesivos son dependientes pero que esa dependencia se atenúa con la posición, y se demuestra que la distribución del $n$-ésimo dígito tiende a la uniforme cuando $n \to \infty$ (en particular $P(D_n=0)\to 1/10$). En cuanto a aplicaciones, se describen los principales tests estadísticos para verificar si un conjunto de datos sigue la Ley de Benford: el test de bondad de ajuste Chi--cuadrado (potente pero problemático con muestras muy grandes), el \textit{Mean Absolute Deviation} (MAD), diseñado por Nigrini para ser independiente del tamaño muestral y con tablas críticas empíricas, y el ``test de los dos últimos dígitos'', basado en la aproximación a la uniformidad de los dígitos finales. Finalmente, se ilustra el uso de estos métodos analizando los resultados del censo uruguayo de 2011 para las $176$ localidades con más de $1000$ habitantes: el primer dígito pasa el test $\chi^2$ pero no el MAD, mientras que la distribución de los dos últimos dígitos no se aparta de la uniformidad, lo que sugiere que, aunque el ajuste a Benford no es perfecto, no hay evidencia clara de invención sistemática de datos.
+\newline
+\textbf{Contraste:} Por un lado, Olsen en su investigación \textit{A Machine Learning Approach to
+Predicting Passwords} aplicó la ley de Benford únicamente para el primer dígito, por otro lado Caputi menciona brevemente la existencia de la ley de Benford para los últimos dos dígitos. 
+\newline
+\textbf{Conclusión propia:} Si la ley de Benford para el primer dígito resultó útil para la investigación vista en \textit{A Machine Learning Approach to
+Predicting Passwords}, es posible conjeturar que exista alguna variación de dicha ley (como la ley de Benford los últimos dos dígitos) que, al combinarla con la metodología usada por el autor de la investigación mencionada anteriormente, sea de mayor utilidad para el presente proyecto.
+
+
+
+\textbf{Benford’s Law: Theory and
+Applications}
+
+
+
+\textbf{Resumen:} El texto ofrece una visión panorámica y multidisciplinaria de la Ley de Benford, entendida como el fenómeno según el cual en muchos conjuntos de datos reales el primer dígito significativo $d$ aparece con probabilidad $\log_{10}\!\left(\frac{d+1}{d}\right)$, por lo que los unos son mucho más frecuentes que los nueves. Se inicia recordando el origen histórico de la ley en las observaciones de Newcomb y Benford sobre el desgaste de las tablas logarítmicas, y seguidamente se explica su formulación en términos del significando, su versión fuerte y su generalización a otras bases numéricas, junto con ideas centrales como la invariancia de escala y la caracterización mediante la distribución uniforme de $\log_B(x) \bmod 1$. Luego se presentan los fundamentos matemáticos que sostienen el fenómeno, destacando enfoques basados en teoría de la medida, análisis de Fourier, geometría de distribuciones, cotas explícitas por variación total y procesos de Lévy, con el fin de estudiar tanto cuándo una sucesión o distribución es exactamente Benford como la rapidez con que otras se aproximan a ese comportamiento. Finalmente, la obra reúne una amplia colección de aplicaciones en contabilidad, detección de fraude, elecciones, economía, psicología, ciencias naturales e imágenes médicas y digitales, mostrando que la ley no solo tiene interés teórico, sino que también constituye una herramienta práctica para evaluar calidad de datos, identificar manipulaciones y entender regularidades numéricas en contextos muy diversos.
+\newline
+\textbf{Contraste:} En comparación a lo visto en \textit{A Machine Learning Approach to Predicting Passwords}, donde se buscaba una forma de predecir contraseñas, aquí el interés está en una ley estadística general que puede aplicarse a diversos tipos de datos, no a un problema de ciberseguridad en particular.
+\newline
+\textbf{Conclusión propia:} La teoría contenida en \textit{Benford’s Law: Theory and
+Applications} permite el entendimiento de una ley estadística general de la estadística, la cual puede ser aplicada a la presente investigación con el fin de obtener una herramienta que permita entender de mejor manera el problema central, y buscar una solución basándose en las metodologías vistas en los otros trabajos analizados en esta sección de Enlaces de Literatura. 
+
+
+
+\textbf{Extremes in
+Random Fields
+A Theory and its Applications}
+
+
+
+\textbf{Resumen:} El capítulo presenta un tratamiento no paramétrico de los tests de Kolmogorov--Smirnov y de Peacock, vistos como problemas de extremos en campos aleatorios. Se parte del caso clásico univariado de Kolmogorov--Smirnov, donde el estadístico es la máxima discrepancia entre la función de distribución empírica y la teórica, y se recuerda que, tras transformar los datos vía la cdf, su distribución límite coincide con el máximo del puente browniano y admite una cola explícita, $\Pr(D \ge y)\approx 2e^{-2y^2}$. A continuación se reanaliza este test usando el enfoque del \textit{likelihood ratio identity} y teoremas de localización: se construye un campo aleatorio a partir de las discrepancias, se restringe la maximización a una vecindad de la mediana (donde el gran-desvío es más probable), se aproxima el máximo mediante una malla discreta y se modela localmente el comportamiento como un paseo gaussiano bidireccional con deriva negativa, lo que permite recuperar asintóticamente la misma cola que en el análisis clásico. Posteriormente se extiende el marco al test de Peacock en varias dimensiones, donde la discrepancia se evalúa simultáneamente en los cuatro cuadrantes definidos por cada punto del plano y se toma como estadístico la mayor de esas discrepancias: ya no existe una transformación que reduzca al caso uniforme, pero mediante el mismo aparato de campos aleatorios, tasas de gran-desvío y localización se obtiene una aproximación para el nivel de significancia basada en curvas de probabilidad $F(t)=1/2$ y en la suma de contribuciones de paseos gaussianos independientes asociados a cada dimensión. Finalmente, se conecta esta teoría con las \textit{scanning statistics} multivariadas, mostrando que el test de Peacock es un caso particular de escaneo de regiones (cuadrantes o rectángulos) en un campo aleatorio, y se discuten extensiones a ventanas rectangulares generales y a núcleos suaves, donde la estructura local se codifica en determinantes de Hessianos o productos de términos unidimensionales, planteando como retos abiertos el tratamiento de formas más irregulares y campos no suaves.
+\newline
+\textbf{Contraste:} Este trabajo contrasta con la mayoría de los vistos en esta sección de análisis de literatura, pues su autor es de la minoría que menciona y explica la utilidad de las pruebas no paramétricas en el contexto de modelación de distribuciones de probabilidad.
+\newline
+\textbf{Conclusión propia:} Usar la teoría vista en \textit{Extremes in
+Random Fields
+A Theory and its Applications} para el proyecto podría ser innovador en el estudio de la aleatoriedad de las contraseñas.
+
+
+
+\textbf{About passwords}
+
+
+
+\textbf{Resumen:} El artículo analiza críticamente varias creencias comunes sobre la seguridad de las contraseñas y sostiene, con argumentos combinatorios y evidencia empírica, que la longitud es un factor mucho más importante que la mera mezcla de mayúsculas, minúsculas, dígitos y símbolos. A partir de filtraciones reales como Hotmail, RockYou, Yahoo! y otros casos masivos, el autor muestra que muchos usuarios siguen eligiendo contraseñas triviales, reutilizadas o basadas en palabras comunes, información personal y patrones previsibles, lo que vuelve muy eficaces los ataques por diccionario, las variantes avanzadas con sustituciones tipo \textit{leet} y los ataques de fuerza bruta fuera de línea. Seguidamente, se discuten distintos métodos populares de generación de contraseñas, como combinaciones aparentemente aleatorias de caracteres, iniciales de frases, generadores deterministas por sitio y concatenaciones mnemotécnicas de palabras, subrayando que cualquier método conocido o estructuralmente típico puede facilitar el trabajo del atacante si este dispone de información previa o de listas de patrones frecuentes. Luego se presenta un análisis estructural de más de 14 millones de contraseñas únicas de RockYou, donde se observa que predominan las minúsculas, los dígitos y las formas ``palabra + números'', mientras que el uso de mayúsculas y caracteres especiales es relativamente escaso; además, se estima que una estrategia de cracking bien diseñada podría romper una fracción considerable de esas contraseñas en muy poco tiempo. Finalmente, el texto propone recomendaciones prácticas para construir contraseñas robustas y memorables, por ejemplo mediante frases largas, combinaciones personales no previsibles o palabras inventadas, y concluye que la seguridad real depende tanto de buenos hábitos del usuario como de funciones hash fuertes, políticas organizacionales adecuadas y educación temprana sobre autenticación y riesgos informáticos.
+\newline
+\textbf{Contraste:} Este texto sugiere fuertemente que el largo de una contraseña influye de manera directamente proporcional en su seguridad, y uno de sus argumentos es que entre más carácteres tiene una contraseña entonces habrían más combinaciones que deberían ser probadas al momento de querer vulnerarla (lo que haría poco probable que un intruso obtenga la respuesta en poco tiempo). Sin embargo, esta posición es contraria a la que ofrecen los autores de \textit{User password repetitive
+patterns analysis and
+visualization}, pues estos últimos dejaron claro que aumentar la longitud de una contraseña no necesariamente implica un aumento en la seguridad, pues los humanos tienden a repetir patrones al momento de hacer una secuencia extensa de caracteres.   
+\newline
+\textbf{Conclusión propia:} El autor de este texto no consideró patrones de caracteres más allá de los básicos, como  “aaaa”. Lo que hizo que sus conclusiones finales fueran medianamente diferentes al de los autores de \textit{User password repetitive
+patterns analysis and
+visualization}, pues estos últimos si consideraron patrones en las contraseñas en forma de un conjunto de caracteres complejos, como "love". Esto último permite deducir que el autor de \textit{About passwords} no aprovechó al máximo la premisa de que los humanos tienden a seguir patrones. Sin embargo, esto último no quita el hecho de que la investigación de Keszthelyi ofrece contenido teórico que podrá ser de ayuda en el desarrollo de la presente investigación, aunque en la parte de metodología si se usará un enfoque más parecido al mostrado en \textit{User password repetitive
+patterns analysis and
+visualization}.
 
 
 \chapter*{Análisis estadísticos}
@@ -326,210 +697,193 @@ András Keszthelyi\\ \hline
 \markboth{Análisis estadísticos}{Análisis estadísticos}
 \stepcounter{chapter}
 
+\section*{Identidad visual del proyecto}
+\addcontentsline{toc}{section}{Identidad visual del proyecto}
+\markboth{Identidad visual del proyecto}{Identidad visual del proyecto}
+
+\textbf{Paleta de colores} \newline
+
+Para la identidad visual del proyecto se escogió la paleta de colores Blues de la biblioteca seaborn, utilizando también su versión invertida Blues_r en algunos casos donde sea necesario resaltar diferencias visuales dentro de ciertos gráficos. Esta paleta se eligió porque brinda una apariencia ordenada y profesional, además de facilitar la lectura e interpretación de la información presentada.
+\newline
 
 
+\textbf{Estilo de graficos} \newline
 
-\chapter*{Arco narrativo del proyecto}
-\addcontentsline{toc}{chapter}{Arco narrativo del proyecto}
-\markboth{Arco narrativo del proyecto}{Arco narrativo del proyecto}
-\stepcounter{chapter}
-
-\textit{«Al explorar los datos, descubrimos que, a pesar de ser el cero el primer carácter más frecuente tanto en las contraseñas completas como en el primer chunk de números (dos o más números juntos), esto no contradice la ley de Benford, pero de igual forma nos revela un patrón propio de las contraseñas, lo que nos obliga a repensar cómo abordaremos el problema.»}
-
-\section*{Nuevas fichas}
-\addcontentsline{toc}{section}{Nuevas fichas}
-\markboth{Nuevas fichas}{Nuevas fichas}
-
-\begin{center}
-    \vspace{0.8cm}
-    {\Large \bfseries BENFORD'S LAW: THEORY AND APPLICATIONS} \\
-    \vspace{0.4cm}
-\end{center}
-
-\vspace{1.5cm}
-
-\noindent
-\textbf{Nivel descriptivo} \newline
-
-\noindent
-Título: Benford's Law: Theory and Applications \newline
-
-\noindent
-Autor: Steven J. Miller \newline
-
-\noindent
-Año: 2015 \newline
-
-\noindent
-Nombre del tema: Estudio matemático y aplicado de la Ley de Benford. \newline
-
-\noindent
-Clasificación: Teórica y aplicada; el libro desarrolla los fundamentos de la Ley de Benford y muestra cómo puede usarse para detectar patrones no uniformes en datos reales.\newline
-
-\noindent
-Resumen en una oración: El libro explica por qué muchos conjuntos de datos naturales no distribuyen sus dígitos iniciales de forma uniforme. \newline
-
-\noindent
-Argumento central: Miller sostiene que la Ley de Benford aparece con frecuencia en datos reales y que puede ser usada como herramienta para analizar la estructura de ciertos conjuntos numéricos.\newline
-
-\noindent
-Problemas con el argumento: La ley no funciona en todos los casos, así que su aplicación depende mucho del tipo de datos estudiados. Si el conjunto no tiene una estructura adecuada, la distribución benfordiana puede no ser representativa.
-
-\noindent
-\textbf{Nivel analítico} \newline
-
-\noindent
-Conexión con mi proyecto: Aunque no trata directamente sobre contraseñas, este texto resulta útil porque introduce una forma de pensar en distribuciones no uniformes que podría inspirar el análisis de patrones dentro de secuencias de contraseñas.\newline
-
-\noindent
-Lo que NO dice el autor: El libro no estudia seguridad informática, ni analiza cómo se comportan las contraseñas humanas, ni ofrece métodos para medir entropía de contraseñas. \newline
-
-\noindent
-Contraste con otra fuente: Frente a trabajos centrados en la predicción de contraseñas, aquí el interés está en una ley estadística general que puede aplicarse a diversos tipos de datos, no a un problema de ciberseguridad en particular.   \newline 
-
-\noindent
-Evaluación de aplicabilidad: 2. Es una fuente útil como apoyo conceptual, pero su relación con el proyecto es indirecta y requiere una adaptación considerable. \newline
-
-\noindent
-Preguntas que le haría al autor: ¿Cree que la lógica estadística de la Ley de Benford podría servir como inspiración para analizar frecuencias de caracteres o posiciones dentro de contraseñas? \newline
-
-\noindent
-Resumen argumentativo: El libro intenta mostrar que muchos datos reales siguen patrones numéricos sorprendentes y no uniformes. Para el proyecto, su aporte principal no está en el contenido específico, sino en la idea de que una distribución empírica puede revelar regularidades útiles para interpretar datos complejos.
+Con el fin de mantener una presentación uniforme en todas las visualizaciones del proyecto, se utilizará el estilo ticks de seaborn mediante la función sns.set_theme(style="ticks"). Asimismo, se empleará sns.despine() para eliminar bordes innecesarios en los gráficos y obtener una apariencia más limpia y similar a la utilizada en publicaciones o reportes académicos, siguiendo las recomendaciones indicadas en la guía de la bitácora.
+\newline
 
 
-\newpage
+\textbf{Tipografia de figuras} \newline
 
-\begin{center}
-    \vspace{0.8cm}
-    {\Large \bfseries ABOUT PASSWORDS} \\
-    \vspace{0.4cm}
-\end{center}
 
-\vspace{1.5cm}
+Para asegurar una buena legibilidad de las figuras en el documento final, se definieron tamaños de fuente superiores a 12pt. Los títulos de los gráficos tendrán un tamaño de 15pt, mientras que las etiquetas y marcas de los ejes utilizarán un tamaño de 13pt.
+\newline
 
-\noindent
-\textbf{Nivel descriptivo} \newline
 
-\noindent
-Título: About Passwords \newline
+\textbf{Nombre del estilo} \newline
 
-\noindent
-Autor: András Keszthelyi \newline
+La identidad visual definida para el proyecto recibirá el nombre de \textbf{Estilo Bigotes}. Este estilo será utilizado de manera consistente en todas las figuras y visualizaciones desarrolladas durante el análisis de datos.
 
-\noindent
-Año: 2013 \newline
 
-\noindent
-Nombre del tema: Reflexión práctica sobre el uso, la creación y la seguridad de las contraseñas. \newline
+\section*{Análisis descriptivo}
+\addcontentsline{toc}{section}{Análisis descriptivo}
+\markboth{Análisis descriptivo}{Análisis descriptivo}
 
-\noindent
-Clasificación: Divulgativa y aplicada; el texto presenta observaciones y recomendaciones generales sobre cómo elegir contraseñas más seguras.\newline
+\textbf{Análisis descriptivo} \newline
 
-\noindent
-Resumen en una oración: El autor expone principios básicos para crear contraseñas que sean más resistentes al ataque y, al mismo tiempo, manejables para el usuario. \newline
+Para el desarrollo del análisis descriptivo de la presente bitácora, se parte de la base de datos original rockyou, la cual contiene 14,344,386 contraseñas únicas provenientes de la filtración de RockYou (2009). A partir de esta fuente primaria, se construyeron dos bases de datos derivadas que serán el insumo principal del análisis: rockyoubenford y rockyouedist.
+rockyoubenford fue construida a partir de una base intermedia llamada rockyouchunk, la cual divide cada contraseña en segmentos (chunks) según su longitud. En rockyoubenford, cada fila corresponde a un dígito del 0 al 9, y las columnas chunk1 a chunk8 indican cuántas veces aparece ese dígito como primer carácter en contraseñas de cada segmento de longitud. Esta estructura permite analizar si la distribución de primeros dígitos en las contraseñas humanas sigue o viola la Ley de Benford, que es una de las variables discriminantes centrales del proyecto.
+rockyouedist registra, para cada carácter posible, su frecuencia de aparición en cada posición dentro de la contraseña (columnas pos1 a pos16). Esto permite estudiar cómo varía la distribución de caracteres según la posición, lo cual es clave para identificar patrones propios de contraseñas humanas en comparación a generadas por bots.
+Ambas bases fueron construidas durante la etapa de limpieza y transformación de datos, y serán cargadas en Python para el análisis descriptivo y la visualización que se desarrolla a continuación.
+\newline
 
-\noindent
-Argumento central: Keszthelyi sostiene que una buena contraseña debe equilibrar la seguridad con la facilidad de recordación, evitando tanto claves demasiado simples como combinaciones imposibles de memorizar.\newline
+\textbf{Formato tidy} \newline
 
-\noindent
-Problemas con el argumento: El texto es útil como orientación general, pero no desarrolla un modelo estadístico o matemático profundo. Por eso, algunas de sus ideas pueden resultar demasiado generales cuando se quiere analizar contraseñas de manera más rigurosa.
-\newpage 
+se verificó que los datos estuvieran 
+en formato tidy. Un dato está en formato tidy cuando cada variable ocupa una columna, 
+cada observación ocupa una fila y cada celda contiene un único valor.
 
-\noindent
-\textbf{Nivel analítico} \newline
+Al revisar las bases rockyoubenford y rockyouedist, se encontró que ambas estaban 
+en formato ancho (wide), lo cual significa que había información distribuida en múltiples 
+columnas que en realidad representaban una misma variable. En el caso de rockyoubenford, 
+cada chunk de longitud era una columna distinta, y en rockyouedist, cada posición dentro 
+de la contraseña también ocupaba su propia columna. Este formato no es ideal para el 
+análisis ni para la visualización.
 
-\noindent
-Conexión con mi proyecto: Este texto sirve para contextualizar el problema de las contraseñas desde una perspectiva práctica, especialmente porque permite entender por qué los usuarios suelen preferir contraseñas que puedan recordar fácilmente.\newline
+Para resolver esto, se utilizó la función melt() de pandas, que es el equivalente en 
+Python de pivot_longer en R. Esta función toma todas las columnas que representan una 
+misma variable y las convierte en dos columnas: una con el nombre de la categoría y otra 
+con el valor correspondiente. De esta forma, cada fila quedó representando una única 
+observación.
 
-\noindent
-Lo que NO dice el autor: El autor no construye un modelo formal de predicción ni estudia la distribución de contraseñas dentro de grandes bases de datos. \newline
+Luego de la transformación, benford_tidy quedó con 80 filas y 3 columnas 
+(digit, chunk, frecuencia), y edist_tidy quedó con 1504 filas y 4 columnas 
+(char, posicion, frecuencia, posicion_num). Esta última columna adicional se 
+creó extrayendo el número de cada posición (por ejemplo, convirtiendo "pos1" en 1), 
+con el fin de poder ordenar correctamente los ejes al momento de graficar.
+se muestran las primeras filas de cada base ya en formato tidy:
 
-\noindent
-Contraste con otra fuente: A diferencia de investigaciones como las de Ma et al. o Bonneau, este texto no busca medir la seguridad mediante técnicas estadísticas complejas, sino ofrecer una visión más directa sobre el uso cotidiano de contraseñas.   \newline 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/benford_tidy_muestra.png}
+    \caption{rockyoubenford en formato tidy}
+    \label{fig:benford_tidy}
+\end{figure}
 
-\noindent
-Evaluación de aplicabilidad: 3. Aporta contexto y observaciones útiles, pero no proporciona herramientas metodológicas fuertes para el análisis cuantitativo del proyecto. \newline
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/edist_tidy_muestra.png}
+    \caption{rockyouedist en formato tidy}
+    \label{fig:edist_tidy}
+\end{figure}
 
-\noindent
-Preguntas que le haría al autor: ¿Cómo adaptarían sus recomendaciones a entornos donde se usan gestores de contraseñas o autenticación multifactor? \newline
+\textbf{Cuadros de resumen} \newline
 
-\noindent
-Resumen argumentativo: El texto intenta explicar de manera práctica por qué las personas eligen contraseñas como las eligen. Su valor principal es que ayuda a conectar la teoría de la seguridad con el comportamiento real de los usuarios, aunque no es suficiente por sí solo para un análisis estadístico profundo.
+\textbf{Cuadro 1: Estadísticas descriptivas de frecuencia por dígito} \newline
 
-\newpage
+En este cuadro cada fila representa un dígito del 0 al 9, y las columnas muestran 
+estadísticas calculadas a partir de las frecuencias de aparición de ese dígito en 
+los distintos chunks de longitud. La media indica el promedio de apariciones del 
+dígito a lo largo de los 8 chunks, la mediana el valor central, el mínimo y máximo 
+los valores extremos entre los 8 chunks, y el total la suma de todas sus apariciones. 
+Se observa que el dígito 1 presenta la media y el total más altos, con 2,185,354 
+apariciones en total, lo que indica que es el dígito más utilizado por los humanos 
+al crear contraseñas. Esto es consistente con la Ley de Benford, que predice que 
+el dígito 1 debería aparecer con mayor frecuencia en conjuntos de datos naturales. 
+Esta distribución no uniforme es precisamente lo que distingue las contraseñas 
+humanas de las generadas por bots.
 
-\begin{center}
-    \vspace{0.8cm}
-    {\Large \bfseries THE SCIENCE OF GUESSING: ANALYZING AN ANONYMIZED CORPUS OF 70 MILLION PASSWORDS} \\
-    \vspace{0.4cm}
-\end{center}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/cuadro1_benford.png}
+    \caption{Estadísticas descriptivas de frecuencia por dígito}
+    \label{fig:cuadro1}
+\end{figure}
 
-\vspace{1.5cm}
+\textbf{Cuadro 2: Estadísticas descriptivas de frecuencia por posición
+} \newline
 
-\noindent
-\textbf{Nivel descriptivo} \newline
+En este cuadro cada fila representa una posición dentro de la contraseña, desde 
+la posición 1 (primer carácter) hasta la posición 16 (último carácter analizado). 
+Para cada posición, se calcularon estadísticas sobre las frecuencias de aparición 
+de todos los caracteres posibles en esa posición. El total indica cuántos caracteres 
+en total aparecen en esa posición sumando todas las contraseñas del dataset, la 
+media es el promedio de apariciones por carácter, el máximo corresponde al carácter 
+más frecuente en esa posición y el mínimo de 0 indica que al menos un carácter no 
+aparece ninguna vez en esa posición, lo cual tiene sentido ya que caracteres poco 
+comunes como llaves o tildes simplemente no son usados por los usuarios en ciertas 
+posiciones.
 
-\noindent
-Título: The Science of Guessing: Analyzing an Anonymized Corpus of 70 Million Passwords \newline
+Se observa que las primeras seis posiciones presentan totales muy similares, 
+rondando los 14 millones, lo que indica que la mayoría de las contraseñas tienen 
+al menos 6 caracteres. A partir de la posición 7 el total cae drásticamente, 
+confirmando que los humanos tienden a crear contraseñas cortas, generalmente de 
+menos de 8 caracteres. Además, el máximo en la posición 2 es de 2,055,931, 
+correspondiente a la letra a, lo que refleja que los humanos tienden a usar 
+palabras comunes como base de su contraseña, donde esta vocal aparece con mucha 
+frecuencia en la segunda posición.
 
-\noindent
-Autor: Joseph Bonneau \newline
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/cuadro2_posicion.png}
+    \caption{Estadísticas descriptivas de frecuencia por posición}
+    \label{fig:cuadro2}
+\end{figure}
 
-\noindent
-Año: 2012 \newline
+\textbf{Cuadro 3: Top 10 caracteres más frecuentes en la primera posición} \newline
 
-\noindent
-Nombre del tema: Análisis estadístico de un gran corpus de contraseñas y estudio de su adivinabilidad. \newline
+Este cuadro muestra los 10 caracteres que aparecen con mayor frecuencia 
+específicamente en la primera posición de las contraseñas, es decir, con cuál 
+carácter los usuarios eligen comenzar su contraseña. La columna frecuencia indica 
+cuántas contraseñas del dataset comienzan con ese carácter. Destaca que el dígito 
+0 es el más común con 903,067 contraseñas, seguido de las letras minúsculas m, s, 
+a y c. Esto confirma que los humanos no eligen el primer carácter de manera 
+aleatoria sino que se concentran en un conjunto reducido de caracteres, generando 
+un patrón predecible que no se esperaría ver en contraseñas generadas por bots.
 
-\noindent
-Clasificación: Empírica y metodológica; el autor examina una gran colección anonimizada de contraseñas para estudiar su estructura, frecuencia y dificultad de ataque.\newline
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/cuadro3_top10.png}
+    \caption{Top 10 caracteres más frecuentes en la primera posición}
+    \label{fig:cuadro3}
+\end{figure}
 
-\noindent
-Resumen en una oración: El trabajo demuestra que las contraseñas no pueden evaluarse correctamente usando solo medidas simples como la entropía de Shannon. \newline
-
-\noindent
-Argumento central: Bonneau sostiene que la fuerza de una contraseña debe evaluarse con modelos que reflejen el comportamiento real de los atacantes y no solo con aproximaciones teóricas generales.\newline
-
-\noindent
-Problemas con el argumento: El estudio se apoya en datos anonimizados, lo cual limita el acceso a la forma exacta de cada contraseña. Además, aunque el corpus es muy grande, sigue representando solo ciertos contextos de uso y no todos los ambientes posibles.
-\newpage 
-
-\noindent
-\textbf{Nivel analítico} \newline
-
-\noindent
-Conexión con mi proyecto: Este artículo es muy importante para mi proyecto porque cuestiona el uso directo de la entropía como medida única de seguridad y propone una visión más realista sobre la dificultad de adivinar contraseñas.\newline
-
-\noindent
-Lo que NO dice el autor: El autor no estudia en detalle la relación entre la estructura interna de una contraseña y los caracteres específicos que la componen, ni analiza cómo cambian las contraseñas cuando se someten a reglas heurísticas de transformación. \newline
-
-\noindent
-Contraste con otra fuente: En comparación con trabajos enfocados en modelar ataques automatizados, aquí el interés principal está en construir una base científica para medir contraseñas de forma más rigurosa y no asumir que toda distribución puede resumirse con una sola cifra.   \newline 
-
-\noindent
-Evaluación de aplicabilidad: 5. Es una de las fuentes más útiles para el proyecto porque establece límites claros a las métricas tradicionales y ofrece una perspectiva sólida para justificar un análisis más cuidadoso de las contraseñas. \newline
-
-\noindent
-Preguntas que le haría al autor: ¿Qué cambiaría en sus conclusiones si el corpus estuviera separado por contexto de uso, tipo de servicio o perfil de usuario? \newline
-
-\noindent
-Resumen argumentativo: El autor intenta demostrar que la seguridad de una contraseña no puede entenderse únicamente con medidas abstractas. Su trabajo es especialmente útil porque obliga a mirar la dificultad real de ataque y no solo las propiedades matemáticas ideales. Para este proyecto, sirve como apoyo fuerte para justificar que las contraseñas deben analizarse según su contexto y según el comportamiento de los atacantes.
+\textbf{Graficos}
 
 \chapter*{Diario aprendizaje}
 \addcontentsline{toc}{chapter}{Diario aprendizaje}
 \markboth{Diario aprendizaje}{Diario aprendizaje}
 \stepcounter{chapter}
 
-\newpage
+\chapter*{Registro del uso de IA}
+\addcontentsline{toc}{section}{Registro del uso de IA}
+\markboth{Identidad visual del proyecto}{Registro del uso de IA}
+\stepcounter{chapter}
 
-Aqui las referencias conectadas con el archivo .bib
+Para la elaboración de la bitácora 2, se hizo uso de inteligencia artificial con el fin
+de resumir las referencias. Cabe resaltar que cada referencia fue leida de manera completa por 
+al menos un miembro del equipo, con el objetivo de verificar que el resumen fuera coherente con 
+los contenidos de cada referencias. Así, se tiene el siquiente registro:
 
-\text{[@smith2020]} Tenemos que hacer las citas dummy si no las usamos, las que si usen, pongan el texto ese con el nombre del autor principal creo que es 
+\textit{Herramienta: } ChatGPT
+
+\textit{Prompt: } "Haz un resumen académico de cada texto de manera individual. Extensión del resumen menor que media página. No agregues información que no venga en el texto que estás resumiendo. Hazlo en código LATEX." (Textos adjuntados: \textit{A study of Probabilistic Password Models, The science of guessing: analyzing an anonymized corpus of 70 million passwords, Benford’s Law Theory and Applications, LEY DE BENFORD, A Machine Learning Approach to
+Predicting Passwords, Towards a Rigorous Statistical Analysis of
+Empirical Password Datasets, User password repetitive
+patterns analysis and
+visualization, Zipf’s Law in Passwords, About passwords, Extremes in Random Fields: A Theory and Its Applications: Chapter 6})
+
+\textit{Respuesta de la IA:} Los resúmenes proporcionados por la IA se pueden encontrar en el apartado de Contraste, de la sección "Enlaces de Literatura".
+
+\textit{Evaluación:} Los resúmenes resultaron ser útiles, pues por cada resumen hubo un miembro del grupo que lo evaluó para cerciorarse de que la información resumida haya sido extraida del texto original.
+
+\textit{Modificaciones:} Al momento de escribir una fórmula, la inteligencia artificial usaba "\\(" al momento de iniciarla y "\\)" al finalizarla. Sin embargo, el compilador de archivos .qmd no lograba interpretar correctamente dichos caracteres, por lo que ambos se tuvieron que cambiar por "/$".  
+
+\textit{Aprendizaje: } Pese a que ya se ha visto que hay ciertas tareas en la que las inteligencias artificiales suelen cometer bastantes errores, se pudo observar que chatGPT es capaz de hacer resúmenes precisos de trabajos académicos.
 
 
 
-cita dummy 
-\text{\textbackslash nocite{smith2020}}
+
 
 ```{=latex}
-\nocite{*}
+\nocite{jerry2014, yu2015, blocki2022, wang2017, christoffer2018, bonneau2012, caputi2019, miller2015, yakir2013, keszthelyi2013}
