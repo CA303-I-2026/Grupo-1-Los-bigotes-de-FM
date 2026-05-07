@@ -134,7 +134,7 @@ Anthonny Flores Rojas (C32975) &
     \item Parte 3.4. La imagen que cuenta la historia.
     \item Parte 4. Arco narrativo del proyecto.
     \item Parte 5. Diario de aprendizaje.
-    \item Parte 3.3. Construcción de fichas de resultados.
+    \item Colaboración de resúmenes de literatura. 
 \end{itemize}
 \vspace{2pt}
 \end{minipage} \\
@@ -145,6 +145,7 @@ Andrey González Bastos (C33329) &
 \begin{itemize}
     \item Parte de preparación.
     \item Parte 1. Parte de planificación.
+    \item Colaboración de resúmenes de literatura. 
 \end{itemize}
 \vspace{2pt}
 \end{minipage} \\
@@ -155,6 +156,7 @@ Randal Picado Bermúdez (C36024) &
 \begin{itemize}
     \item Parte 3.1. Identidad visual del proyecto.
     \item Parte 3.2. Análisis descriptivo.
+    \item Colaboración de resúmenes de literatura. 
 \end{itemize}
 \vspace{2pt}
 \end{minipage} \\
@@ -165,6 +167,7 @@ Leonardo Vega Aragón (C38313) &
 \begin{itemize}
     \item Parte 2. Enlaces de literatura.
     \item Parte 3.3. Construcción de fichas de resultados.
+    \item Colaboración de resúmenes de literatura. 
 \end{itemize}
 \vspace{2pt}
 \end{minipage} \\
@@ -177,7 +180,7 @@ Leonardo Vega Aragón (C38313) &
 \addcontentsline{toc}{section}{Audiencia del proyecto}
 \markboth{Audiencia del proyecto}{Audiencia del proyecto}
 
-Este trabajo está dirigido a un público actuarial dedicado más a la parte de análisis de datos y ciberseguridad, pues al basar todo el trabajo en el análisis exhaustivo de contraseñas, resulta atractivo para quienes se dedican a esta área llegar a leer este material. 
+Este trabajo está dirigido a un público actuarial dedicado más a la parte de análisis de datos y ciberseguridad, pues al basar todo el trabajo en el análisis exhaustivo de contraseñas, resulta atractivo para quienes se dedican a esta área llegar a leer este material
 
 
 \chapter*{Parte de planificación}
