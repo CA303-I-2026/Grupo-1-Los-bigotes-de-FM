@@ -696,14 +696,14 @@ se muestran las primeras filas de cada base ya en formato tidy:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../../proyecto_final/figuras/benford_tidy_muestra.png}
+    \includegraphics[width=0.8\textwidth]{figuras/benford_tidy_muestra.png}
     \caption{rockyoubenford en formato tidy}
     \label{fig:benford_tidy}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{../../proyecto_final/figuras/edist_tidy_muestra.png}
+    \includegraphics[width=\textwidth]{figuras/edist_tidy_muestra.png}
     \caption{rockyouedist en formato tidy}
     \label{fig:edist_tidy}
 \end{figure}

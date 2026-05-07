@@ -63,7 +63,7 @@ def tabla_a_png(df, ruta, titulo=""):
     plt.savefig(ruta, bbox_inches="tight", dpi=150)
     plt.close()
 
-tabla_a_png(benford_tidy.head(10), "../proyecto_final/figuras/benford_tidy_muestra.png", "rockyoubenford (tidy)")
-tabla_a_png(edist_tidy.head(10),   "../proyecto_final/figuras/edist_tidy_muestra.png",  "rockyouedist (tidy)")
+tabla_a_png(benford_tidy.head(10), "../bitacoras/bitacora_2/figuras/benford_tidy_muestra.png", "rockyoubenford (tidy)")
+tabla_a_png(edist_tidy.head(10),   "../bitacoras/bitacora_2/figuras/edist_tidy_muestra.png",  "rockyouedist (tidy)")
 
 
