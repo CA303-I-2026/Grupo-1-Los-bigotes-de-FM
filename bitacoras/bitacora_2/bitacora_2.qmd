@@ -41,7 +41,6 @@ format:
       \usepackage{mathtools}
       \usepackage{setspace}
       \usepackage{ltablex}
-      \usepackage{float}
       \keepXColumns
 
       % Tablas
@@ -94,7 +93,7 @@ format:
             \large Andrey González Bastos (C33329) \\[0.75cm]
             \large Randal Picado Bermúdez (C36024) \\[0.75cm]
             \large Leonardo Vega Aragón (C38313) \\[1.5cm]
-            \large Fecha: 07/05/26 \\[1cm]
+            \large Fecha: 09/04/26 \\[1cm]
           \end{center}
         \end{titlepage}
       }
@@ -117,80 +116,12 @@ reference-section-title: "Bibliografía"
 \addcontentsline{toc}{section}{Rastro de decisiones}
 \markboth{Rastro de decisiones}{Rastro de decisiones}
 
-Hola, acá va la vara de rastro de decisiones. 
 
-<<<<<<< HEAD
-\section*{Registro de uso de IA}
-\addcontentsline{toc}{section}{Registro de uso de IA}
-\markboth{Registro de uso de IA}{Registro de uso de IA}
-
-Hola, acá va la vara de la IA.
-
-=======
->>>>>>> 06d53bd9520559e2ab59b3a0851b3d9abbf7fdf3
 \section*{Log de contribuciones}
 \addcontentsline{toc}{section}{Log de contribuciones}
 \markboth{Log de contribuciones}{Log de contribuciones}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|}
-\hline
-\textbf{Integrante} & \textbf{Sección / Tarea} \\
-\hline
-Anthonny Flores Rojas (C32975) & 
-\begin{minipage}[t]{7cm}
-\vspace{2pt}
-\begin{itemize}
-    \item Parte 3.4. La imagen que cuenta la historia.
-    \item Parte 4. Arco narrativo del proyecto.
-    \item Parte 5. Diario de aprendizaje.
-    \item Parte 3.3. Construcción de fichas de resultados.
-\end{itemize}
-\vspace{2pt}
-\end{minipage} \\
-\hline
-Andrey González Bastos (C33329) & 
-\begin{minipage}[t]{7cm}
-\vspace{2pt}
-\begin{itemize}
-    \item Parte de preparación.
-    \item Parte 1. Parte de planificación.
-\end{itemize}
-\vspace{2pt}
-\end{minipage} \\
-\hline
-Randal Picado Bermúdez (C36024) & 
-\begin{minipage}[t]{7cm}
-\vspace{2pt}
-\begin{itemize}
-    \item Parte 3.1. Identidad visual del proyecto.
-    \item Parte 3.2. Análisis descriptivo.
-\end{itemize}
-\vspace{2pt}
-\end{minipage} \\
-\hline
-Leonardo Vega Aragón (C38313) & 
-\begin{minipage}[t]{7cm}
-\vspace{2pt}
-\begin{itemize}
-    \item Parte 2. Enlaces de literatura.
-    \item Parte 3.3. Construcción de fichas de resultados.
-\end{itemize}
-\vspace{2pt}
-\end{minipage} \\
-\hline
-\end{tabular}
-\caption{Log de contribuciones}
-\end{table}
-
-\section*{Respuesta a la retroalimentación}
-\addcontentsline{toc}{section}{Respuesta a la retroalimentación}
-\markboth{Respuesta a la retroalimentación}{Respuesta a la retroalimentación}
-
-En cuanto a la retroalimentación de pares, se mejoró la comunicación entre los integrantes del grupo, además de mejorar las fechas de entrega establecidas para cada tarea. 
-
-En cuanto a la retroalimentación dada por el profesor, se mejoró el registro del uso de IA, además de que se corrigió el fatal error de dejar el "aquí se hará esto..." que por error se filtró de una versión no deseada de la bitácora final. También, se expandió el número de fichas a 10, añadiendo así 7. Por otro lado, se mejoró la redacción del diario de aprendizaje, el resto de retroalimentación es aplicable solo a la bitácora #1.  
+Para el log de contribuciones no lo hagamos en un tabla, mejor en subsection* con contribuciones de y ahi se pone un enumerate o itemize de las contribuciones
 
 \section*{Audiencia del proyecto}
 \addcontentsline{toc}{section}{Audiencia del proyecto}
