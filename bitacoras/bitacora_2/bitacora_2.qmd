@@ -116,6 +116,7 @@ reference-section-title: "Bibliografía"
 \addcontentsline{toc}{section}{Rastro de decisiones}
 \markboth{Rastro de decisiones}{Rastro de decisiones}
 
+Para esta bitácora no se tomaron decisiones concretas respecto a la metodología, se basó más en el análisis exploratorio de datos y el manejo de las fuentes. 
 
 \section*{Log de contribuciones}
 \addcontentsline{toc}{section}{Log de contribuciones}
@@ -180,7 +181,17 @@ Leonardo Vega Aragón (C38313) &
 \addcontentsline{toc}{section}{Audiencia del proyecto}
 \markboth{Audiencia del proyecto}{Audiencia del proyecto}
 
-Este trabajo está dirigido a un público actuarial dedicado más a la parte de análisis de datos y ciberseguridad, pues al basar todo el trabajo en el análisis exhaustivo de contraseñas, resulta atractivo para quienes se dedican a esta área llegar a leer este material
+Este trabajo está dirigido a un público actuarial dedicado más a la parte de análisis de datos y ciberseguridad, pues al basar todo el trabajo en el análisis exhaustivo de contraseñas, resulta atractivo para quienes se dedican a esta área llegar a leer este material. 
+
+Esta semana le diríamos a la audiencia que los datos del conjunto RockYou muestran algo preocupante: la mayoría de las contraseñas siguen patrones muy predecibles. La gente tiende a comenzar sus contraseñas con letras, específicamente consonantes seguidas de vocales, imitando la estructura del lenguaje natural, y agrega los números al final,generalmente los dígitos 0, 1 y 2. Además, los caracteres especiales son prácticamente inexistentes, y la distribución de dígitos no sigue ni el azar ni la Ley de Benford, sino patrones culturales como fechas y secuencias conocidas. Osea que,aunque creemos estar eligiendo contraseñas personales y únicas, en realidad somos bastante predecibles, y esto es peligroso pues puede ser aprovechado por hackers.
+
+\section*{Respuesta a la retroalimentación}
+\addcontentsline{toc}{section}{Respuesta a la retroalimentación}
+\markboth{Audiencia del proyecto}{Respuesta a la retroalimentación}
+
+En cuanto a la retroalimentación de pares, se mejoró la comunicación entre los integrantes del grupo, además de mejorar las fechas de entrega establecidas para cada tarea.
+
+En cuanto a la retroalimentación dada por el profesor, se mejoró el registro del uso de IA, además de que se corrigió el fatal error de dejar el “aquí se hará esto...” que por error se filtró de una versión no deseada de la bitácora final. También, se expandió el número de fichas a 10, añadiendo así 7. Por otro lado, se mejoró la redacción del diario de aprendizaje, el resto de retroalimentación es aplicable solo a la bitácora #1.
 
 
 \chapter*{Parte de planificación}
@@ -834,13 +845,165 @@ un patrón predecible que no se esperaría ver en contraseñas generadas por bot
 
 \textbf{Graficos}
 
+\textbf{Gráfico 1: Frecuencia del primer dígito vs. Ley de Benford} \newline
+
+Una de las primeras preguntas que nos hicimos fue si los dígitos en las contraseñas 
+siguen algún patrón conocido. La Ley de Benford predice que, en conjuntos de datos 
+numéricos naturales, el dígito 1 debería aparecer como primer dígito cerca del 30\% 
+de las veces, y esta frecuencia va cayendo conforme aumenta el dígito. Al comparar 
+esta predicción con los datos reales de RockYou, lo que encontramos es que sí hay 
+una tendencia similar, pero bastante más suavizada. El dígito 1 sigue siendo el más 
+común con aproximadamente un 18\%, pero los dígitos del 3 al 9 aparecen con 
+frecuencias mucho más parejas de lo que Benford esperaría. Una posible explicación 
+es que las personas no eligen números de forma completamente aleatoria ni completamente 
+natural: usan fechas, años, números favoritos o secuencias conocidas como ``123'', 
+lo que distorsiona la distribución. Es interesante porque muestra que las contraseñas 
+humanas tienen su propia lógica, distinta tanto del azar como de los patrones 
+matemáticos naturales.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/grafico1_benford.png}
+    \caption{Frecuencia del primer dígito vs. Ley de Benford}
+    \label{fig:grafico1}
+\end{figure}
+
+\textbf{Gráfico 2: Proporción de letras, dígitos y otros caracteres por posición} \newline
+
+Este gráfico fue uno de los más reveladores del análisis. Lo que muestra es bastante 
+claro: en las primeras posiciones de una contraseña, entre el 68\% y el 70\% de los 
+caracteres son letras. Conforme avanzamos hacia posiciones más tardías, esa proporción 
+va bajando y la de dígitos va subiendo, hasta que hacia la posición 8 o 9 ambas 
+rondan el 50\%. Esto básicamente confirma algo que en seguridad informática se conoce 
+bien pero que aquí podemos ver con datos reales: la gente tiende a escribir una 
+palabra y luego le agrega números al final. Desde el punto de vista de la seguridad, 
+esto es un problema serio porque los atacantes ya saben que deben buscar primero 
+letras y luego dígitos. También llama la atención que los caracteres especiales 
+(la categoría ``Otro'') son muy poco usados en todas las posiciones, lo que indica 
+que muy pocas personas incluyen símbolos en sus contraseñas.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/grafico2_prop_tipo_posicion.png}
+    \caption{Proporción de letras, dígitos y otros caracteres por posición}
+    \label{fig:grafico2}
+\end{figure}
+
+\textbf{Gráfico 3: Top 10 caracteres más frecuentes en la segunda posición} \newline
+
+Al analizar qué caracteres aparecen más en la segunda posición de las contraseñas, 
+el resultado fue llamativo pero con sentido: los primeros cuatro lugares los ocupan 
+las vocales \textit{a}, \textit{o}, \textit{e} e \textit{i}. Esto tiene una 
+explicación bastante lógica si pensamos en cómo funciona el lenguaje: la mayoría 
+de palabras en español e inglés comienzan con una consonante seguida de una vocal, 
+entonces si alguien usa su nombre o una palabra como base para su contraseña, es 
+natural que la segunda letra sea una vocal. Lo interesante es que también aparecen 
+los dígitos 8 y 1 en la lista, lo que nos recuerda que hay un grupo de contraseñas 
+que son directamente numéricas desde el inicio. En resumen, este gráfico refuerza 
+la idea de que las contraseñas siguen patrones del lenguaje cotidiano, lo que las 
+hace más fáciles de adivinar de lo que uno podría pensar.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/grafico3_top10_pos2.png}
+    \caption{Top 10 caracteres más frecuentes en la segunda posición}
+    \label{fig:grafico3}
+\end{figure}
+
+\textbf{Gráfico 4: Top 10 caracteres más frecuentes en la primera posición} \newline
+
+Este gráfico muestra con qué carácter empieza la gente sus contraseñas, y el 
+resultado sorprende un poco: el dígito 0 es el más frecuente de todos, con cerca 
+de 900.000 apariciones, superando a letras tan comunes como \textit{m}, \textit{s} 
+o \textit{a}. Esto sugiere que hay una cantidad importante de contraseñas puramente 
+numéricas, o que comienzan con secuencias como 0000 o 012345. Después del 0, 
+el resto de los caracteres más usados son consonantes, lo que tiene sentido si 
+pensamos que las personas usan nombres o palabras como base. Si leemos este gráfico 
+junto con el Gráfico 3, se ve claramente el patrón consonante-vocal que mencionamos: 
+se empieza con una consonante y la segunda posición la toma una vocal. Esto muestra 
+que aunque la gente cree estar eligiendo contraseñas personales y únicas, en realidad 
+muchos siguen estructuras muy similares entre sí.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/grafico4_top10_pos1.png}
+    \caption{Top 10 caracteres más frecuentes en la primera posición}
+    \label{fig:grafico4}
+\end{figure}
+
+\textbf{Gráfico 5: Composición relativa de dígitos por chunk (\%)} \newline
+
+Para entender mejor cómo se distribuyen los dígitos dentro de las contraseñas, 
+construimos este gráfico que muestra la proporción de cada dígito del 0 al 9 en 
+cada chunk, es decir, en cada bloque de posiciones. Al normalizar los datos, podemos 
+comparar la composición sin que nos afecte el hecho de que hay muchas más contraseñas 
+cortas que largas. Lo más notable es el comportamiento del dígito 0, que en el primer 
+chunk representa casi el 28\% de todos los dígitos, una proporción bastante mayor 
+que los demás. A partir del tercer chunk, las líneas tienden a juntarse y estabilizarse, 
+lo que indica que en posiciones intermedias no hay una preferencia tan marcada por 
+ningún dígito en particular. El 0 vuelve a despuntar en los chunks finales, 
+posiblemente por contraseñas que terminan en ``0'' o ``00''. En general, el gráfico 
+muestra que el 0 tiene un papel especial en cómo las personas construyen la parte 
+numérica de sus contraseñas.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/grafico5_chunks_norm.png}
+    \caption{Composición relativa de dígitos por chunk (\%)}
+    \label{fig:grafico5}
+\end{figure}
+
+\textbf{Gráfico 6a: Evolución por posición --- top 3 letras} \newline
+
+Aquí quisimos ver cómo se comportan las letras más frecuentes a lo largo de todas 
+las posiciones posibles en una contraseña. Las tres letras que más aparecen en el 
+conjunto son \textit{a}, \textit{e} e \textit{i}, las tres vocales, lo cual ya de 
+por sí dice bastante sobre cómo se construyen las contraseñas. Lo más llamativo es 
+el pico enorme de la letra \textit{a} en la posición 2, que supera los 2 millones 
+de apariciones, algo que ya habíamos visto en el Gráfico 3 y que aquí se confirma 
+con más contexto. A partir de la posición 6, las tres curvas caen de forma sostenida, 
+lo que refleja simplemente que pocas contraseñas son tan largas. Las trayectorias 
+de \textit{a} y \textit{e} son bastante parecidas entre sí, mientras que \textit{i} 
+se mantiene siempre un poco más abajo. Este gráfico nos ayuda a visualizar que las 
+vocales no solo son frecuentes, sino que tienen posiciones preferidas dentro de la 
+contraseña, lo que añade otro nivel de predictibilidad.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/grafico6a_top3_letras.png}
+    \caption{Evolución por posición --- top 3 letras}
+    \label{fig:grafico6a}
+\end{figure}
+
+\textbf{Gráfico 6b: Evolución por posición --- top 3 dígitos} \newline
+
+Este gráfico es el complemento directo del anterior, pero para los dígitos más 
+frecuentes: el 0, el 1 y el 2. El contraste con las letras es muy claro: mientras 
+que las letras dominan al inicio y decaen hacia el final, los dígitos hacen 
+exactamente lo opuesto. Sus frecuencias empiezan bajas en las primeras posiciones, 
+suben progresivamente y alcanzan su punto máximo entre las posiciones 6 y 7, para 
+luego caer. Esto es básicamente la evidencia visual del patrón ``palabra seguida de 
+números'' que mencionamos antes: la gente escribe sus letras primero y sus números 
+después. Otro detalle interesante es que los tres dígitos siguen curvas muy paralelas 
+entre las posiciones 3 y 10, lo que sugiere que una vez que alguien decide agregar 
+dígitos, no tiene una preferencia fuerte entre usar 0, 1 o 2. Desde la perspectiva 
+de la seguridad, este comportamiento es bastante predecible y es exactamente el tipo 
+de patrón que los programas de fuerza bruta están diseñados para explotar.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/grafico6b_top3_digitos.png}
+    \caption{Evolución por posición --- top 3 dígitos}
+    \label{fig:grafico6b}
+\end{figure}
+
 \chapter*{Diario aprendizaje}
 \addcontentsline{toc}{chapter}{Diario aprendizaje}
 \markboth{Diario aprendizaje}{Diario aprendizaje}
 \stepcounter{chapter}
 
 \chapter*{Registro del uso de IA}
-\addcontentsline{toc}{section}{Registro del uso de IA}
+\addcontentsline{toc}{chapter}{Registro del uso de IA}
 \markboth{Identidad visual del proyecto}{Registro del uso de IA}
 \stepcounter{chapter}
 
