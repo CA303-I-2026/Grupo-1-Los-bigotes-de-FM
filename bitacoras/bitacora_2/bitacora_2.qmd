@@ -104,11 +104,6 @@ csl: apa.csl
 reference-section-title: "Bibliografía"
 ---
 
-\clearpage
-\thispagestyle{empty}
-\tableofcontents*
-\thispagestyle{empty}
-
 
 \newpage
 \setcounter{page}{1}
