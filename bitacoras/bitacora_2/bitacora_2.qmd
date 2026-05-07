@@ -710,6 +710,77 @@ se muestran las primeras filas de cada base ya en formato tidy:
 
 \textbf{Cuadros de resumen} \newline
 
+\textbf{Cuadro 1: Estadísticas descriptivas de frecuencia por dígito} \newline
+
+En este cuadro cada fila representa un dígito del 0 al 9, y las columnas muestran 
+estadísticas calculadas a partir de las frecuencias de aparición de ese dígito en 
+los distintos chunks de longitud. La media indica el promedio de apariciones del 
+dígito a lo largo de los 8 chunks, la mediana el valor central, el mínimo y máximo 
+los valores extremos entre los 8 chunks, y el total la suma de todas sus apariciones. 
+Se observa que el dígito 1 presenta la media y el total más altos, con 2,185,354 
+apariciones en total, lo que indica que es el dígito más utilizado por los humanos 
+al crear contraseñas. Esto es consistente con la Ley de Benford, que predice que 
+el dígito 1 debería aparecer con mayor frecuencia en conjuntos de datos naturales. 
+Esta distribución no uniforme es precisamente lo que distingue las contraseñas 
+humanas de las generadas por bots.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/cuadro1_benford.png}
+    \caption{Estadísticas descriptivas de frecuencia por dígito}
+    \label{fig:cuadro1}
+\end{figure}
+
+\textbf{Cuadro 2: Estadísticas descriptivas de frecuencia por posición
+} \newline
+
+En este cuadro cada fila representa una posición dentro de la contraseña, desde 
+la posición 1 (primer carácter) hasta la posición 16 (último carácter analizado). 
+Para cada posición, se calcularon estadísticas sobre las frecuencias de aparición 
+de todos los caracteres posibles en esa posición. El total indica cuántos caracteres 
+en total aparecen en esa posición sumando todas las contraseñas del dataset, la 
+media es el promedio de apariciones por carácter, el máximo corresponde al carácter 
+más frecuente en esa posición y el mínimo de 0 indica que al menos un carácter no 
+aparece ninguna vez en esa posición, lo cual tiene sentido ya que caracteres poco 
+comunes como llaves o tildes simplemente no son usados por los usuarios en ciertas 
+posiciones.
+
+Se observa que las primeras seis posiciones presentan totales muy similares, 
+rondando los 14 millones, lo que indica que la mayoría de las contraseñas tienen 
+al menos 6 caracteres. A partir de la posición 7 el total cae drásticamente, 
+confirmando que los humanos tienden a crear contraseñas cortas, generalmente de 
+menos de 8 caracteres. Además, el máximo en la posición 2 es de 2,055,931, 
+correspondiente a la letra a, lo que refleja que los humanos tienden a usar 
+palabras comunes como base de su contraseña, donde esta vocal aparece con mucha 
+frecuencia en la segunda posición.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/cuadro2_posicion.png}
+    \caption{Estadísticas descriptivas de frecuencia por posición}
+    \label{fig:cuadro2}
+\end{figure}
+
+\textbf{Cuadro 3: Top 10 caracteres más frecuentes en la primera posición} \newline
+
+Este cuadro muestra los 10 caracteres que aparecen con mayor frecuencia 
+específicamente en la primera posición de las contraseñas, es decir, con cuál 
+carácter los usuarios eligen comenzar su contraseña. La columna frecuencia indica 
+cuántas contraseñas del dataset comienzan con ese carácter. Destaca que el dígito 
+0 es el más común con 903,067 contraseñas, seguido de las letras minúsculas m, s, 
+a y c. Esto confirma que los humanos no eligen el primer carácter de manera 
+aleatoria sino que se concentran en un conjunto reducido de caracteres, generando 
+un patrón predecible que no se esperaría ver en contraseñas generadas por bots.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/cuadro3_top10.png}
+    \caption{Top 10 caracteres más frecuentes en la primera posición}
+    \label{fig:cuadro3}
+\end{figure}
+
+\textbf{Graficos}
+
 \chapter*{Diario aprendizaje}
 \addcontentsline{toc}{chapter}{Diario aprendizaje}
 \markboth{Diario aprendizaje}{Diario aprendizaje}
