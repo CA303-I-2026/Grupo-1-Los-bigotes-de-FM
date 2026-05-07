@@ -369,4 +369,4 @@ cita dummy
 \text{\textbackslash nocite{smith2020}}
 
 ```{=latex}
-\nocite{*}
+\nocite{jerry2014, yu2015, blocki2022, wang2017, christoffer2018, bonneau2012, caputi2019, miller2015, yakir2013, keszthelyi2013}
