@@ -121,7 +121,57 @@ reference-section-title: "Bibliografía"
 \addcontentsline{toc}{section}{Log de contribuciones}
 \markboth{Log de contribuciones}{Log de contribuciones}
 
-Para el log de contribuciones no lo hagamos en un tabla, mejor en subsection* con contribuciones de y ahi se pone un enumerate o itemize de las contribuciones
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Integrante} & \textbf{Sección / Tarea} \\
+\hline
+Anthonny Flores Rojas (C32975) & 
+\begin{minipage}[t]{7cm}
+\vspace{2pt}
+\begin{itemize}
+    \item Parte 3.4. La imagen que cuenta la historia.
+    \item Parte 4. Arco narrativo del proyecto.
+    \item Parte 5. Diario de aprendizaje.
+    \item Parte 3.3. Construcción de fichas de resultados.
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Andrey González Bastos (C33329) & 
+\begin{minipage}[t]{7cm}
+\vspace{2pt}
+\begin{itemize}
+    \item Parte de preparación.
+    \item Parte 1. Parte de planificación.
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Randal Picado Bermúdez (C36024) & 
+\begin{minipage}[t]{7cm}
+\vspace{2pt}
+\begin{itemize}
+    \item Parte 3.1. Identidad visual del proyecto.
+    \item Parte 3.2. Análisis descriptivo.
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Leonardo Vega Aragón (C38313) & 
+\begin{minipage}[t]{7cm}
+\vspace{2pt}
+\begin{itemize}
+    \item Parte 2. Enlaces de literatura.
+    \item Parte 3.3. Construcción de fichas de resultados.
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabular}
+\caption{Log de contribuciones}
+\end{table}
 
 \section*{Audiencia del proyecto}
 \addcontentsline{toc}{section}{Audiencia del proyecto}
