@@ -267,6 +267,33 @@ András Keszthelyi\\ \hline
 \markboth{Análisis estadísticos}{Análisis estadísticos}
 \stepcounter{chapter}
 
+\section*{Identidad visual del proyecto}
+\addcontentsline{toc}{section}{Identidad visual del proyecto}
+\markboth{Identidad visual del proyecto}{Identidad visual del proyecto}
+\noindent
+\textbf{Paleta de colores} \newline
+
+Para la identidad visual del proyecto se escogió la paleta de colores Blues de la biblioteca seaborn, utilizando también su versión invertida Blues_r en algunos casos donde sea necesario resaltar diferencias visuales dentro de ciertos gráficos. Esta paleta se eligió porque brinda una apariencia ordenada y profesional, además de facilitar la lectura e interpretación de la información presentada.
+\newline
+
+\noindent
+\textbf{Estilo de graficos} \newline
+
+Con el fin de mantener una presentación uniforme en todas las visualizaciones del proyecto, se utilizará el estilo ticks de seaborn mediante la función sns.set_theme(style="ticks"). Asimismo, se empleará sns.despine() para eliminar bordes innecesarios en los gráficos y obtener una apariencia más limpia y similar a la utilizada en publicaciones o reportes académicos, siguiendo las recomendaciones indicadas en la guía de la bitácora.
+\newline
+
+\noindent
+\textbf{Tipografia de figuras} \newline
+
+
+Para asegurar una buena legibilidad de las figuras en el documento final, se definieron tamaños de fuente superiores a 12pt. Los títulos de los gráficos tendrán un tamaño de 15pt, mientras que las etiquetas y marcas de los ejes utilizarán un tamaño de 13pt.
+\newline
+
+\noindent
+\textbf{Nombre del estilo} \newline
+
+La identidad visual definida para el proyecto recibirá el nombre de \textbf{Estilo Bigotes}. Este estilo será utilizado de manera consistente en todas las figuras y visualizaciones desarrolladas durante el análisis de datos.
+
 
 
 
