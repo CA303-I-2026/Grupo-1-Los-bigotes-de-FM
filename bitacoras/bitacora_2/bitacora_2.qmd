@@ -86,7 +86,7 @@ format:
             \\
             \LARGE Escuela de Matemáticas \\[0.75cm]
             \LARGE Estadística Actuarial I (CA0303) \\[1cm]
-            \large Bitácora \#1 \\[0.75cm]
+            \large Bitácora \#2 \\[0.75cm]
             \large Prof: Maikol Solís \\[1.5cm]
             \large Estudiantes: \\[1cm]
             \large Anthonny Flores Rojas (C32975) \\[0.75cm]
@@ -208,13 +208,6 @@ Towards a Rigorous Statistical Analysis of Empirical Password Datasets &
 2022 &
 Jeremiah Blocki y Peiyuan Liu \\ \hline
 
-Teórico &
-Teoría abstracta &
-Ley de Benford: Explicación y Aplicaciones &
-LEY DE BENFORD &
-2019 &
-María Caputi Zunini \\ \hline
-
 Metodológico &
 Modelos criptográficos &
 Estudiando la distribución de contraseñas mediante la distribución de Zipf &
@@ -229,12 +222,19 @@ A Machine Learning Approach to Predicting Passwords &
 2018 &
 Christoffer Olsen \\ \hline
 
+Metodológico &
+Modelos criptográficos &
+Análisis estadístico de un gran corpus de contraseñas y estudio de su adivinabilidad &
+The Science of Guessing: Analyzing an Anonymized Corpus of 70 Million Passwords & 
+2012 &
+Joseph Bonneau \\ \hline
+
 Teórico &
-Teoría Abstracta &
-Nonparametric tests: Kolmogorov-Smirnov and Peacock &
-Extremes in Random Fields: A Theory and Its Applications &
-2013 &
-Benjamin Yakir \\ \hline
+Teoría abstracta &
+Ley de Benford: Explicación y Aplicaciones &
+LEY DE BENFORD &
+2019 &
+María Caputi Zunini \\ \hline
 
 Teórico &
 Teoría aplicada &
@@ -243,19 +243,19 @@ Benford's Law: Theory and Applications &
 2015 &
 Steven J. Miller \\ \hline
 
-Divulgativa &
+Teórico &
+Teoría Abstracta &
+Nonparametric tests: Kolmogorov-Smirnov and Peacock &
+Extremes in Random Fields: A Theory and Its Applications &
+2013 &
+Benjamin Yakir \\ \hline
+
+Divulgativo &
 Observaciones sobre contraseñas &
 Reflexión práctica sobre el uso, la creación y la seguridad de las contraseñas &
 About Passwords & 
 2013 &
 András Keszthelyi\\ \hline
-
-Metodológico &
-Modelos criptográficos &
-Análisis estadístico de un gran corpus de contraseñas y estudio de su adivinabilidad &
-The Science of Guessing: Analyzing an Anonymized Corpus of 70 Million Passwords & 
-2012 &
-Joseph Bonneau \\ \hline
 
 
 \end{tabularx}
