@@ -996,11 +996,42 @@ de patrón que los programas de fuerza bruta están diseñados para explotar.
     \caption{Evolución por posición --- top 3 dígitos}
     \label{fig:grafico6b}
 \end{figure}
+\newpage
+\section*{La imagen que cuenta la historia}
+\addcontentsline{toc}{section}{La imagen que cuenta la historia}
+\markboth{La imagen que cuenta la historia}{La imagen que cuenta la historia}
+
+
+Se eligió la figura 2.7 (Proporción de letras, dígitos y otros caracteres por posición) como la visualización central porque resume, en un solo vistazo, el corazón del análisis; las contraseñas humanas no son aleatorias, sino que siguen una estructura lingüística predecible y sistemática. En las primeras posiciones, aproximadamente el 70 % de los caracteres son letras, reflejando el hábito de iniciar con palabras o nombres; hacia las posiciones 7 a 9, los dígitos ganan terreno hasta equipararse, evidenciando el patrón de "palabra + números al final". Solo con ver este gráfico, se podría decidir de inmediato diseñar un ataque de fuerza bruta que priorice letras al inicio y dígitos al final, siendo mucho más eficiente que un ataque aleatorio. Aunque el gráfico simplifica la realidad al agrupar los caracteres en solo tres categorías y omite qué caracteres específicos son los más frecuentes (detalle que queda para los Gráficos 3 y 4), este sacrificio de profundidad se hace en favor de la claridad del mensaje estructural. Incluso la franja casi invisible de los caracteres especiales es, en sí misma, un hallazgo de seguridad relevante. La conexión con la pregunta de investigación es directa, si las contraseñas humanas tienen esta estructura letras al inicio, dígitos al final y casi nada de símbolos, los alritmos que generan caracteres de forma uniforme producirán un perfil radicalmente diferente, que es precisamente la firma estadística que buscamos identificar. Este gráfico no requiere conocimientos avanzados para ser interpretado, lo que lo hace ideal para comunicar el valor del proyecto a cualquier audiencia. Si tuviéramos 30 segundos para mostrar un solo resultado, sería este: basta una mirada para entender que los humanos somos predecibles, y esa predictibilidad es el fundamento de toda la investigación.
 
 \chapter*{Diario aprendizaje}
 \addcontentsline{toc}{chapter}{Diario aprendizaje}
 \markboth{Diario aprendizaje}{Diario aprendizaje}
 \stepcounter{chapter}
+
+\section*{El ordenamiento de la literatura como herramienta de pensamiento}
+\addcontentsline{toc}{subsection}{El ordenamiento de la literatura como herramienta de pensamiento}
+\markboth{El ordenamiento de la literatura}{El ordenamiento de la literatura}
+
+Organizar las fuentes en grupos temáticos antes de escribir fue más que un ejercicio de orden; nos obligó a cuestionar qué rol cumple cada referencia en el argumento central. Agrupar la bibliografía en categorías metodológicas, teóricas y divulgativas dejó claro qué áreas del trabajo estaban bien respaldadas y cuáles necesitaban más peso, algo que no habríamos notado si las manejáramos como una lista plana sin estructura.
+
+\section*{La manipulación de datos en formato tidy con Python}
+\addcontentsline{toc}{subsection}{La manipulación de datos en formato tidy con Python}
+\markboth{La manipulación de datos en formato tidy}{La manipulación de datos en formato tidy}
+
+Pasar las bases de datos a formato \textit{tidy} no es una convención estética, es una decisión estructural que define si los análisis y gráficos funcionarán o no. Aprendimos que una base en formato ancho (\textit{wide}) puede verse "ordenada", pero oculta relaciones entre variables que solo son manipulables cuando cada observación tiene su propia fila. Esta experiencia nos enseñó que preparar el dato es tan vital como el análisis mismo, y que saltarse este paso genera errores que cuestan mucho tiempo corregir después.
+
+\section*{La toma de decisiones narrativas al construir gráficos en Python}
+\addcontentsline{toc}{subsection}{La toma de decisiones narrativas al construir gráficos en Python}
+\markboth{La toma de decisiones narrativas}{La toma de decisiones narrativas}
+
+Al usar \texttt{seaborn}, nos dimos cuenta de que una visualización no habla por sí sola. Elegir los ejes, las agrupaciones y hasta la paleta de colores son decisiones narrativas que condicionan la interpretación del lector tanto como los datos. El ejercicio de elegir un solo gráfico como imagen central fue revelador, porque nos obligó a justificar por qué ese y no otro, evaluando qué estábamos simplificando u omitiendo intencionalmente para ganar claridad.
+
+\section*{El uso de Perplexity para localizar y verificar referencias}
+\addcontentsline{toc}{subsection}{El uso de Perplexity para localizar y verificar referencias}
+\markboth{El uso de Perplexity}{El uso de Perplexity}
+
+Usar Perplexity para rastrear bibliografía nos enseñó que la IA es excelente como punto de partida, pero nunca como fuente definitiva. Cada enlace o dato sugerido tuvo que ser contrastado con la fuente original antes de incluirlo en el trabajo. Esta supervisión activa terminó siendo una habilidad necesaria por derecho propio, no se trata solo de saber usar la herramienta, sino de saber validar lo que entrega.
 
 \chapter*{Registro del uso de IA}
 \addcontentsline{toc}{chapter}{Registro del uso de IA}
@@ -1008,9 +1039,11 @@ de patrón que los programas de fuerza bruta están diseñados para explotar.
 \stepcounter{chapter}
 
 Para la elaboración de la bitácora 2, se hizo uso de inteligencia artificial con el fin
-de resumir las referencias. Cabe resaltar que cada referencia fue leida de manera completa por 
+de resumir las referencias y obtener las mismas. Cabe resaltar que cada referencia fue leida de manera completa por 
 al menos un miembro del equipo, con el objetivo de verificar que el resumen fuera coherente con 
 los contenidos de cada referencias. Así, se tiene el siquiente registro:
+
+\vspace{1cm}
 
 \textit{Herramienta: } ChatGPT
 
@@ -1027,9 +1060,45 @@ visualization, Zipf’s Law in Passwords, About passwords, Extremes in Random Fi
 \textit{Modificaciones:} Al momento de escribir una fórmula, la inteligencia artificial usaba "\\(" al momento de iniciarla y "\\)" al finalizarla. Sin embargo, el compilador de archivos .qmd no lograba interpretar correctamente dichos caracteres, por lo que ambos se tuvieron que cambiar por "/$".  
 
 \textit{Aprendizaje: } Pese a que ya se ha visto que hay ciertas tareas en la que las inteligencias artificiales suelen cometer bastantes errores, se pudo observar que chatGPT es capaz de hacer resúmenes precisos de trabajos académicos.
+\vspace{1cm}
 
+\textit{Herramienta: } Perplexity
 
+\textit{Prompt: } "Busqué los enlaces URL de los textos adjuntados para contrastar y verificar las referencias bibliográficas utilizadas en el trabajo, adjunto el punto bib. En particular, me ayudaste a localizar las URLs de las siguientes dos referencias: \textit{Nonparametric tests: Kolmogorov–Smirnov and Peacock} y \textit{Anomaly Detection: A Survey}"
 
+\textit{Respuesta de la IA: } Los enlaces URL de las fuentes localizadas se usaron para complementar el apartado de literatura y verificar la correspondencia entre los textos y el archivo \texttt{.bib}.
+
+\textit{Evaluación: } Los resultados fueron útiles, ya que permitieron acceder a las fuentes originales y comprobar la información bibliográfica de manera más precisa.  
+
+\textit{Modificaciones: } Al escribir fórmulas, la inteligencia artificial usaba \texttt{\textbackslash\textbackslash(} al iniciar y \texttt{\textbackslash\textbackslash)} al finalizar. Sin embargo, el compilador de archivos \texttt{.qmd} no interpretaba correctamente esos caracteres, por lo que fue necesario sustituirlos por \texttt{\$}.
+
+\textit{Aprendizaje: } Aunque las inteligencias artificiales pueden cometer errores en tareas académicas, se comprobó que Perplexity puede ser útil para localizar fuentes, contrastar referencias y apoyar la redacción académica.
+\vspace{1cm}
+
+\textit{Herramienta: } Gemini
+
+\textit{Prompt: } "Revisá el siguiente texto en español académico y corregí errores 
+ortográficos, gramaticales y de puntuación sin modificar el contenido ni el estilo 
+de redacción. Indicá cada corrección realizada."
+
+\textit{Respuesta de la IA: } Gemini devolvió el texto corregido con anotaciones 
+puntuales sobre cada modificación realizada, señalando errores de concordancia, 
+uso de tildes, puntuación y construcciones sintácticas mejorables.
+
+\textit{Evaluación: } Los resultados fueron satisfactorios; la herramienta identificó 
+errores que pasaron inadvertidos durante la revisión manual del equipo, y las 
+explicaciones de cada corrección permitieron comprender el criterio aplicado en 
+cada caso.
+
+\textit{Modificaciones: } En algunas ocasiones, Gemini reformuló oraciones completas 
+en lugar de limitarse a corregir errores puntuales, por lo que fue necesario 
+comparar la versión sugerida con el original y conservar únicamente las correcciones 
+estrictamente ortográficas o gramaticales.
+
+\textit{Aprendizaje: } Se comprobó que Gemini es una herramienta útil para la revisión 
+lingüística de textos académicos en español, siempre que el usuario supervise 
+activamente las sugerencias para evitar que modificaciones de estilo alteren el 
+sentido original del texto.
 
 
 ```{=latex}
