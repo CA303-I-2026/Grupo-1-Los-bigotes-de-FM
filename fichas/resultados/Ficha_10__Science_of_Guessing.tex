@@ -1,0 +1,83 @@
+\documentclass[12pt, letterpaper]{article}
+
+% --- Paquetes básicos ---
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext,newpxmath} % Fuente estilo Palatino
+\usepackage[margin=3cm]{geometry}
+\usepackage{titlesec}
+\usepackage[autostyle]{csquotes}
+
+% --- Para dibujar la V de Gowin ---
+\usepackage{tikz}
+\usetikzlibrary{positioning,babel,calc}
+
+% --- Configuración de la sección (1. IDEA DE...) ---
+\titleformat{\section}
+  {\normalfont\large\scshape\centering} 
+  {\thesection.}
+  {0.5em}
+  {}
+
+\begin{document}
+
+% --- Encabezado Manual ---
+\begin{center}
+    \vspace{0.8cm}
+    {\Large \bfseries THE SCIENCE OF GUESSING: ANALYZING AN ANONYMIZED CORPUS OF 70 MILLION PASSWORDS} \\
+    \vspace{0.4cm}
+\end{center}
+
+\vspace{1.5cm}
+
+\noindent
+\textbf{Nivel descriptivo} \newline
+
+\noindent
+Título: The Science of Guessing: Analyzing an Anonymized Corpus of 70 Million Passwords \newline
+
+\noindent
+Autor: Joseph Bonneau \newline
+
+\noindent
+Año: 2012 \newline
+
+\noindent
+Nombre del tema: Análisis estadístico de un gran corpus de contraseñas y estudio de su adivinabilidad. \newline
+
+\noindent
+Clasificación: Empírica y metodológica; el autor examina una gran colección anonimizada de contraseñas para estudiar su estructura, frecuencia y dificultad de ataque.\newline
+
+\noindent
+Resumen en una oración: El trabajo demuestra que las contraseñas no pueden evaluarse correctamente usando solo medidas simples como la entropía de Shannon. \newline
+
+\noindent
+Argumento central: Bonneau sostiene que la fuerza de una contraseña debe evaluarse con modelos que reflejen el comportamiento real de los atacantes y no solo con aproximaciones teóricas generales.\newline
+
+\noindent
+Problemas con el argumento: El estudio se apoya en datos anonimizados, lo cual limita el acceso a la forma exacta de cada contraseña. Además, aunque el corpus es muy grande, sigue representando solo ciertos contextos de uso y no todos los ambientes posibles.
+\newpage 
+
+\noindent
+\textbf{Nivel analítico} \newline
+
+\noindent
+Conexión con mi proyecto: Este artículo es muy importante para mi proyecto porque cuestiona el uso directo de la entropía como medida única de seguridad y propone una visión más realista sobre la dificultad de adivinar contraseñas.\newline
+
+\noindent
+Lo que NO dice el autor: El autor no estudia en detalle la relación entre la estructura interna de una contraseña y los caracteres específicos que la componen, ni analiza cómo cambian las contraseñas cuando se someten a reglas heurísticas de transformación. \newline
+
+\noindent
+Contraste con otra fuente: En comparación con trabajos enfocados en modelar ataques automatizados, aquí el interés principal está en construir una base científica para medir contraseñas de forma más rigurosa y no asumir que toda distribución puede resumirse con una sola cifra.   \newline 
+
+\noindent
+Evaluación de aplicabilidad: 5. Es una de las fuentes más útiles para el proyecto porque establece límites claros a las métricas tradicionales y ofrece una perspectiva sólida para justificar un análisis más cuidadoso de las contraseñas. \newline
+
+\noindent
+Preguntas que le haría al autor: ¿Qué cambiaría en sus conclusiones si el corpus estuviera separado por contexto de uso, tipo de servicio o perfil de usuario? \newline
+
+\noindent
+Resumen argumentativo: El autor intenta demostrar que la seguridad de una contraseña no puede entenderse únicamente con medidas abstractas. Su trabajo es especialmente útil porque obliga a mirar la dificultad real de ataque y no solo las propiedades matemáticas ideales. Para este proyecto, sirve como apoyo fuerte para justificar que las contraseñas deben analizarse según su contexto y según el comportamiento de los atacantes.
+
+\end{document}

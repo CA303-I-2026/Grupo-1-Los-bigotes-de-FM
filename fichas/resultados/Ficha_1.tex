@@ -1,0 +1,68 @@
+\documentclass[12pt, letterpaper]{article}
+
+% --- Paquetes básicos ---
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext,newpxmath} % Fuente estilo Palatino
+\usepackage[margin=3cm]{geometry}
+\usepackage{titlesec}
+\usepackage[autostyle]{csquotes}
+
+% --- Para dibujar la V de Gowin ---
+\usepackage{tikz}
+\usetikzlibrary{positioning,babel,calc}
+
+% --- Configuración de la sección (1. IDEA DE...) ---
+\titleformat{\section}
+  {\normalfont\large\scshape\centering} 
+  {\thesection.}
+  {0.5em}
+  {}
+
+\begin{document}
+
+% --- Encabezado Manual ---
+\begin{center}
+    \vspace{0.8cm}
+    {\Large \bfseries LAS CONTRASEÑAS HUMANAS SIGUEN ESTRUCTURA LINGÜÍSTICA: CONSONANTE INICIAL, VOCAL SEGUNDA POSICIÓN} \\
+    \vspace{0.4cm}
+\end{center}
+
+\vspace{1.5cm}
+
+\noindent
+\textbf{Nivel descriptivo} \newline
+
+\noindent
+Titular: Las contraseñas humanas siguen estructura lingüística: consonante inicial, vocal segunda posición. \newline
+
+\noindent
+Nombre del hallazgo: Patrón posicional consonante-vocal en contraseñas humanas. \newline
+
+\noindent
+Resumen en una oración: Las primeras posiciones de las contraseñas están dominadas por consonantes seguidas de vocales. \newline
+
+\noindent
+Método o análisis que lo produjo: Análisis de frecuencia de caracteres por posición sobre la base \texttt{rockyouedist}, visualizado mediante los Gráficos 3 y 4 (top 10 caracteres en primera y segunda posición). \newline
+
+\noindent
+Evidencia: El Gráfico 4 muestra que los caracteres más frecuentes en la primera posición son consonantes (m, s, c, b, j, l, t), mientras que el Gráfico 3 muestra que los cuatro primeros lugares de la segunda posición los ocupan las vocales a, o, e, i, con la letra \textit{a} superando los 2 millones de apariciones (Figura 2.8).
+\newpage
+
+\noindent
+\textbf{Nivel analítico} \newline
+
+\noindent
+Conexión con la pregunta de investigación: Este patrón posicional es una firma estadística propia de contraseñas humanas, ya que refleja la estructura del lenguaje natural. Un bot que genere contraseñas con distribución uniforme de caracteres no reproduciría esta alternancia consonante-vocal, lo que lo convierte en una variable discriminante central para el proyecto. \newline
+
+\noindent
+Contraste con la literatura: Este hallazgo es consistente con lo reportado por Keszthelyi (2013) en \textit{About Passwords}, donde se observa que los usuarios tienden a usar palabras o nombres como base de sus contraseñas. También coincide con los hallazgos de Yu y Liao (2015) en \textit{User Password Repetitive Patterns Analysis and Visualization}, quienes documentaron que los caracteres del mismo tipo tienden a agruparse en posiciones específicas. \newline
+
+\noindent
+Lo que NO explica este resultado: Este hallazgo no distingue si el patrón se mantiene uniforme entre contraseñas de distintas longitudes, ni permite saber si el patrón varía según el idioma del usuario. Tampoco explica qué proporción de estas contraseñas son nombres propios versus palabras comunes. \newline
+
+\noindent
+Implicación para el siguiente paso: En la Bitácora \#3 se deberá modelar formalmente la distribución de caracteres por posición para cuantificar qué tan diferente es este perfil del esperado bajo una distribución uniforme, que es la que se asumiría para contraseñas generadas por bots.
+
+\end{document}

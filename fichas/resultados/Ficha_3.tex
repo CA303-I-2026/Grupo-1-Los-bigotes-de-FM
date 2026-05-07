@@ -1,0 +1,68 @@
+\documentclass[12pt, letterpaper]{article}
+
+% --- Paquetes básicos ---
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext,newpxmath} % Fuente estilo Palatino
+\usepackage[margin=3cm]{geometry}
+\usepackage{titlesec}
+\usepackage[autostyle]{csquotes}
+
+% --- Para dibujar la V de Gowin ---
+\usepackage{tikz}
+\usetikzlibrary{positioning,babel,calc}
+
+% --- Configuración de la sección (1. IDEA DE...) ---
+\titleformat{\section}
+  {\normalfont\large\scshape\centering} 
+  {\thesection.}
+  {0.5em}
+  {}
+
+\begin{document}
+
+% --- Encabezado Manual ---
+\begin{center}
+    \vspace{0.8cm}
+    {\Large \bfseries DÍGITO 1 LIDERA FRECUENCIA PERO BENFORD PREDICE EL DOBLE DE SU PRESENCIA} \\
+    \vspace{0.4cm}
+\end{center}
+
+\vspace{1.5cm}
+
+\noindent
+\textbf{Nivel descriptivo} \newline
+
+\noindent
+Titular: Dígito 1 lidera frecuencia pero Benford predice el doble de su presencia. \newline
+
+\noindent
+Nombre del hallazgo: Desviación sistemática de la distribución de primeros dígitos respecto a la Ley de Benford. \newline
+
+\noindent
+Resumen en una oración: Los primeros dígitos en contraseñas humanas siguen una tendencia similar a Benford pero significativamente más aplanada. \newline
+
+\noindent
+Método o análisis que lo produjo: Comparación directa entre la frecuencia observada del primer dígito en \texttt{rockyoubenford} y la distribución teórica de la Ley de Benford, visualizada en el Gráfico 1. \newline
+
+\noindent
+Evidencia: El Gráfico 1 (Figura 2.6) muestra que el dígito 1 aparece como primer dígito en aproximadamente el 18\% de los casos, mientras que la Ley de Benford predice cerca del 30\%. Los dígitos del 3 al 9 aparecen con frecuencias más parejas entre sí de lo que la ley esperaría, y el dígito 0, que Benford no contempla como primer dígito significativo, aparece con una frecuencia destacada de aproximadamente el 28\% según el Cuadro 1 (Figura 2.3).
+\newpage
+
+\noindent
+\textbf{Nivel analítico} \newline
+
+\noindent
+Conexión con la pregunta de investigación: La desviación respecto a Benford confirma que las contraseñas humanas no siguen ni la aleatoriedad uniforme ni los patrones matemáticos naturales, sino una lógica cultural propia basada en fechas, años y secuencias conocidas. Esta lógica cultural es precisamente lo que un bot no replicaría, lo que la convierte en una variable discriminante con fundamento teórico sólido. \newline
+
+\noindent
+Contraste con la literatura: Este resultado es coherente con lo planteado por Caputi (2019) en \textit{Ley de Benford}, quien describe que la ley se cumple en datos de origen natural pero puede desviarse cuando los datos responden a convenciones culturales. También conecta con Olsen (2018), quien aplicó la Ley de Benford al primer dígito en su análisis de contraseñas y encontró patrones similares de desviación. \newline
+
+\noindent
+Lo que NO explica este resultado: Este hallazgo no determina si la desviación es estadísticamente significativa mediante una prueba formal como chi-cuadrado o MAD, ni si el patrón se mantiene al segmentar por longitud de contraseña o por chunk. Tampoco explica por qué el dígito 0 tiene una presencia tan elevada como primer carácter, cuando Benford lo excluye por definición. \newline
+
+\noindent
+Implicación para el siguiente paso: En la Bitácora \#3 se deberá aplicar una prueba de bondad de ajuste formal (chi-cuadrado o MAD siguiendo la metodología de Caputi) para cuantificar el grado de desviación respecto a Benford y determinar si esta diferencia es suficientemente grande como para usarse como criterio discriminante entre contraseñas humanas y generadas por bots.
+
+\end{document}

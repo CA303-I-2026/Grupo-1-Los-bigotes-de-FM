@@ -320,7 +320,7 @@ András Keszthelyi\\ \hline
 párrafos de sus fichas literarias en un texto corrido en el orden establecido anteriormente}
 
 
-\subsubsection*{A Study of Probabilistic Password Models}
+\subsection*{A Study of Probabilistic Password Models}
 
 \textbf{Nivel descriptivo}
 
@@ -333,7 +333,8 @@ Conexión con mi proyecto: Los autores utilizan RockYou como dataset de entrenam
 
 
 
-\subsubsection*{User password repetitive patterns analysis and visualization}
+
+\subsection*{User password repetitive patterns analysis and visualization}
 
 
 \textbf{Nivel descriptivo}
@@ -352,7 +353,8 @@ Problemas con el argumento o el tema: Los investigadores señalan que RockYou (2
 Conexión con mi proyecto: Los autores utilizan RockYou 2009 para caracterizar la distribución de subcadenas. Sus hallazgos sobre el dominio de caracteres del mismo tipo en patrones repetitivos son variables de entrada directas para discriminar estadísticamente entre contraseñas de origen humano y las generadas por bots. Lo que NO dicen los autores: Los investigadores no realizan comparativas con contraseñas generadas automáticamente ni ajustan modelos paramétricos como Zipf o Pareto. La ausencia de un modelo formal de distribución limita la capacidad de separar ambas poblaciones de forma inferencial. Contraste con otra fuente: Mientras que un estudio busca límites teóricos rigurosos bajo un marco estadístico, estos autores se mantienen en un plano descriptivo-algorítmico de los datos empíricos. La primera investigación aporta el rigor de probabilidad que le falta a este conteo de frecuencias. Evaluación de aplicabilidad (escala 1–5): 4. Justificación: Los autores emplean el mismo corpus de trabajo. Sus algoritmos de conteo son replicables en C++ con bajo costo computacional, aunque se limitan por ser descriptivos y no proveer un marco de prueba de hipótesis. Pregunta que le haría al autor: ¿Consideran los autores que existe alguna métrica cuantitativa, como una entropía de repetición, que permita separar poblaciones humanas de robóticas basándose en sus algoritmos? Resumen argumentativo: Los autores intentan resolver la falta de herramientas para identificar patrones repetitivos que las métricas de entropía estándar omiten. Su solución funciona para describir el comportamiento en RockYou, pero carece de un modelo inferencial. Se utilizarán sus hallazgos para definir variables de interés (frecuencia de subcadenas, tipos de caracteres) que luego se integrarán en modelos de distribución formal para construir el criterio discriminante entre humanos y bots.
 
 
-\subsubsection*{Towards a Rigorous Statistical Analysis of Empirical Password Datasets}
+
+\subsection*{Towards a Rigorous Statistical Analysis of Empirical Password Datasets}
 
 
 \textbf{Nivel descriptivo}
@@ -364,7 +366,7 @@ Título: Towards a Rigorous Statistical Analysis of Empirical Password Datasets.
 Conexión con mi proyecto: Los autores definen la variable de éxito $\lambda_{G}$ como el indicador crítico de seguridad. Para este proyecto, su enfoque es vital porque permite validar si las frecuencias observadas en RockYou 2009 son suficientes para inferir el comportamiento de una población humana real o si el modelo de discriminación humano-bot está operando sobre ruido estadístico. Lo que NO dicen los autores: Los investigadores omiten cualquier análisis sobre la composición interna de los strings o patrones de teclado; su metodología trata a las contraseñas como valores atómicos en una distribución, lo que impide usar su técnica para entender por qué una estructura específica (como repeticiones) es de origen humano. Contraste con otra fuente: Mientras que un estudio previo se enfoca en algoritmos de detección de subcadenas y patrones visuales, estos autores priorizan la inferencia de la probabilidad total de quiebre. Los primeros proporcionan la anatomía del dato, mientras que estos entregan el marco de probabilidad para asegurar que el análisis de RockYou sea estadísticamente significativo. Evaluación de aplicabilidad (escala 1–5): 5. Justificación: Los autores utilizan una técnica de partición de datos que se puede integrar directamente en los scripts de C++ para evaluar la convergencia de la entropía. Es el respaldo matemático necesario para garantizar que el modelo de riesgo no sea una simple observación de un leak específico. Pregunta que le haría al autor: ¿Cómo se comportarían sus límites de confianza si se aplicaran a un dataset donde una fracción de los datos ha sido inyectada artificialmente por scripts, rompiendo el supuesto de independencia de la muestra? Resumen argumentativo: Los autores abordan la falta de herramientas para medir la seguridad de forma independiente a la potencia del software de cracking. Su propuesta de usar programación lineal para encontrar distribuciones consistentes con el dataset resuelve el problema de la incertidumbre en la "cola larga" de la distribución. Para este trabajo, se tomará su técnica de validación mediante submuestras para blindar el análisis estadístico de RockYou.
 
 
-\subsubsection*{Zipf’s Law in Passwords}
+\subsection*{Zipf’s Law in Passwords}
 
 
 \textbf{Nivel descriptivo} 
@@ -398,7 +400,7 @@ de analizar las contraseñas según sus contextos, para poder asignarles mayor p
 por los autores relacionados a la distribución que sigue la longitud de las contraseñas, pues esto podría indicar que hay ciertas posiciones en una contraseña donde es más probable que hayan caracteres relacionados al final de una contraseña (varias fuentes han mostrado, empíricamente, que las últimas posiciones quedan reservadas para caracteres especiales, por ejemplo).
 
 
-\subsubsection*{A Machine Learning Approach to
+\subsection*{A Machine Learning Approach to
 Predicting Passwords}
 
 
@@ -444,7 +446,7 @@ y el hecho de que la distribución de caracteres de una contraseña pueden
 variar según el tipo de página (y correos) a los que estén asociadas.
 
 
-\subsubsection*{The science of guessing: analyzing an anonymized corpus of 70 million passwords}
+\subsection*{The science of guessing: analyzing an anonymized corpus of 70 million passwords}
 
 
 
@@ -461,8 +463,7 @@ Título: The Science of Guessing: Analyzing an Anonymized Corpus of 70 Million P
 Conexión con mi proyecto: Este artículo es muy importante para mi proyecto porque cuestiona el uso directo de la entropía como medida única de seguridad y propone una visión más realista sobre la dificultad de adivinar contraseñas. Lo que NO dice el autor: El autor no estudia en detalle la relación entre la estructura interna de una contraseña y los caracteres específicos que la componen, ni analiza cómo cambian las contraseñas cuando se someten a reglas heurísticas de transformación. Contraste con otra fuente: En comparación con trabajos enfocados en modelar ataques automatizados, aquí el interés principal está en construir una base científica para medir contraseñas de forma más rigurosa y no asumir que toda distribución puede resumirse con una sola cifra. Evaluación de aplicabilidad: 5. Es una de las fuentes más útiles para el proyecto porque establece límites claros a las métricas tradicionales y ofrece una perspectiva sólida para justificar un análisis más cuidadoso de las contraseñas. Preguntas que le haría al autor: ¿Qué cambiaría en sus conclusiones si el corpus estuviera separado por contexto de uso, tipo de servicio o perfil de usuario?.Resumen argumentativo: El autor intenta demostrar que la seguridad de una contraseña no puede entenderse únicamente con medidas abstractas. Su trabajo es especialmente útil porque obliga a mirar la dificultad real de ataque y no solo las propiedades matemáticas ideales. Para este proyecto, sirve como apoyo fuerte para justificar que las contraseñas deben analizarse según su contexto y según el comportamiento de los atacantes.
 
 
-
-\subsubsection*{LEY DE BENFORD}
+\subsection*{LEY DE BENFORD}
 
 
 \textbf{Nivel descriptivo} 
@@ -476,7 +477,7 @@ Predicting Passwords} aplicó la ley de Benford únicamente para el primer dígi
 
 
 
-\subsubsection*{Benford’s Law Theory and Applications}
+\subsection*{Benford’s Law Theory and Applications}
 
 
 
@@ -494,7 +495,7 @@ Conexión con mi proyecto: Aunque no trata directamente sobre contraseñas, este
 
 
 
-\subsubsection*{Extremes in
+\subsection*{Extremes in
 Random Fields
 A Theory and its Applications}
 
@@ -533,7 +534,7 @@ sustentar y justificar cada avance que se haga en el proyecto.
 
 
 
-\subsubsection*{About Passwords}
+\subsection*{About Passwords}
 
 
 
@@ -686,6 +687,165 @@ visualization}, pues estos últimos si consideraron patrones en las contraseñas
 patterns analysis and
 visualization}.
 
+\section*{Construcción de fichas de resultados}
+\addcontentsline{toc}{section}{Construcción de fichas de resultados}
+\markboth{Construcción de fichas de resultados}{Construcción de fichas de resultados}
+
+\subsection*{Ficha 1}
+
+\subsubsection*{Nivel descriptivo}
+
+\textbf{Titular:} Las contraseñas humanas siguen estructura lingüística: 
+consonante inicial, vocal segunda posición.
+
+\textbf{Nombre del hallazgo:} Patrón posicional consonante-vocal en contraseñas 
+humanas.
+
+\textbf{Resumen en una oración:} Las primeras posiciones de las contraseñas 
+están dominadas por consonantes seguidas de vocales.
+
+\textbf{Método o análisis que lo produjo:} Análisis de frecuencia de caracteres 
+por posición sobre la base \texttt{rockyouedist}, visualizado mediante los 
+Gráficos 3 y 4 (top 10 caracteres en primera y segunda posición).
+
+\textbf{Evidencia:} El Gráfico 4 muestra que los caracteres más frecuentes en 
+la primera posición son consonantes (m, s, c, b, j, l, t), mientras que el 
+Gráfico 3 muestra que los cuatro primeros lugares de la segunda posición los 
+ocupan las vocales a, o, e, i, con la letra \textit{a} superando los 2 millones 
+de apariciones (Figura 2.8).
+
+\subsubsection*{Nivel analítico}
+
+\textbf{Conexión con la pregunta de investigación:} Este patrón posicional es 
+una firma estadística propia de contraseñas humanas, ya que refleja la estructura 
+del lenguaje natural. Un bot que genere contraseñas con distribución uniforme 
+de caracteres no reproduciría esta alternancia consonante-vocal, lo que lo 
+convierte en una variable discriminante central para el proyecto.
+
+\textbf{Contraste con la literatura:} Este hallazgo es consistente con lo 
+reportado por Keszthelyi (2013) en \textit{About Passwords}, donde se observa 
+que los usuarios tienden a usar palabras o nombres como base de sus contraseñas. 
+También coincide con los hallazgos de Yu y Liao (2015) en \textit{User Password 
+Repetitive Patterns Analysis and Visualization}, quienes documentaron que los 
+caracteres del mismo tipo tienden a agruparse en posiciones específicas.
+
+\textbf{Lo que NO explica este resultado:} Este hallazgo no distingue si el 
+patrón se mantiene uniforme entre contraseñas de distintas longitudes, ni 
+permite saber si el patrón varía según el idioma del usuario. Tampoco explica 
+qué proporción de estas contraseñas son nombres propios versus palabras comunes.
+
+\textbf{Implicación para el siguiente paso:} En la Bitácora \#3 se deberá 
+modelar formalmente la distribución de caracteres por posición para cuantificar 
+qué tan diferente es este perfil del esperado bajo una distribución uniforme, 
+que es la que se asumiría para contraseñas generadas por bots.
+
+\newpage
+
+\subsection*{Ficha 2}
+
+\subsubsection*{Nivel descriptivo}
+
+\textbf{Titular:} Dígitos invaden posiciones finales: las contraseñas 
+terminan en números, no en letras.
+
+\textbf{Nombre del hallazgo:} Desplazamiento posicional de dígitos hacia 
+el final de la contraseña.
+
+\textbf{Resumen en una oración:} La proporción de dígitos crece 
+progresivamente desde la primera posición hasta equipararse con las letras 
+entre las posiciones 7 y 9.
+
+\textbf{Método o análisis que lo produjo:} Análisis de composición relativa 
+por tipo de carácter (letra, dígito, otro) por posición, visualizado en el 
+Gráfico 2, y confirmado por las series temporales del Gráfico 6b para los 
+dígitos 0, 1 y 2.
+
+\textbf{Evidencia:} El Gráfico 2 (Figura 2.7) muestra que en la posición 1 
+las letras representan aproximadamente el 69\% y los dígitos el 27\%, mientras 
+que hacia la posición 8 ambas categorías rondan el 50\%. El Gráfico 6b 
+(Figura 2.12) confirma que los dígitos 0, 1 y 2 alcanzan su frecuencia máxima 
+entre las posiciones 6 y 7.
+
+\subsubsection*{Nivel analítico}
+
+\textbf{Conexión con la pregunta de investigación:} Este patrón de 
+desplazamiento es una de las características más explotables para discriminar 
+contraseñas humanas de las generadas por bots, ya que un generador automático 
+con distribución uniforme produciría proporciones similares de letras y dígitos 
+en todas las posiciones, sin este gradiente sistemático.
+
+\textbf{Contraste con la literatura:} El hallazgo coincide directamente con 
+lo descrito por Keszthelyi (2013), quien documenta empíricamente que la 
+estructura más común en RockYou es ``palabra + números''. También es coherente 
+con Bonneau (2012) en \textit{The Science of Guessing}, quien señala que esta 
+predictibilidad estructural hace que los diccionarios de ataque funcionen de 
+manera casi tan eficiente como ataques específicos por grupo demográfico.
+
+\textbf{Lo que NO explica este resultado:} Este hallazgo no permite determinar 
+si los dígitos al final corresponden predominantemente a fechas, años, 
+secuencias conocidas como ``123'' o números favoritos. Tampoco explica si 
+este patrón es más pronunciado en contraseñas cortas que en largas.
+
+\textbf{Implicación para el siguiente paso:} Será necesario analizar en la 
+Bitácora \#3 qué dígitos específicos dominan en las posiciones finales y si 
+su distribución se aleja significativamente tanto de la uniformidad como de 
+la Ley de Benford, para determinar cuál modelo distribucional los describe 
+mejor.
+\newpage
+\subsection*{Ficha 3}
+
+\subsubsection*{Nivel descriptivo}
+
+\textbf{Titular:} Dígito 1 lidera frecuencia pero Benford predice el doble 
+de su presencia.
+
+\textbf{Nombre del hallazgo:} Desviación sistemática de la distribución de 
+primeros dígitos respecto a la Ley de Benford.
+
+\textbf{Resumen en una oración:} Los primeros dígitos en contraseñas humanas 
+siguen una tendencia similar a Benford pero significativamente más aplanada.
+
+\textbf{Método o análisis que lo produjo:} Comparación directa entre la 
+frecuencia observada del primer dígito en \texttt{rockyoubenford} y la 
+distribución teórica de la Ley de Benford, visualizada en el Gráfico 1.
+
+\textbf{Evidencia:} El Gráfico 1 (Figura 2.6) muestra que el dígito 1 
+aparece como primer dígito en aproximadamente el 18\% de los casos, mientras 
+que la Ley de Benford predice cerca del 30\%. Los dígitos del 3 al 9 aparecen 
+con frecuencias más parejas entre sí de lo que la ley esperaría, y el dígito 
+0, que Benford no contempla como primer dígito significativo, aparece con una 
+frecuencia destacada de aproximadamente el 28\% según el Cuadro 1 
+(Figura 2.3).
+
+\subsubsection*{Nivel analítico}
+
+\textbf{Conexión con la pregunta de investigación:} La desviación respecto 
+a Benford confirma que las contraseñas humanas no siguen ni la aleatoriedad 
+uniforme ni los patrones matemáticos naturales, sino una lógica cultural 
+propia basada en fechas, años y secuencias conocidas. Esta lógica cultural 
+es precisamente lo que un bot no replicaría, lo que la convierte en una 
+variable discriminante con fundamento teórico sólido.
+
+\textbf{Contraste con la literatura:} Este resultado es coherente con lo 
+planteado por Caputi (2019) en \textit{Ley de Benford}, quien describe 
+que la ley se cumple en datos de origen natural pero puede desviarse cuando 
+los datos responden a convenciones culturales. También conecta con Olsen 
+(2018), quien aplicó la Ley de Benford al primer dígito en su análisis de 
+contraseñas y encontró patrones similares de desviación.
+
+\textbf{Lo que NO explica este resultado:} Este hallazgo no determina si 
+la desviación es estadísticamente significativa mediante una prueba formal 
+como chi-cuadrado o MAD, ni si el patrón se mantiene al segmentar por 
+longitud de contraseña o por chunk. Tampoco explica por qué el dígito 0 
+tiene una presencia tan elevada como primer carácter, cuando Benford lo 
+excluye por definición.
+
+\textbf{Implicación para el siguiente paso:} En la Bitácora \#3 se deberá 
+aplicar una prueba de bondad de ajuste formal (chi-cuadrado o MAD siguiendo 
+la metodología de Caputi) para cuantificar el grado de desviación respecto 
+a Benford y determinar si esta diferencia es suficientemente grande como 
+para usarse como criterio discriminante entre contraseñas humanas y generadas 
+por bots.
 
 \chapter*{Análisis estadísticos}
 \addcontentsline{toc}{chapter}{Análisis estadísticos}

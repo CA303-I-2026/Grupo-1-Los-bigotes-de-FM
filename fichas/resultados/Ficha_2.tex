@@ -1,0 +1,68 @@
+\documentclass[12pt, letterpaper]{article}
+
+% --- Paquetes básicos ---
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext,newpxmath} % Fuente estilo Palatino
+\usepackage[margin=3cm]{geometry}
+\usepackage{titlesec}
+\usepackage[autostyle]{csquotes}
+
+% --- Para dibujar la V de Gowin ---
+\usepackage{tikz}
+\usetikzlibrary{positioning,babel,calc}
+
+% --- Configuración de la sección (1. IDEA DE...) ---
+\titleformat{\section}
+  {\normalfont\large\scshape\centering} 
+  {\thesection.}
+  {0.5em}
+  {}
+
+\begin{document}
+
+% --- Encabezado Manual ---
+\begin{center}
+    \vspace{0.8cm}
+    {\Large \bfseries DÍGITOS INVADEN POSICIONES FINALES: LAS CONTRASEÑAS TERMINAN EN NÚMEROS, NO EN LETRAS} \\
+    \vspace{0.4cm}
+\end{center}
+
+\vspace{1.5cm}
+
+\noindent
+\textbf{Nivel descriptivo} \newline
+
+\noindent
+Titular: Dígitos invaden posiciones finales: las contraseñas terminan en números, no en letras. \newline
+
+\noindent
+Nombre del hallazgo: Desplazamiento posicional de dígitos hacia el final de la contraseña. \newline
+
+\noindent
+Resumen en una oración: La proporción de dígitos crece progresivamente desde la primera posición hasta equipararse con las letras entre las posiciones 7 y 9. \newline
+
+\noindent
+Método o análisis que lo produjo: Análisis de composición relativa por tipo de carácter (letra, dígito, otro) por posición, visualizado en el Gráfico 2, y confirmado por las series temporales del Gráfico 6b para los dígitos 0, 1 y 2. \newline
+
+\noindent
+Evidencia: El Gráfico 2 (Figura 2.7) muestra que en la posición 1 las letras representan aproximadamente el 69\% y los dígitos el 27\%, mientras que hacia la posición 8 ambas categorías rondan el 50\%. El Gráfico 6b (Figura 2.12) confirma que los dígitos 0, 1 y 2 alcanzan su frecuencia máxima entre las posiciones 6 y 7.
+\newpage
+
+\noindent
+\textbf{Nivel analítico} \newline
+
+\noindent
+Conexión con la pregunta de investigación: Este patrón de desplazamiento es una de las características más explotables para discriminar contraseñas humanas de las generadas por bots, ya que un generador automático con distribución uniforme produciría proporciones similares de letras y dígitos en todas las posiciones, sin este gradiente sistemático. \newline
+
+\noindent
+Contraste con la literatura: El hallazgo coincide directamente con lo descrito por Keszthelyi (2013), quien documenta empíricamente que la estructura más común en RockYou es ``palabra + números''. También es coherente con Bonneau (2012) en \textit{The Science of Guessing}, quien señala que esta predictibilidad estructural hace que los diccionarios de ataque funcionen de manera casi tan eficiente como ataques específicos por grupo demográfico. \newline
+
+\noindent
+Lo que NO explica este resultado: Este hallazgo no permite determinar si los dígitos al final corresponden predominantemente a fechas, años, secuencias conocidas como ``123'' o números favoritos. Tampoco explica si este patrón es más pronunciado en contraseñas cortas que en largas. \newline
+
+\noindent
+Implicación para el siguiente paso: Será necesario analizar en la Bitácora \#3 qué dígitos específicos dominan en las posiciones finales y si su distribución se aleja significativamente tanto de la uniformidad como de la Ley de Benford, para determinar cuál modelo distribucional los describe mejor.
+
+\end{document}
