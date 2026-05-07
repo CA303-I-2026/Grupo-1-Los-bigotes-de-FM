@@ -117,13 +117,6 @@ reference-section-title: "Bibliografía"
 \markboth{Rastro de decisiones}{Rastro de decisiones}
 
 
-\section*{Registro de uso de IA}
-\addcontentsline{toc}{section}{Registro de uso de IA}
-\markboth{Registro de uso de IA}{Registro de uso de IA}
-
-
-
-
 \section*{Log de contribuciones}
 \addcontentsline{toc}{section}{Log de contribuciones}
 \markboth{Log de contribuciones}{Log de contribuciones}
@@ -314,10 +307,9 @@ Conexión con mi proyecto: Los autores definen la variable de éxito $\lambda_{G
 
 
 Título: Zipf’s Law in Passwords 
-Autor: Ding Wang, Student Member, IEEE, Haibo Cheng, Ping Wang, Senior Member, IEEE,
-Xinyi Huang, y Gaopeng Jian. 
+Autor: Ding Wang, Haibo Cheng, Ping Wang, Xinyi Huang, y Gaopeng Jian. 
 Año: 2017. 
-Nombre del tema: Estudiando la distribución de contraseñas mediante la distribución de Zipf. 
+Nombre del tema: Análisis de la distribución de contraseñas mediante la distribución de Zipf. 
 Clasificación: Metodológica; Los autores desarrollan dos modelos Zipf para caracterizar la distribución de contraseñas dentro de ciertas bases de datos.
 Resumen en una oración: Bajo ciertas hipótesis, la distribución de las contraseñas parece asemejarse a una distribución de zipf. 
 Argumento central: Aplicación ley de Zipf.
