@@ -14,6 +14,9 @@
 #include <unordered_map>  
 #include <chrono>
 #include <thread>
+#include <cmath>
+#include <algorithm>
+#include <iomanip>
 
 using namespace std;
 
@@ -615,13 +618,129 @@ class cleaner {
             
         }
 
+
+
+    // Funcion para calcular estadisticas de longitud ponderadas por frecuencia
+    void makeLengthStatsFreq() {
+
+        ifstream fFreq("../datos/originales/rockyou-with-count.txt");
+        string line;
+
+        unordered_map<int, long long> freqByLen;
+        long long total = 0;
+
+        while (getline(fFreq, line)) {
+
+            if (line.empty()) continue;
+
+            istringstream iss(line);
+            long long freq = 0;
+            string pwd;
+            iss >> freq >> pwd;
+
+            if (pwd.empty()) continue;
+
+            freqByLen[(int)pwd.length()] += freq;
+            total += freq;
+
+        }
+
+        fFreq.close();
+
+        // Media
+        double mean = 0;
+        for (auto& p : freqByLen) mean += p.first * (double)p.second / total;
+
+        // Varianza, sesgo, curtosis
+        double var = 0, skew = 0, kurt = 0;
+        for (auto& p : freqByLen) {
+            double d = p.first - mean;
+            double w = (double)p.second / total;
+            var  += w * d * d;
+            skew += w * d * d * d;
+            kurt += w * d * d * d * d;
+        }
+        double sd = sqrt(var);
+        skew = skew / (sd * sd * sd);
+        kurt = kurt / (var * var) - 3.0;
+
+        // Moda
+        int moda = 0;
+        long long modaCount = 0;
+        for (auto& p : freqByLen) {
+            if (p.second > modaCount) { modaCount = p.second; moda = p.first; }
+        }
+
+        // Ordenar por longitud para percentiles y ECDF
+        vector<pair<int, long long>> sorted(freqByLen.begin(), freqByLen.end());
+        sort(sorted.begin(), sorted.end());
+
+        auto percentile = [&](double p) -> int {
+            long long target = (long long)(p * total);
+            long long acc = 0;
+            for (auto& x : sorted) {
+                acc += x.second;
+                if (acc >= target) return x.first;
+            }
+            return sorted.back().first;
+        };
+
+        int p10 = percentile(0.10);
+        int p25 = percentile(0.25);
+        int p50 = percentile(0.50);
+        int p75 = percentile(0.75);
+        int p90 = percentile(0.90);
+        int p95 = percentile(0.95);
+        int p99 = percentile(0.99);
+
+        // Escritura
+        ofstream fOut("../datos/procesados/rockyoulengthstats.txt");
+
+        fOut << "=== Estadisticas de longitud (ponderadas por frecuencia) ===\n\n";
+        fOut << "Total passwords (con repeticion): " << total << "\n";
+        fOut << "Media:    " << fixed << setprecision(4) << mean << "\n";
+        fOut << "Mediana:  " << p50 << "\n";
+        fOut << "Moda:     " << moda << " (" << modaCount << " ocurrencias)\n";
+        fOut << "Varianza: " << fixed << setprecision(4) << var << "\n";
+        fOut << "Desv std: " << fixed << setprecision(4) << sd << "\n";
+        fOut << "Sesgo:    " << fixed << setprecision(4) << skew << "\n";
+        fOut << "Curtosis: " << fixed << setprecision(4) << kurt << " (exceso)\n";
+
+        fOut << "\n=== Percentiles ===\n";
+        fOut << "P10: " << p10 << "\n";
+        fOut << "P25: " << p25 << "\n";
+        fOut << "P50: " << p50 << "\n";
+        fOut << "P75: " << p75 << "\n";
+        fOut << "P90: " << p90 << "\n";
+        fOut << "P95: " << p95 << "\n";
+        fOut << "P99: " << p99 << "\n";
+
+        fOut << "\n=== Histograma ===\n";
+        fOut << "longitud,frecuencia,proporcion\n";
+        for (auto& p : sorted) {
+            fOut << p.first << "," << p.second << ","
+                << fixed << setprecision(6) << (double)p.second / total << "\n";
+        }
+
+        fOut << "\n=== ECDF ===\n";
+        fOut << "longitud,ecdf\n";
+        long long acc = 0;
+        for (auto& p : sorted) {
+            acc += p.second;
+            fOut << p.first << "," << fixed << setprecision(6) << (double)acc / total << "\n";
+        }
+
+        fOut.close();
+
+    }
+
 };
 
 // main
 int main() {
 
     cleaner datos;
-    // datos.txttodataNew();
+    datos.txttodataNew();
 
     cout << "termino" << endl;
 
@@ -631,13 +750,10 @@ int main() {
     // datos.toletters();
     // datos.datatotxt();
 
-    cout << "Iniciando makedistFreq..." << endl;
-    datos.makedistFreq();
-    cout << "makedistFreq terminado" << endl;
+    // datos.makedistFreq();
+    // datos.makebenfordFreq();
 
-    cout << "Iniciando makebenfordFreq..." << endl;
-    datos.makebenfordFreq();
-    cout << "makebenfordFreq terminado" << endl;
+    datos.makeLengthStatsFreq();
 
     // // datos.makeentropy();
     // // datos.tochunks();
