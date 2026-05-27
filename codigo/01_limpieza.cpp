@@ -47,13 +47,13 @@ struct Datadist {
 // Funcion para encontrar la contrasenna mas larga
 size_t maxLengh(vector<Data>& dt) {
 
-    size_t maxLen = 0; // Variable de conteo
+    size_t maxLen = 0;
 
-    for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
+    for(size_t i = 0; i < dt.size(); i++) {
 
-        if (dt[i].password.length() > maxLen) { // Si es mas larga
+        if (dt[i].password.length() > maxLen) {
 
-            maxLen = dt[i].password.length(); // Se copia el largo
+            maxLen = dt[i].password.length();
 
         }
 
@@ -66,13 +66,13 @@ size_t maxLengh(vector<Data>& dt) {
 // Funcion para contar cuantas contrasennas exceden el maximo de 16 caracteres
 size_t contEx(vector<Data>& dt) {
 
-    size_t ex = 0; // Variable de conteo
+    size_t ex = 0;
 
-    for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
+    for(size_t i = 0; i < dt.size(); i++) {
 
-        if (dt[i].password.length() > 16) { // Si es mas larga de n caracteres
+        if (dt[i].password.length() > 16) {
 
-            ex++; // Se suman al exceso
+            ex++;
 
         }
 
@@ -82,27 +82,25 @@ size_t contEx(vector<Data>& dt) {
 
 }
 
-// Funcion para contar cuantos caracteres diferentes a los chuunks y contraseñas
+// Funcion para contar cuantos caracteres diferentes a los chunks y contraseñas
 size_t contDif(vector<Datac>& dt) {
 
-    size_t cf = 0; // Variable de conteo
+    size_t cf = 0;
     size_t a = 0;
 
-    for(size_t i = 0; i < dt.size(); i++) { // Recorrer todas las contrasennas
+    for(size_t i = 0; i < dt.size(); i++) {
 
         for(size_t j = 0; j < 8; j++) {
 
-            a =+ dt[i].chunks[j].length(); // Se suman los largos de los chunks
-            // cout << dt[i].chunks[j] << endl; // Se imprimen los chunks
-            // cout << dt[i].chunks[j].length() << endl; // Se imprimen los chunks
+            a =+ dt[i].chunks[j].length();
 
         }
 
-        cf =+ dt[i].password.length(); // Se suman los largos de las contrasennas
+        cf =+ dt[i].password.length();
         
     }
 
-    cf = cf - a; // Se resta el largo total de los chunks
+    cf = cf - a;
 
     return cf;
 
@@ -113,8 +111,8 @@ class cleaner {
 
     public:
 
-        vector<Data> datacom; // Vector para almacenar los datos
-        vector<Datac> datacomp; // Vector para almacenar los datos
+        vector<Data> datacom;
+        vector<Datac> datacomp;
         vector<Datact> newdata;
         vector<Databenf> benford;
         vector<Datadist> distribution;
@@ -128,26 +126,25 @@ class cleaner {
             if (password.empty()) return list;
 
             string current = "";
-            current += password[0]; // Se empieza el primer chunk con el primer caracter
+            current += password[0];
 
             for (size_t i = 1; i < password.length(); i++) {
 
-                // Si son del mismo tipo 
                 if (isdigit(password[i]) == isdigit(password[i-1])) {
 
-                    current += password[i]; // Se agrega al chunk actual
+                    current += password[i];
 
                 } else {
 
-                    if (current.length() >= 2) list.push_back(current); // Se guarda el chunk
+                    if (current.length() >= 2) list.push_back(current);
                     current = "";
-                    current += password[i]; // Se empieza uno nuevo
+                    current += password[i];
 
                 }
 
             }
 
-            if (current.length() >= 2) list.push_back(current); // Se guarda el ultimo chunk
+            if (current.length() >= 2) list.push_back(current);
 
             return list;
 
@@ -158,13 +155,13 @@ class cleaner {
 
             vector<string> list;
 
-            for(size_t i = 0; i < datacomp.size(); i++) { // Recorrer todas las contrasennas+
+            for(size_t i = 0; i < datacomp.size(); i++) {
 
                 list = chunksdetector(datacomp[i].password);
 
-                for(size_t j = 0; j < list.size() && j < 8; j++) { // copiar cada chunk
+                for(size_t j = 0; j < list.size() && j < 8; j++) {
 
-                    datacomp[i].chunks[j] = list[j]; // Se copia el chunk
+                    datacomp[i].chunks[j] = list[j];
 
                 }
                 
@@ -175,11 +172,11 @@ class cleaner {
         // Funcion para partir en letras
         void toletters() {
 
-            for(size_t i = 0; i < datacom.size(); i++) { // Recorrer todas las contrasennas
+            for(size_t i = 0; i < datacom.size(); i++) {
 
-                for(size_t j = 0; j < datacom[i].password.length(); j++) { // Por cada letra del elemento
+                for(size_t j = 0; j < datacom[i].password.length(); j++) {
 
-                    datacom[i].w[j] = datacom[i].password[j]; // Se copia la letra
+                    datacom[i].w[j] = datacom[i].password[j];
 
                 }
                 
@@ -190,20 +187,20 @@ class cleaner {
         // Funcion para pasar de data a txt (LETTERS)
         void datatotxt() {
 
-            ofstream fLoc("../datos/procesados/rockyou.txt"); // Buscar direccion
+            ofstream fLoc("../datos/procesados/rockyou.txt");
 
             for (size_t i = 0; i < datacom.size(); i++) {
 
-                fLoc << datacom[i].password; // Escribir la clave
+                fLoc << datacom[i].password;
 
-                for (size_t j = 0; j < 16; j++) { // Recorrer w
+                for (size_t j = 0; j < 16; j++) {
 
                     fLoc << ",";
 
-                    if (datacom[i].w[j] != '\0') { // Si no esta vacio
+                    if (datacom[i].w[j] != '\0') {
                         fLoc << datacom[i].w[j];
                     } else {
-                        fLoc << " "; // Espacio vacio
+                        fLoc << " ";
                     }
 
                 }
@@ -212,72 +209,71 @@ class cleaner {
 
             }
 
-            fLoc.close(); // Cierre de apertura de txt
+            fLoc.close();
 
         }
 
-        // Funcion para pasar de data a txt (CHUNKS)
-        void datatotxtc() {
+        // // Funcion para pasar de data a txt (CHUNKS)
+        // void datatotxtc() {
 
-            ofstream fLoc("../datos/procesados/rockyouchunk.txt"); // Buscar direccion
+        //     ofstream fLoc("../datos/procesados/rockyouchunk.txt");
 
-            for (size_t i = 0; i < datacomp.size(); i++) {
+        //     for (size_t i = 0; i < datacomp.size(); i++) {
 
-                fLoc << datacomp[i].password; // Escribir la clave
+        //         fLoc << datacomp[i].password;
 
-                for (size_t j = 0; j < 8; j++) { // Recorrer w
+        //         for (size_t j = 0; j < 8; j++) {
 
-                    fLoc << ",";
+        //             fLoc << ",";
 
-                    if (datacomp[i].chunks[j] != "") { // Si no esta vacio
-                        fLoc << datacomp[i].chunks[j];
-                    } else {
-                        fLoc << " "; // Espacio vacio
-                    }
+        //             if (datacomp[i].chunks[j] != "") {
+        //                 fLoc << datacomp[i].chunks[j];
+        //             } else {
+        //                 fLoc << " ";
+        //             }
 
-                }
+        //         }
 
-                fLoc << "\n";
+        //         fLoc << "\n";
 
-            }
+        //     }
 
-            fLoc.close(); // Cierre de apertura de txt
+        //     fLoc.close();
 
-        }
+        // }
 
         // Funcion para pasar de txt a data
         void txttodata() {
 
-            ifstream fLoc("../datos/originales/rockyou.txt"); // Buscar direccion
-            string line; // Variable auxiliar
+            ifstream fLoc("../datos/originales/rockyou.txt");
+            string line;
             
-            while (getline(fLoc, line)) { // Mientras allan lineas en el txt
+            while (getline(fLoc, line)) {
 
-                if (!line.empty() && line.length() <= 16) {  // Si no son vacias y es menor a la cota eleguida
+                if (!line.empty() && line.length() <= 16) {
 
-
-                    Data a; // Variable auxiliar
+                    Data a;
                     Datac b;
-                    a.password = line; // Se copia la clave
+                    a.password = line;
                     b.password = line;
-                    datacom.push_back(a); // Y se almacena
+                    datacom.push_back(a);
                     datacomp.push_back(b);
 
                 }
 
             }
 
-            fLoc.close(); // Cierre de apertura de txt
+            fLoc.close();
 
         }
 
         // Funcion para pasar de txt a data (CREACION DE TABLAS)
         void txttodataNew() {
 
-            ifstream fLoc("../datos/procesados/rockyou.txt"); // Buscar direccion
-            string line; // Variable auxiliar
+            ifstream fLoc("../datos/procesados/rockyou.txt");
+            string line;
             
-            while (getline(fLoc, line)) { // Mientras allan lineas en el txt
+            while (getline(fLoc, line)) {
 
                 if (line.empty()) continue;
 
@@ -285,9 +281,9 @@ class cleaner {
                 string token;
                 Data a;
 
-                getline(ss, a.password, ','); // Leer la password
+                getline(ss, a.password, ',');
 
-                for (size_t i = 0; i < 16; i++) { // Leer cada letra
+                for (size_t i = 0; i < 16; i++) {
 
                     getline(ss, token, ',');
 
@@ -303,7 +299,7 @@ class cleaner {
 
             }
 
-            fLoc.close(); // Cierre de apertura de txt
+            fLoc.close();
 
             ifstream fLocc("../datos/procesados/rockyouchunk.txt");
 
@@ -315,9 +311,9 @@ class cleaner {
                 string token;
                 Datac b;
 
-                getline(ss, b.password, ','); // Leer la password
+                getline(ss, b.password, ',');
 
-                for (size_t i = 0; i < 8; i++) { // Leer cada chunk
+                for (size_t i = 0; i < 8; i++) {
 
                     getline(ss, token, ',');
 
@@ -335,56 +331,55 @@ class cleaner {
 
         }
 
-        // Funcion para calcular las entropias
-        void makeentropy() {
+        // // Funcion para calcular las entropias
+        // void makeentropy() {
 
-            newdata.resize(datacom.size());
+        //     newdata.resize(datacom.size());
 
-            size_t n = datacom.size();
-            size_t chunks = thread::hardware_concurrency(); // Numero de nucleos
-            size_t sizes = n / chunks; // Tamanno de cada chunk
+        //     size_t n = datacom.size();
+        //     size_t chunks = thread::hardware_concurrency();
+        //     size_t sizes = n / chunks;
 
-            vector<thread> threads; // Hilos
+        //     vector<thread> threads;
 
-            for (size_t t = 0; t < chunks; t++) { // Por cada nucleo
+        //     for (size_t t = 0; t < chunks; t++) {
 
-                size_t a = t * sizes; // Inicio del chunk
-                size_t b = (t == chunks - 1) ? n : a + sizes; // Fin del chunk 
+        //         size_t a = t * sizes;
+        //         size_t b = (t == chunks - 1) ? n : a + sizes;
 
-                threads.push_back(thread([this, a, b]() { // Lambda para cada hilo
+        //         threads.push_back(thread([this, a, b]() {
 
-                    for (size_t i = a; i < b; i++) { // Por cada contrasenna del chunk
+        //             for (size_t i = a; i < b; i++) {
 
-                        newdata[i].password = datacom[i].password;
-                        newdata[i].entropyS = entropyShannon(datacom[i].password);
-                        newdata[i].entropyD = entropyDensity(datacom[i].password);
+        //                 newdata[i].password = datacom[i].password;
+        //                 newdata[i].entropyS = entropyShannon(datacom[i].password);
+        //                 newdata[i].entropyD = entropyDensity(datacom[i].password);
 
-                    }
+        //             }
 
-                }));
+        //         }));
 
-            }
+        //     }
 
-            for (auto& t : threads) t.join(); // Esperar todos los threads y cerrar
-            // Aun con los hilos del proyecto pasado esta cosa esta pesada, cuidado al correrlo
+        //     for (auto& t : threads) t.join();
 
-        }
+        // }
 
         // Funcion para calcular la distribucion de los caracteres
         void makedist() {
 
-            for (size_t pos = 0; pos < 16; pos++) { // Por cada posicion de letra
+            for (size_t pos = 0; pos < 16; pos++) {
 
                 vector<char> chars;
 
-                for (size_t j = 0; j < datacom.size(); j++) { // Por cada contrasenna
+                for (size_t j = 0; j < datacom.size(); j++) {
 
                     chars.push_back(datacom[j].w[pos]);
 
                 }
 
                 Datadist d;
-                d.map = contDis(chars); // Se calcula la distribucion de los caracteres
+                d.map = contDis(chars);
                 distribution.push_back(d);
 
             }
@@ -394,74 +389,77 @@ class cleaner {
         // Funcion para calcular la distribucion de los primeros numeros de los chunks
         void makebenford() {
 
-            for (size_t pos = 0; pos < 8; pos++) { // Por cada posicion de chunk
+            for (size_t pos = 0; pos < 8; pos++) {
 
                 vector<string> chunks;
 
-                for (size_t j = 0; j < datacomp.size(); j++) { // Por cada contrasenna
+                for (size_t j = 0; j < datacomp.size(); j++) {
 
                     chunks.push_back(datacomp[j].chunks[pos]);
 
                 }
 
                 Databenf b;
-                b.benfC = contChunks(chunks); // Se calcula la distribucion
+                b.benfC = contChunks(chunks);
                 benford.push_back(b);
 
             }
 
         }
 
-        // Funcion para pasar de data a txt (CREACION DE TABLAS)
-        void datatotxtNew() {
- 
-            
-            // Guardar entropias
-            ofstream fEnt("../datos/procesados/rockyoue.txt");
-            fEnt << "password,entropyS,entropyD\n"; // Header
+        // Funcion para calcular y guardar rockyouedistfreq desde el dataset de frecuencias
+        void makedistFreq() {
 
-            for (size_t i = 0; i < newdata.size(); i++) { // Por cada contrasenna
+            ifstream fFreq("../datos/originales/rockyou-with-count.txt");
+            string line;
 
-                fEnt << newdata[i].password << "," << newdata[i].entropyS << "," << newdata[i].entropyD << "\n";
-            
+            vector<unordered_map<char, int>> distFreq(16);
+
+            while (getline(fFreq, line)) {
+
+                if (line.empty()) continue;
+
+                istringstream iss(line);
+                size_t freq = 0;
+                string pwd;
+                iss >> freq >> pwd;
+
+                if (pwd.empty() || pwd.length() > 16) continue;
+
+                for (size_t j = 0; j < pwd.length(); j++) {
+
+                    distFreq[j][pwd[j]] += freq;
+
+                }
+
             }
 
-            fEnt.close(); // Cierre de apertura de txt
-            
-            // Guardar distribucion de caracteres por posicion
-            ofstream fDist("../datos/procesados/rockyouedist.txt");
+            fFreq.close();
 
-            fDist << "char"; // Header
+            ofstream fDist("../datos/procesados/rockyouedistfreq.txt");
+
+            fDist << "char";
             for (size_t i = 1; i <= 16; i++) fDist << ",pos" << i;
             fDist << "\n";
 
-            unordered_set<char> allChars; // Caracteres unicos
-            for (size_t i = 0; i < distribution.size(); i++) { // Recolectar todos los chars unicos
-                
-                for (auto& pair : distribution[i].map) {
-                    
+            unordered_set<char> allChars;
+            for (size_t i = 0; i < 16; i++)
+                for (auto& pair : distFreq[i])
                     allChars.insert(pair.first);
-                
-                }
-            }
 
-            for (char c : allChars) { // Por cada char unico una fila
-                if ((unsigned char)c > 127) continue; // Ignorar caracteres no ASCII
+            for (char c : allChars) {
+
+                if ((unsigned char)c > 127) continue;
                 fDist << c;
 
-                for (size_t j = 0; j < 16; j++) { // Por cada posicion
+                for (size_t j = 0; j < 16; j++) {
 
                     fDist << ",";
 
-                    if (distribution[j].map.count(c)) {
-
-                        fDist << distribution[j].map[c];
-
-                    } else {
-
-                        fDist << "0"; // Espacio vacio
-
-                    }
+                    if (distFreq[j].count(c))
+                        fDist << distFreq[j][c];
+                    else
+                        fDist << "0";
 
                 }
 
@@ -469,32 +467,143 @@ class cleaner {
 
             }
 
-            fDist.close(); // Cierre de apertura de txt
+            fDist.close();
+
+        }
+
+        // Funcion para calcular y guardar rockyoubenfordfreq desde el dataset de frecuencias
+        void makebenfordFreq() {
+
+            ifstream fFreq("../datos/originales/rockyou-with-count.txt");
+            string line;
+
+            vector<unordered_map<int, int>> benfFreq(8);
+
+            while (getline(fFreq, line)) {
+
+                if (line.empty()) continue;
+
+                istringstream iss(line);
+                size_t freq = 0;
+                string pwd;
+                iss >> freq >> pwd;
+
+                if (pwd.empty() || pwd.length() > 16) continue;
+
+                vector<string> chunks = chunksdetector(pwd);
+
+                for (size_t j = 0; j < chunks.size() && j < 8; j++) {
+
+                    if (!chunks[j].empty() && isdigit(chunks[j][0])) {
+
+                        int firstDigit = chunks[j][0] - '0';
+                        benfFreq[j][firstDigit] += freq;
+
+                    }
+
+                }
+
+            }
+
+            fFreq.close();
+
+            ofstream fBenf("../datos/procesados/rockyoubenfordfreq.txt");
+
+            fBenf << "digit";
+            for (size_t i = 1; i <= 8; i++) fBenf << ",chunk" << i;
+            fBenf << "\n";
+
+            for (size_t d = 0; d <= 9; d++) {
+
+                fBenf << d;
+
+                for (size_t j = 0; j < 8; j++) {
+
+                    fBenf << ",";
+
+                    if (benfFreq[j].count(d))
+                        fBenf << benfFreq[j][d];
+                    else
+                        fBenf << "0";
+
+                }
+
+                fBenf << "\n";
+
+            }
+
+            fBenf.close();
+
+        }
+
+        // Funcion para pasar de data a txt (CREACION DE TABLAS)
+        void datatotxtNew() {
+
+            // // Guardar entropias
+            // ofstream fEnt("../datos/procesados/rockyoue.txt");
+            // fEnt << "password,entropyS,entropyD\n";
+
+            // for (size_t i = 0; i < newdata.size(); i++) {
+
+            //     fEnt << newdata[i].password << "," << newdata[i].entropyS << "," << newdata[i].entropyD << "\n";
+            
+            // }
+
+            // fEnt.close();
+            
+            // Guardar distribucion de caracteres por posicion
+            ofstream fDist("../datos/procesados/rockyouedist.txt");
+
+            fDist << "char";
+            for (size_t i = 1; i <= 16; i++) fDist << ",pos" << i;
+            fDist << "\n";
+
+            unordered_set<char> allChars;
+            for (size_t i = 0; i < distribution.size(); i++)
+                for (auto& pair : distribution[i].map)
+                    allChars.insert(pair.first);
+
+            for (char c : allChars) {
+
+                if ((unsigned char)c > 127) continue;
+                fDist << c;
+
+                for (size_t j = 0; j < 16; j++) {
+
+                    fDist << ",";
+
+                    if (distribution[j].map.count(c))
+                        fDist << distribution[j].map[c];
+                    else
+                        fDist << "0";
+
+                }
+
+                fDist << "\n";
+
+            }
+
+            fDist.close();
 
             // Guardar distribucion de Benford por posicion de chunk
             ofstream fBenf("../datos/procesados/rockyoubenford.txt");
 
-            fBenf << "digit"; // Header
+            fBenf << "digit";
             for (size_t i = 1; i <= 8; i++) fBenf << ",chunk" << i;
             fBenf << "\n";
 
-            for (size_t d = 0; d <= 9; d++) { // Por cada digito del 0 al 9 una fila
+            for (size_t d = 0; d <= 9; d++) {
 
                 fBenf << d;
 
-                for (size_t j = 0; j < 8; j++) { // Por cada posicion de chunk
+                for (size_t j = 0; j < 8; j++) {
 
                     fBenf << ",";
 
-                    if (benford[j].benfC.count(d)) {
-
+                    if (benford[j].benfC.count(d))
                         fBenf << benford[j].benfC[d];
-
-                    } else {
-
-                        fBenf << "0"; // Espacio vacio
-
-                    }
+                    else
+                        fBenf << "0";
 
                 }
 
@@ -502,7 +611,7 @@ class cleaner {
             
             }
 
-            fBenf.close(); // Cierre de apertura de txt
+            fBenf.close();
             
         }
 
@@ -511,19 +620,29 @@ class cleaner {
 // main
 int main() {
 
-    // Prubas 
     cleaner datos;
-    datos.txttodataNew();
-    //datos.makeentropy();
-    
+    // datos.txttodataNew();
+
     cout << "termino" << endl;
-    //datos.makebenford();
-    datos.makedist();
-    datos.datatotxtNew();
-    datos.toletters();
-    //datos.tochunks();
-    datos.datatotxt();
-    //datos.datatotxtc();
+
+    // datos.makedist();
+    // datos.makebenford();
+    // datos.datatotxtNew();
+    // datos.toletters();
+    // datos.datatotxt();
+
+    cout << "Iniciando makedistFreq..." << endl;
+    datos.makedistFreq();
+    cout << "makedistFreq terminado" << endl;
+
+    cout << "Iniciando makebenfordFreq..." << endl;
+    datos.makebenfordFreq();
+    cout << "makebenfordFreq terminado" << endl;
+
+    // // datos.makeentropy();
+    // // datos.tochunks();
+    // // datos.datatotxtc();
+
     /*
     se saco aprox menos del 1% de las contraseñas (las mayores a 16 caracteres)
     en total fueron 125936 que se quedaron afuera
@@ -538,4 +657,4 @@ int main() {
 
     return 0;
 
-} 
+}
