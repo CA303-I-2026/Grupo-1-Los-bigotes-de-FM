@@ -514,16 +514,16 @@ int main() {
     // Prubas 
     cleaner datos;
     datos.txttodataNew();
-    datos.makeentropy();
+    //datos.makeentropy();
     
     cout << "termino" << endl;
-    datos.makebenford();
+    //datos.makebenford();
     datos.makedist();
     datos.datatotxtNew();
     datos.toletters();
-    datos.tochunks();
+    //datos.tochunks();
     datos.datatotxt();
-    datos.datatotxtc();
+    //datos.datatotxtc();
     /*
     se saco aprox menos del 1% de las contraseñas (las mayores a 16 caracteres)
     en total fueron 125936 que se quedaron afuera
