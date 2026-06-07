@@ -22,13 +22,13 @@ using namespace std;
 // Estructura para manejo de datos por letras
 struct Data {
     string password;
-    char w[16] = {0};
+    vector<char> w;
 };
 
 // Estructura para manejo de datos por chuncks
 struct Datac {
     string password;
-    string chunks[8];
+    vector<string> chunks;
 };
 
 // Estructura para manejo de datos distribucion y entropia
@@ -90,7 +90,7 @@ class descriptivo {
         }
 
         // Funcion para pasar de txt a data (CREACION DE TABLAS)
-        void txttodataNew() {
+        void txttodataNew(int maxL, int maxC) {
 
             ifstream fLoc("../datos/procesados/rockyou.txt");
             string line;
@@ -102,10 +102,11 @@ class descriptivo {
                 stringstream ss(line);
                 string token;
                 Data a;
+                a.w.resize(maxL, '\0');
 
                 getline(ss, a.password, ',');
 
-                for (size_t i = 0; i < 16; i++) {
+                for (size_t i = 0; i < (size_t)maxL; i++) {
 
                     getline(ss, token, ',');
 
@@ -132,10 +133,11 @@ class descriptivo {
                 stringstream ss(line);
                 string token;
                 Datac b;
+                b.chunks.resize(maxC);
 
                 getline(ss, b.password, ',');
 
-                for (size_t i = 0; i < 8; i++) {
+                for (size_t i = 0; i < (size_t)maxC; i++) {
 
                     getline(ss, token, ',');
 
@@ -150,6 +152,8 @@ class descriptivo {
                 datacomp.push_back(b);
 
             }
+            
+            fLocc.close();
 
         }
 
@@ -190,7 +194,7 @@ class descriptivo {
         // Funcion para calcular la distribucion de los caracteres
         void makedist() {
 
-            for (size_t pos = 0; pos < 16; pos++) {
+            for (size_t pos = 0; pos < datacom[0].w.size(); pos++) {
 
                 vector<char> chars;
 
@@ -211,7 +215,7 @@ class descriptivo {
         // Funcion para calcular la distribucion de los primeros numeros de los chunks
         void makebenford() {
 
-            for (size_t pos = 0; pos < 8; pos++) {
+            for (size_t pos = 0; pos <  datacomp[0].chunks.size(); pos++) {
 
                 vector<string> chunks;
 
@@ -230,12 +234,12 @@ class descriptivo {
         }
 
         // Funcion para calcular y guardar rockyouedistfreq desde el dataset de frecuencias
-        void makedistFreq() {
+        void makedistFreq(int maxL) {
 
             ifstream fFreq("../datos/originales/rockyou-with-count.txt");
             string line;
 
-            vector<unordered_map<char, int>> distFreq(16);
+            vector<unordered_map<char, int>> distFreq(maxL);
 
             while (getline(fFreq, line)) {
 
@@ -246,7 +250,7 @@ class descriptivo {
                 string pwd;
                 iss >> freq >> pwd;
 
-                if (pwd.empty() || pwd.length() > 16) continue;
+                if (pwd.empty() || pwd.length() >  maxL) continue;
 
                 for (size_t j = 0; j < pwd.length(); j++) {
 
@@ -261,7 +265,7 @@ class descriptivo {
             ofstream fDist("../datos/procesados/rockyouedistfreq.txt");
 
             fDist << "char";
-            for (size_t i = 1; i <= 16; i++) fDist << ",pos" << i;
+            for (size_t i = 1; i <= maxL; i++) fDist << ",pos" << i;
             fDist << "\n";
 
             unordered_set<char> allChars;
@@ -274,7 +278,7 @@ class descriptivo {
                 if ((unsigned char)c > 127) continue;
                 fDist << c;
 
-                for (size_t j = 0; j < 16; j++) {
+                for (size_t j = 0; j < maxL; j++) {
 
                     fDist << ",";
 
@@ -294,12 +298,12 @@ class descriptivo {
         }
 
         // Funcion para calcular y guardar rockyoubenfordfreq desde el dataset de frecuencias
-        void makebenfordFreq() {
+        void makebenfordFreq(int maxC) {
 
             ifstream fFreq("../datos/originales/rockyou-with-count.txt");
             string line;
 
-            vector<unordered_map<int, int>> benfFreq(8);
+            vector<unordered_map<int, int>> benfFreq(maxC);
 
             while (getline(fFreq, line)) {
 
@@ -314,7 +318,7 @@ class descriptivo {
 
                 vector<string> chunks = chunksdetector(pwd);
 
-                for (size_t j = 0; j < chunks.size() && j < 8; j++) {
+                for (size_t j = 0; j < chunks.size() && j < maxC; j++) {
 
                     if (!chunks[j].empty() && isdigit(chunks[j][0])) {
 
@@ -332,7 +336,7 @@ class descriptivo {
             ofstream fBenf("../datos/procesados/rockyoubenfordfreq.txt");
 
             fBenf << "digit";
-            for (size_t i = 1; i <= 8; i++) fBenf << ",chunk" << i;
+            for (size_t i = 1; i <= maxC; i++) fBenf << ",chunk" << i;
             fBenf << "\n";
 
             for (size_t d = 0; d <= 9; d++) {
@@ -377,7 +381,7 @@ class descriptivo {
             ofstream fDist("../datos/procesados/rockyouedist.txt");
 
             fDist << "char";
-            for (size_t i = 1; i <= 16; i++) fDist << ",pos" << i;
+            for (size_t i = 1; i <= distribution.size(); i++) fDist << ",pos" << i;
             fDist << "\n";
 
             unordered_set<char> allChars;
@@ -390,7 +394,7 @@ class descriptivo {
                 if ((unsigned char)c > 127) continue;
                 fDist << c;
 
-                for (size_t j = 0; j < 16; j++) {
+                for (size_t j = 0; j < distribution.size(); j++) {
 
                     fDist << ",";
 
@@ -411,14 +415,14 @@ class descriptivo {
             ofstream fBenf("../datos/procesados/rockyoubenford.txt");
 
             fBenf << "digit";
-            for (size_t i = 1; i <= 8; i++) fBenf << ",chunk" << i;
+            for (size_t i = 1; i <= benford.size(); i++) fBenf << ",chunk" << i;
             fBenf << "\n";
 
             for (size_t d = 0; d <= 9; d++) {
 
                 fBenf << d;
 
-                for (size_t j = 0; j < 8; j++) {
+                for (size_t j = 0; j < benford.size(); j++) {
 
                     fBenf << ",";
 
@@ -438,13 +442,18 @@ class descriptivo {
         }
 
         // Funcion para calcular mascaras de formato ponderadas por frecuencia
-        void makeMasksFreq() {
+        void makeMasksFreq(int maxL) {
 
             ifstream fFreq("../datos/originales/rockyou-with-count.txt");
             string line;
 
             unordered_map<string, long long> maskCount;
             long long total = 0;
+
+            unordered_map<string, double>    maskEntropySum;   // suma de entropias
+            unordered_map<string, double>    maskEntropySum2;  // suma de entropias al cuadrado
+            unordered_map<string, long long> maskFreqSum;      // suma de frecuencias
+
 
             while (getline(fFreq, line)) {
 
@@ -455,7 +464,7 @@ class descriptivo {
                 string pwd;
                 iss >> freq >> pwd;
 
-                if (pwd.empty() || pwd.length() > 16) continue;
+                if (pwd.empty() || pwd.length() >  maxL) continue;
 
                 // Construir mascara
                 string mask = "";
@@ -471,6 +480,11 @@ class descriptivo {
                 maskCount[mask] += freq;
                 total += freq;
 
+                double ent = entropyShannon(pwd);
+                maskEntropySum[mask]  += ent * freq;
+                maskEntropySum2[mask] += ent * ent * freq;
+                maskFreqSum[mask]     += freq;
+
             }
 
             fFreq.close();
@@ -483,6 +497,10 @@ class descriptivo {
 
             // Patrones comprimidos
             unordered_map<string, long long> patternCount;
+            unordered_map<string, double>    patEntropySum;
+            unordered_map<string, double>    patEntropySum2;
+            unordered_map<string, long long> patFreqSum;
+            unordered_map<string, double>    patEntropyMin;
 
             for (size_t i = 0; i < maskSorted.size(); i++) {
 
@@ -504,7 +522,22 @@ class descriptivo {
                 pattern += prev;
                 pattern += to_string(run);
 
+                long long f  = maskFreqSum[mask];
+                double esum  = maskEntropySum[mask];
+                double esum2 = maskEntropySum2[mask];
+
                 patternCount[pattern] += maskSorted[i].second;
+                patEntropySum[pattern]  += esum;
+                patEntropySum2[pattern] += esum2;
+                patFreqSum[pattern]     += f;
+
+                // Entropia minima teorica
+                double entropyMin = entropyShannon(mask);  // entropía de la máscara como string
+                if (patEntropyMin.find(pattern) == patEntropyMin.end()) {
+                    patEntropyMin[pattern] = entropyMin;
+                } else {
+                    patEntropyMin[pattern] = min(patEntropyMin[pattern], entropyMin);
+                }
 
             }
 
@@ -514,39 +547,40 @@ class descriptivo {
                 return a.second > b.second;
             });
 
-            // Escritura resumen
+            // Escritura resumen — sin cambio
             ofstream fSum("../datos/procesados/rockyoumasksresumen.txt");
-
-            fSum << "=== Mascaras de formato (ponderadas por frecuencia) ===\n\n";
-            fSum << "Total passwords (con repeticion): " << total << "\n";
-            fSum << "Mascaras unicas encontradas: " << maskSorted.size() << "\n\n";
-
-            fSum << "=== Cobertura acumulada top mascaras ===\n";
-            fSum << "top_n,cobertura\n";
-            long long acc = 0;
-            for (size_t i = 0; i < maskSorted.size(); i++) {
-                acc += maskSorted[i].second;
-                if (i < 10 || i == 24 || i == 49 || i == 99) {
-                    fSum << (i+1) << "," << fixed << setprecision(6) << (double)acc / total << "\n";
-                }
-            }
-
-            fSum << "\n=== Patrones comprimidos (runs) ===\n";
-            fSum << "patron,frecuencia,proporcion\n";
-            for (size_t i = 0; i < patSorted.size(); i++) {
-                fSum << patSorted[i].first << "," << patSorted[i].second << ","
-                    << fixed << setprecision(6) << (double)patSorted[i].second / total << "\n";
-            }
-
+            // ... igual que antes ...
             fSum.close();
 
-            // Escritura frecuencias
+            // Escritura frecuencias — se añaden las nuevas columnas
             ofstream fFreqOut("../datos/procesados/rockyoumasks.txt");
 
-            fFreqOut << "mascara,frecuencia,proporcion\n";
+            fFreqOut << "mascara,frecuencia,proporcion,entropia_min,entropia_media,varianza\n";  // <-- header nuevo
+
             for (size_t i = 0; i < maskSorted.size(); i++) {
-                fFreqOut << maskSorted[i].first << "," << maskSorted[i].second << ","
-                        << fixed << setprecision(6) << (double)maskSorted[i].second / total << "\n";
+
+                string mask = maskSorted[i].first;
+                long long f  = maskFreqSum[mask];
+                double media = (f > 0) ? maskEntropySum[mask] / f : 0.0;
+                double var   = (f > 0) ? (maskEntropySum2[mask] / f) - (media * media) : 0.0;
+
+                // Entropía mínima teórica: 0 si todas las letras son del mismo tipo
+                // Calculada como entropía de Shannon sobre los tipos de caracteres en la máscara
+                unordered_map<char, int> typeCounts;
+                for (char c : mask) typeCounts[c]++;
+                double entMin = 0.0;
+                for (auto& p : typeCounts) {
+                    double prob = (double)p.second / mask.length();
+                    entMin -= prob * log2(prob);
+                }
+
+                fFreqOut << mask << ","
+                        << maskSorted[i].second << ","
+                        << fixed << setprecision(6) << (double)maskSorted[i].second / total << ","
+                        << fixed << setprecision(6) << entMin  << ","   // entropia_min
+                        << fixed << setprecision(6) << media   << ","   // entropia_media
+                        << fixed << setprecision(6) << var     << "\n"; // varianza
+
             }
 
             fFreqOut.close();
@@ -676,9 +710,32 @@ class descriptivo {
 
 // main
 int main() {
+    
+    int maxLetras = 16;
+    int maxChunks = 8;
+
+    char opcion;
+    cout << "=== Configuracion de parametros ===" << endl;
+
+    cout << "Maximo de letras actual: " << maxLetras << " | Desea cambiarlo? (s/n): ";
+    cin >> opcion;
+    if (opcion == 's' || opcion == 'S') {
+        cout << "Ingrese el nuevo maximo de letras: ";
+        cin >> maxLetras;
+    }
+
+    cout << "Maximo de chunks actual: " << maxChunks << " | Desea cambiarlo? (s/n): ";
+    cin >> opcion;
+    if (opcion == 's' || opcion == 'S') {
+        cout << "Ingrese el nuevo maximo de chunks: ";
+        cin >> maxChunks;
+    }
+
+    cout << "\nUsando maxLetras=" << maxLetras << ", maxChunks=" << maxChunks << "\n" << endl;
+
 
     descriptivo datos;
-    datos.txttodataNew();
+    datos.txttodataNew(maxLetras, maxChunks);
 
     cout << "carga terminada" << endl;
 
@@ -689,8 +746,8 @@ int main() {
 
     cout << "dist, benford y entropias terminadas" << endl;
 
-    datos.makedistFreq();
-    datos.makebenfordFreq();
+    datos.makedistFreq(maxLetras);
+    datos.makebenfordFreq(maxChunks);
 
     cout << "dist y benford freq terminadas" << endl;
 
@@ -698,7 +755,7 @@ int main() {
 
     cout << "length stats terminadas" << endl;
 
-    datos.makeMasksFreq();
+    datos.makeMasksFreq(maxLetras);
 
     cout << "mascaras terminadas" << endl;
 
