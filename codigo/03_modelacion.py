@@ -466,6 +466,120 @@ def kruskal_wallis_entropias():
     print(f"  -> Graficos en {OUT_KW_DIR}/")
 
 
+def spearman_longitud_entropia():
+    """
+    Calcula la correlacion de Spearman entre la longitud de la mascara y su
+    entropia media, en dos variantes: sin ponderar (una observacion por mascara)
+    y ponderada (cada mascara repetida segun su frecuencia).
+
+    Args:
+        None
+
+    Returns:
+        None: Guarda un grafico de dispersion con tendencia y un resumen en texto plano.
+
+    Example:
+        >>> spearman_longitud_entropia()
+        Spearman (sin ponderar):  rho = 0.701254   p = 0.000000   RECHAZA H0
+        Spearman (ponderado):     rho = 0.884739   p = 0.000000   RECHAZA H0
+
+    Notes:
+        La longitud se calcula como len(mascara). La version ponderada repite cada
+        mascara hasta un cap de 200k repeticiones para evitar desbordamiento de memoria.
+        Un rho positivo indica que mascaras mas largas tienden a tener mayor entropia.
+    """
+
+    OUT_SP_TXT = "../datos/procesados/spearman_resumen.txt"
+
+    longitudes  = []
+    entropias   = []
+    frecuencias = []
+
+    with open(ROCKYOUMASKS, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            longitudes.append(len(row["mascara"]))
+            entropias.append(float(row["entropia_media"]))
+            frecuencias.append(int(row["frecuencia"]))
+
+    longitudes  = np.array(longitudes,  dtype=float)
+    entropias   = np.array(entropias,   dtype=float)
+    frecuencias = np.array(frecuencias, dtype=float)
+
+    rho_raw, p_raw = stats.spearmanr(longitudes, entropias)
+
+    cap     = 200_000
+    lon_exp = []
+    ent_exp = []
+
+    for lon, ent, frq in zip(longitudes, entropias, frecuencias):
+        rep = min(int(frq), cap)
+        lon_exp.extend([lon] * rep)
+        ent_exp.extend([ent] * rep)
+
+    rho_pond, p_pond = stats.spearmanr(lon_exp, ent_exp)
+
+    rechaza_raw  = p_raw  < 0.05
+    rechaza_pond = p_pond < 0.05
+
+    print(f"  Spearman (sin ponderar):  rho = {rho_raw:.6f}   p = {p_raw:.6f}   {'RECHAZA H0' if rechaza_raw else 'No rechaza H0'}")
+    print(f"  Spearman (ponderado):     rho = {rho_pond:.6f}   p = {p_pond:.6f}   {'RECHAZA H0' if rechaza_pond else 'No rechaza H0'}")
+
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+    fig.patch.set_facecolor("white")
+
+    ax1   = axes[0]
+    sizes = np.sqrt(frecuencias / frecuencias.max()) * 80
+
+    sns.scatterplot(x=longitudes, y=entropias, size=sizes, sizes=(5, 80),
+                    color=palette[3], alpha=0.5, edgecolor="none", legend=False, ax=ax1)
+
+    z     = np.polyfit(longitudes, entropias, 1)
+    p_fit = np.poly1d(z)
+    xs    = np.linspace(longitudes.min(), longitudes.max(), 200)
+
+    ax1.plot(xs, p_fit(xs), "--", color=palette[4], linewidth=1.5, label="Tendencia lineal")
+    ax1.set_title(f"Longitud vs Entropia (sin ponderar)\nrho = {rho_raw:.4f}  |  p = {p_raw:.6f}", fontsize=12)
+    ax1.set_xlabel("Longitud de mascara")
+    ax1.set_ylabel("Entropia media")
+    ax1.legend()
+    sns.despine(ax=ax1)
+    ax1.grid(linestyle="--", alpha=0.4)
+
+    ax2        = axes[1]
+    lon_unicas = sorted(set(longitudes.astype(int)))
+    medias_por_lon = []
+
+    for l in lon_unicas:
+        mask       = longitudes == l
+        media_pond = np.average(entropias[mask], weights=frecuencias[mask])
+        medias_por_lon.append(media_pond)
+
+    sns.barplot(x=lon_unicas, y=medias_por_lon, palette="Blues", ax=ax2)
+    ax2.set_title(f"Entropia media ponderada por longitud\nrho = {rho_pond:.4f}  |  p = {p_pond:.6f}", fontsize=12)
+    ax2.set_xlabel("Longitud de mascara")
+    ax2.set_ylabel("Entropia media ponderada")
+    sns.despine(ax=ax2)
+    ax2.grid(axis="y", linestyle="--", alpha=0.4)
+
+    plt.tight_layout()
+    plt.savefig("../datos/procesados/graficos_kw/spearman_longitud_entropia.png",
+                dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    with open(OUT_SP_TXT, "w", encoding="utf-8") as f:
+        f.write("=== Spearman: correlacion longitud de mascara vs entropia media ===\n\n")
+        f.write(f"{'Variante':<25} {'rho':<12} {'p-valor':<14} {'Resultado'}\n")
+        f.write("-" * 65 + "\n")
+        f.write(f"{'Sin ponderar':<25} {rho_raw:<12.6f} {p_raw:<14.6f} {'RECHAZA H0' if rechaza_raw else 'No rechaza H0'}\n")
+        f.write(f"{'Ponderado':<25} {rho_pond:<12.6f} {p_pond:<14.6f} {'RECHAZA H0' if rechaza_pond else 'No rechaza H0'}\n")
+        f.write("\nNota: version ponderada repite cada mascara segun su frecuencia (cap 200k)\n")
+        f.write("Longitud calculada como len(mascara)\n")
+
+    print(f"\n  -> {OUT_SP_TXT} guardado")
+    print(f"  -> Grafico en ../datos/procesados/graficos_kw/spearman_longitud_entropia.png")
+
+
 
 
 # main
@@ -479,3 +593,6 @@ if __name__ == "__main__":
 
     print("Calculando Kruskal-Wallis sobre entropias...")
     kruskal_wallis_entropias()
+
+    print("Calculando Spearman longitud vs entropia...")
+    spearman_longitud_entropia()
