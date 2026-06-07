@@ -576,10 +576,411 @@ def spearman_longitud_entropia():
         f.write("\nNota: version ponderada repite cada mascara segun su frecuencia (cap 200k)\n")
         f.write("Longitud calculada como len(mascara)\n")
 
+
     print(f"\n  -> {OUT_SP_TXT} guardado")
     print(f"  -> Grafico en ../datos/procesados/graficos_kw/spearman_longitud_entropia.png")
 
+def analizar_patrones_mascaras():
+    """
+    Analiza patrones estructurales en las mascaras de contrasennas ponderadas por frecuencia
+    y genera una suite de graficos descriptivos integrados.
+ 
+    Graficos generados:
+        - Barras composicion de tipos (Solo L, Solo D, L+D, etc.)
+        - Barras horizontales de inicio y final por tipo de caracter
+        - Heatmap de correlacion entre presencia de tipos (L, U, D, S)
+        - Barras de longitud ponderada
+        - Barras de estructuras de bloque top 15
+        - Scatter: longitud vs entropia media (burbuja por frecuencia)
+        - Heatmap de bigramas de transicion entre tipos
+        - Barras de posicion del primer D (sufijo numerico)
+ 
+    Args:
+        None
+ 
+    Returns:
+        None: Guarda graficos PNG en OUT_PAT_DIR y resumen de texto en OUT_PAT_TXT.
+ 
+    Example:
+        >>> analizar_patrones_mascaras()
+        [patrones] composicion guardada
+        [patrones] heatmap correlacion guardado
+        ...
+ 
+    Notes:
+        Todos los calculos se ponderan por frecuencia de mascara salvo donde
+        se indica. El heatmap de correlacion muestra el porcentaje de contrasennas
+        que contienen ambos tipos simultaneamente, normalizado por el menor
+        de los dos marginals (coeficiente de Jaccard ponderado).
+    """
+ 
+    OUT_PAT_DIR = "../datos/procesados/graficos_patrones"
+    OUT_PAT_TXT = "../datos/procesados/patrones_mascaras_resumen.txt"
+    os.makedirs(OUT_PAT_DIR, exist_ok=True)
+ 
+    mascaras    = []
+    frecuencias = []
+    entropias   = []
+ 
+    with open(ROCKYOUMASKS, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            mascaras.append(row["mascara"])
+            frecuencias.append(int(row["frecuencia"]))
+            entropias.append(float(row["entropia_media"]))
+ 
+    mascaras    = np.array(mascaras)
+    frecuencias = np.array(frecuencias, dtype=float)
+    entropias   = np.array(entropias,   dtype=float)
+    total_pw    = frecuencias.sum()
+ 
+    def wpct(mask_bool):
+        return frecuencias[mask_bool].sum() / total_pw * 100
+ 
+    chars_set = [set(m) for m in mascaras]
+ 
+    tiene = {
+        t: np.array([t in s for s in chars_set])
+        for t in ["L", "U", "D", "S"]
+    }
+ 
+    def bloques(m):
+        if not m:
+            return ""
+        r = [m[0]]
+        for c in m[1:]:
+            if c != r[-1]:
+                r.append(c)
+        return "".join(r)
+ 
+    longitudes = np.array([len(m) for m in mascaras])
+ 
+    # ------------------------------------------------------------------ #
+    # 1. DONUT — composicion de tipos                                      #
+    # ------------------------------------------------------------------ #
+    solo_L = np.array([s == {"L"}              for s in chars_set])
+    solo_D = np.array([s == {"D"}              for s in chars_set])
+    solo_U = np.array([s == {"U"}              for s in chars_set])
+    solo_S = np.array([s == {"S"}              for s in chars_set])
+    LD     = np.array([s == {"L","D"}          for s in chars_set])
+    LU     = np.array([s == {"L","U"}          for s in chars_set])
+    LS     = np.array([s == {"L","S"}          for s in chars_set])
+    LUD    = np.array([s == {"L","U","D"}      for s in chars_set])
+    LUDS   = np.array([s == {"L","U","D","S"}  for s in chars_set])
+    otros  = ~(solo_L | solo_D | solo_U | solo_S | LD | LU | LS | LUD | LUDS)
+ 
+    etiquetas_donut = ["Solo L", "Solo D", "Solo U", "L+D", "L+U", "L+S",
+                       "L+U+D", "L+U+D+S", "Solo S", "Otros"]
+    mascaras_donut  = [solo_L, solo_D, solo_U, LD, LU, LS, LUD, LUDS, solo_S, otros]
+    valores_donut   = [wpct(m) for m in mascaras_donut]
+    colores_donut   = [palette[9], palette[7], palette[5], palette[8],
+                       palette[6], palette[4], palette[3], palette[2],
+                       palette[1], palette[0]]
+ 
+    fig, ax = plt.subplots(figsize=(9, 5))
+    fig.patch.set_facecolor("white")
+    sns.barplot(x=etiquetas_donut, y=valores_donut, palette="Blues", ax=ax)
+    ax.set_ylabel("% contraseñas (ponderado)")
+    ax.set_xlabel("Tipo de composición")
+    ax.set_title("Composición de tipos de caracter\n(ponderado por frecuencia)", fontsize=12)
+    ax.tick_params(axis="x", rotation=45)
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.35)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_PAT_DIR}/01_composicion_tipos.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+    print("  [patrones] composicion guardada")
+ 
+    # ------------------------------------------------------------------ #
+    # 2. BARRAS DOBLES — inicio y final por tipo                          #
+    # ------------------------------------------------------------------ #
+    tipos        = ["L", "D", "U", "S"]
+    pct_inicio   = [wpct(np.array([m[0]  == t for m in mascaras])) for t in tipos]
+    pct_final    = [wpct(np.array([m[-1] == t for m in mascaras])) for t in tipos]
+ 
+    x     = np.arange(len(tipos))
+    ancho = 0.35
+ 
+    fig, ax = plt.subplots(figsize=(7, 4))
+    fig.patch.set_facecolor("white")
+    bars1 = ax.bar(x - ancho/2, pct_inicio, ancho, color=palette[7], alpha=0.9, label="Inicia con")
+    bars2 = ax.bar(x + ancho/2, pct_final,  ancho, color=palette[4], alpha=0.9, label="Termina con")
+    ax.bar_label(bars1, fmt="%.1f%%", fontsize=8, padding=3)
+    ax.bar_label(bars2, fmt="%.1f%%", fontsize=8, padding=3)
+    ax.set_xticks(x)
+    ax.set_xticklabels(["Letras minúsculas (L)", "Dígitos (D)", "Mayúsculas (U)", "Símbolos (S)"], rotation=20, ha="right")
+    ax.set_ylabel("% contrasennas (ponderado)")
+    ax.set_title("Tipo de caracter en primera y ultima posicion", fontsize=12)
+    ax.legend()
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.35)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_PAT_DIR}/02_inicio_final.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+    print("  [patrones] inicio/final guardada")
+ 
+    # ------------------------------------------------------------------ #
+    # 3. HEATMAP — correlacion (Jaccard ponderado) entre tipos            #
+    # ------------------------------------------------------------------ #
+    tipos4 = ["L", "U", "D", "S"]
+    n4     = len(tipos4)
+    mat    = np.zeros((n4, n4))
+ 
+    for i, ti in enumerate(tipos4):
+        for j, tj in enumerate(tipos4):
+            if i == j:
+                mat[i, j] = wpct(tiene[ti])
+            else:
+                ambos    = tiene[ti] & tiene[tj]
+                cualquiera = tiene[ti] | tiene[tj]
+                denom    = frecuencias[cualquiera].sum()
+                mat[i, j] = (frecuencias[ambos].sum() / denom * 100) if denom > 0 else 0
+ 
+    fig, ax = plt.subplots(figsize=(5, 4))
+    fig.patch.set_facecolor("white")
+    sns.heatmap(
+        mat,
+        annot=True,
+        fmt=".1f",
+        xticklabels=tipos4,
+        yticklabels=tipos4,
+        cmap="Blues",
+        linewidths=0.5,
+        ax=ax,
+        vmin=0, vmax=100,
+        annot_kws={"size": 10}
+    )
+    ax.set_title("Co-ocurrencia ponderada entre tipos (%)\n(diagonal = presencia individual;\nfuera = Jaccard ponderado)", fontsize=10)
+    ax.set_xlabel("Tipo B")
+    ax.set_ylabel("Tipo A")
+    plt.tight_layout()
+    plt.savefig(f"{OUT_PAT_DIR}/03_heatmap_correlacion_tipos.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+    print("  [patrones] heatmap correlacion guardado")
+ 
+    # ------------------------------------------------------------------ #
+    # 4. BARRAS — distribucion de longitudes (hasta 20)                   #
+    # ------------------------------------------------------------------ #
+    lons_validas = range(1, 21)
+    pct_lon      = []
+    for l in lons_validas:
+        pct_lon.append(wpct(longitudes == l))
+ 
+    fig, ax = plt.subplots(figsize=(10, 4))
+    fig.patch.set_facecolor("white")
+    barras = ax.bar(list(lons_validas), pct_lon, color=palette[6], alpha=0.88)
+    ax.bar_label(barras, fmt="%.1f%%", fontsize=7, rotation=45, padding=2)
+    ax.set_xlabel("Longitud de mascara")
+    ax.set_ylabel("% contrasennas (ponderado)")
+    ax.set_title("Distribucion de longitud de mascara", fontsize=12)
+    ax.set_xticks(list(lons_validas))
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.35)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_PAT_DIR}/04_longitud.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+    print("  [patrones] longitud guardada")
+ 
+    # ------------------------------------------------------------------ #
+    # 5. BARRAS HORIZONTALES — top 15 estructuras de bloque               #
+    # ------------------------------------------------------------------ #
+    bloque_freq = {}
+    for m, f in zip(mascaras, frecuencias):
+        b = bloques(m)
+        bloque_freq[b] = bloque_freq.get(b, 0) + f
+ 
+    top15_bloques = sorted(bloque_freq.items(), key=lambda x: -x[1])[:15]
+    bl_labels     = [b for b, _ in top15_bloques]
+    bl_vals       = [v / total_pw * 100 for _, v in top15_bloques]
+ 
+    fig, ax = plt.subplots(figsize=(7, 5))
+    fig.patch.set_facecolor("white")
+    bars = ax.barh(bl_labels[::-1], bl_vals[::-1], color=palette[6], alpha=0.88)
+    ax.bar_label(bars, fmt="%.2f%%", fontsize=8, padding=3)
+    ax.set_xlabel("% contrasennas (ponderado)")
+    ax.set_title("Top 15 estructuras de bloque\n(tipos contiguos comprimidos)", fontsize=12)
+    sns.despine(ax=ax)
+    ax.grid(axis="x", linestyle="--", alpha=0.35)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_PAT_DIR}/05_bloques.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+    print("  [patrones] bloques guardada")
+ 
+    # ------------------------------------------------------------------ #
+    # 6. SCATTER burbuja — longitud vs entropia media                     #
+    # ------------------------------------------------------------------ #
+    lon_media_por_lon = {}
+    for l in range(1, 31):
+        mask = longitudes == l
+        if mask.sum() == 0:
+            continue
+        lon_media_por_lon[l] = {
+            "ent_pond": np.average(entropias[mask], weights=frecuencias[mask]),
+            "frec":     frecuencias[mask].sum()
+        }
+ 
+    xs    = list(lon_media_por_lon.keys())
+    ys    = [lon_media_por_lon[l]["ent_pond"] for l in xs]
+    sz_f  = np.array([lon_media_por_lon[l]["frec"] for l in xs])
+    sz    = np.sqrt(sz_f / sz_f.max()) * 600
+ 
+    fig, ax = plt.subplots(figsize=(10, 5))
+    fig.patch.set_facecolor("white")
+    sc = ax.scatter(xs, ys, s=sz, c=palette[7], alpha=0.7, edgecolors=palette[9], linewidths=0.5)
+    z     = np.polyfit(xs, ys, 1)
+    p_fit = np.poly1d(z)
+    xline = np.linspace(min(xs), max(xs), 200)
+    ax.plot(xline, p_fit(xline), "--", color=palette[4], linewidth=1.5, label="Tendencia")
+    ax.set_xlabel("Longitud de mascara")
+    ax.set_ylabel("Entropia media ponderada")
+    ax.set_title("Longitud de mascara vs entropia media\n(tamano de burbuja = frecuencia relativa)", fontsize=12)
+    ax.legend()
+    sns.despine(ax=ax)
+    ax.grid(linestyle="--", alpha=0.35)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_PAT_DIR}/06_longitud_vs_entropia.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+    print("  [patrones] scatter longitud-entropia guardada")
+ 
+    # ------------------------------------------------------------------ #
+    # 7. HEATMAP — bigramas de transicion entre tipos                     #
+    # ------------------------------------------------------------------ #
+    tipos_ord  = ["L", "U", "D", "S"]
+    trans_mat  = np.zeros((4, 4))
+    t_idx      = {t: i for i, t in enumerate(tipos_ord)}
+ 
+    trans_total = 0.0
+    for m, f in zip(mascaras, frecuencias):
+        for k in range(len(m) - 1):
+            a, b2 = m[k], m[k+1]
+            if a in t_idx and b2 in t_idx:
+                trans_mat[t_idx[a], t_idx[b2]] += f
+                trans_total += f
+ 
+    trans_pct = trans_mat / trans_total * 100 if trans_total > 0 else trans_mat
+ 
+    fig, ax = plt.subplots(figsize=(5, 4))
+    fig.patch.set_facecolor("white")
+    sns.heatmap(
+        trans_pct,
+        annot=True,
+        fmt=".2f",
+        xticklabels=tipos_ord,
+        yticklabels=tipos_ord,
+        cmap="Blues",
+        linewidths=0.5,
+        ax=ax,
+        annot_kws={"size": 10}
+    )
+    ax.set_title("Bigramas de transicion entre tipos (%)\n(fila = tipo origen, col = tipo destino)", fontsize=10)
+    ax.set_xlabel("Tipo destino")
+    ax.set_ylabel("Tipo origen")
+    plt.tight_layout()
+    plt.savefig(f"{OUT_PAT_DIR}/07_heatmap_transiciones.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+    print("  [patrones] heatmap transiciones guardado")
+ 
+    # ------------------------------------------------------------------ #
+    # 8. BARRAS — posicion del primer D (mascaras con D)                  #
+    # ------------------------------------------------------------------ #
+    tipos_pos = ["D", "L", "U", "S"]
+    for t in tipos_pos:
+        with_t    = [(m, f) for m, f in zip(mascaras, frecuencias) if t in m]
+        total_t_f = sum(f for _, f in with_t)
+        pos_t_freq = {}
+        for m, f in with_t:
+            pos = next(i+1 for i, c in enumerate(m) if c == t)
+            pos_t_freq[pos] = pos_t_freq.get(pos, 0) + f
 
+        top_pos = sorted(pos_t_freq.items(), key=lambda x: x[0])
+        labels  = [f"Pos {p}" for p, _ in top_pos]
+        vals    = [v / total_t_f * 100 for _, v in top_pos]
+
+        fig, ax = plt.subplots(figsize=(8, 4))
+        fig.patch.set_facecolor("white")
+        bars = ax.bar(labels, vals, color=palette[6], alpha=0.88)
+        ax.bar_label(bars, fmt="%.1f%%", fontsize=8, padding=2)
+        ax.set_xlabel(f"Posición del primer {t} en la máscara")
+        ax.set_ylabel(f"% (de máscaras con {t})")
+        ax.set_title(f"Posición del primer {t}\n(entre máscaras que contienen al menos un {t})", fontsize=12)
+        sns.despine(ax=ax)
+        ax.grid(axis="y", linestyle="--", alpha=0.35)
+        plt.tight_layout()
+        plt.savefig(f"{OUT_PAT_DIR}/08_posicion_primer_{t}.png", dpi=150, bbox_inches="tight", facecolor="white")
+        plt.close()
+        print(f"  [patrones] posición primer {t} guardada")
+
+ 
+    # ------------------------------------------------------------------ #
+    # 9. BARRAS — longitud del sufijo numerico (mascaras que terminan D)  #
+    # ------------------------------------------------------------------ #
+    term_D     = [(m, f) for m, f in zip(mascaras, frecuencias) if m[-1] == "D"]
+    total_tD   = sum(f for _, f in term_D)
+    sufijo_len = {}
+    for m, f in term_D:
+        suf = 0
+        for c in reversed(m):
+            if c == "D": suf += 1
+            else: break
+        sufijo_len[suf] = sufijo_len.get(suf, 0) + f
+ 
+    suf_items  = sorted(sufijo_len.items(), key=lambda x: x[0])
+    suf_labels = [f"{s} D" for s, _ in suf_items]
+    suf_vals   = [v / total_tD * 100 for _, v in suf_items]
+ 
+    fig, ax = plt.subplots(figsize=(7, 4))
+    fig.patch.set_facecolor("white")
+    bars = ax.bar(suf_labels, suf_vals, color=palette[5], alpha=0.88)
+    ax.bar_label(bars, fmt="%.1f%%", fontsize=8, padding=2)
+    ax.set_xlabel("Longitud del sufijo numerico")
+    ax.set_ylabel("% (de mascaras que terminan en D)")
+    ax.set_title("Longitud del sufijo numerico al final de la mascara", fontsize=12)
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.35)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_PAT_DIR}/09_sufijo_numerico.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+    print("  [patrones] sufijo numerico guardada")
+ 
+    # ------------------------------------------------------------------ #
+    # 10. RESUMEN TXT                                                      #
+    # ------------------------------------------------------------------ #
+    lineas = []
+    def pr(t=""):
+        lineas.append(t)
+ 
+    pr("=" * 65)
+    pr("  PATRONES EN MASCARAS (ponderado por frecuencia)")
+    pr("=" * 65)
+    pr(f"  Mascaras unicas : {len(mascaras):>10,}")
+    pr(f"  Contrasennas    : {int(total_pw):>10,}")
+    pr()
+    pr("--- Composicion ---")
+    pr(f"  Solo L           : {wpct(solo_L):.2f}%")
+    pr(f"  Solo D           : {wpct(solo_D):.2f}%")
+    pr(f"  Solo U           : {wpct(solo_U):.2f}%")
+    pr(f"  Solo S           : {wpct(solo_S):.2f}%")
+    pr(f"  L+D              : {wpct(LD):.2f}%")
+    pr(f"  L+U              : {wpct(LU):.2f}%")
+    pr(f"  L+S              : {wpct(LS):.2f}%")
+    pr(f"  L+U+D            : {wpct(LUD):.2f}%")
+    pr(f"  L+U+D+S          : {wpct(LUDS):.2f}%")
+    pr()
+    pr("--- Inicio y final ---")
+    for t in tipos:
+        pr(f"  Inicia {t}         : {wpct(np.array([m[0]==t  for m in mascaras])):.2f}%")
+        pr(f"  Termina {t}        : {wpct(np.array([m[-1]==t for m in mascaras])):.2f}%")
+    pr()
+    pr("--- Longitud media ponderada ---")
+    pr(f"  {np.average(longitudes, weights=frecuencias):.2f} caracteres")
+    pr()
+    pr(f"Graficos en: {OUT_PAT_DIR}/")
+ 
+    with open(OUT_PAT_TXT, "w", encoding="utf-8") as f:
+        f.write("\n".join(lineas) + "\n")
+ 
+    print(f"\n  -> {OUT_PAT_TXT} guardado")
+    print(f"  -> Graficos en {OUT_PAT_DIR}/")
 
 
 # main
@@ -596,3 +997,6 @@ if __name__ == "__main__":
 
     print("Calculando Spearman longitud vs entropia...")
     spearman_longitud_entropia()
+
+    print("Analizando los patrones de las mascaras...")
+    analizar_patrones_mascaras()
