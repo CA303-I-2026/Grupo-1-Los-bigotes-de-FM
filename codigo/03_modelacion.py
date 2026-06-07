@@ -25,7 +25,7 @@ TOKENS_DIST       = "../datos/procesados/tokens_dist_digitos.txt"
 OUT_DIR           = "../datos/procesados/graficos_ks"
 OUT_TXT           = "../datos/procesados/ks_tokens_resumen.txt"
 OUT               = "../datos/procesados/pruebas_resumen.txt"
-palette           = sns.color_palette("Blues", 5)
+palette           = sns.color_palette("Blues", 10)
 
 
 
@@ -157,21 +157,20 @@ def ks_benford(alpha=0.05):
 
         ax1 = axes[0]
         ax1.set_facecolor("white")
-        ax1.bar(x - ancho/2, prob_teorica,  width=ancho, color=palette[2], alpha=0.7, label=f"Benford pos {pos_num}")
-        ax1.bar(x + ancho/2, prob_empirica, width=ancho, color=palette[3], alpha=0.7, label="Empirica")
+        ax1.bar(x - ancho/2, prob_teorica,  width=ancho, color=palette[4], alpha=0.85, label=f"Benford pos {pos_num}")
+        ax1.bar(x + ancho/2, prob_empirica, width=ancho, color=palette[9], alpha=0.85, label="Empirica")
         ax1.set_title(f"Posicion {pos_num} — Distribucion", fontsize=13)
         ax1.set_xlabel("Digito")
         ax1.set_ylabel("Probabilidad")
         ax1.set_xticks(x)
         ax1.legend()
+        sns.despine(ax=ax1)
         ax1.grid(axis="y", linestyle="--", alpha=0.4)
-        ax1.spines["top"].set_visible(False)
-        ax1.spines["right"].set_visible(False)
 
         ax2 = axes[1]
         ax2.set_facecolor("white")
-        ax2.step(x, cdf_teorica,  where="post", color=palette[2], linewidth=2, label=f"CDF Benford pos {pos_num}")
-        ax2.step(x, cdf_empirica, where="post", color=palette[3], linewidth=2, label="CDF Empirica")
+        ax2.step(x, cdf_teorica,  where="post", color=palette[4], linewidth=2, label=f"CDF Benford pos {pos_num}")
+        ax2.step(x, cdf_empirica, where="post", color=palette[9], linewidth=2, label="CDF Empirica")
 
         idx_max = np.argmax(np.abs(cdf_empirica - cdf_teorica))
         ax2.annotate(
@@ -185,9 +184,8 @@ def ks_benford(alpha=0.05):
         ax2.set_ylabel("CDF")
         ax2.set_xticks(x)
         ax2.legend()
+        sns.despine(ax=ax2)
         ax2.grid(linestyle="--", alpha=0.4)
-        ax2.spines["top"].set_visible(False)
-        ax2.spines["right"].set_visible(False)
 
         plt.tight_layout()
         plt.savefig(f"{OUT_DIR}/ks_pos{pos_num}.png", dpi=150, bbox_inches="tight", facecolor="white")
@@ -212,6 +210,264 @@ def ks_benford(alpha=0.05):
     print(f"  -> Graficos en {OUT_DIR}/")
 
 
+
+def kruskal_wallis_entropias():
+    """
+    Calcula la prueba de Kruskal-Wallis sobre las entropias medias de las mascaras
+    agrupadas por tres criterios: longitud de mascara, tipo dominante de caracteres
+    y rango de entropia media.
+
+    Args:
+        None
+
+    Returns:
+        None: Guarda graficos boxplot por agrupacion y un resumen en texto plano.
+
+    Example:
+        >>> kruskal_wallis_entropias()
+        KW Longitud:       H = 48231.2100   p = 0.000000   RECHAZA H0
+        KW Tipo dominante: H = 12045.8800   p = 0.000000   RECHAZA H0
+        KW Rango entropia: H = 11746760.06  p = 0.000000   RECHAZA H0
+
+    Notes:
+        Las muestras se expanden por frecuencia (hasta un cap de 500k por mascara)
+        para que el test pondere correctamente las mascaras mas comunes.
+        Los tipos dominantes son: Solo L (solo minusculas), Solo D (solo digitos),
+        Solo U (solo mayusculas) y Mixta (combinacion de tipos).
+        El resultado de la agrupacion por rango de entropia es trivialmente
+        significativo por construccion y debe interpretarse solo como descriptivo.
+    """
+
+    OUT_KW_DIR = "../datos/procesados/graficos_kw"
+    OUT_KW_TXT = "../datos/procesados/kw_entropias_resumen.txt"
+    os.makedirs(OUT_KW_DIR, exist_ok=True)
+
+    mascaras    = []
+    entropias   = []
+    frecuencias = []
+
+    with open(ROCKYOUMASKS, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            mascaras.append(row["mascara"])
+            entropias.append(float(row["entropia_media"]))
+            frecuencias.append(int(row["frecuencia"]))
+
+    mascaras    = np.array(mascaras)
+    entropias   = np.array(entropias)
+    frecuencias = np.array(frecuencias)
+
+    def expandir(vals, freqs, cap=500_000):
+        """
+        Expande una lista de valores repitiendolos segun su frecuencia asociada.
+
+        Args:
+            vals (list[float]): Valores a expandir.
+            freqs (list[int]):  Frecuencias correspondientes.
+            cap (int):          Limite maximo de repeticiones por valor. Por defecto 500000.
+
+        Returns:
+            numpy.ndarray: Array expandido de floats.
+        """
+        out = []
+        for v, f in zip(vals, freqs):
+            out.extend([v] * min(f, cap))
+        return np.array(out, dtype=float)
+
+    resultados_kw = []
+
+    longitudes  = np.array([len(m) for m in mascaras])
+    grupos_long = defaultdict(list)
+
+    for lon, ent, frq in zip(longitudes, entropias, frecuencias):
+        grupos_long[lon].append((ent, frq))
+
+    grupos_long_valid = {k: v for k, v in grupos_long.items() if len(v) >= 2}
+    etiquetas_long    = sorted(grupos_long_valid.keys())
+    muestras_long     = [expandir([e for e, _ in grupos_long_valid[k]],
+                                  [f for _, f in grupos_long_valid[k]])
+                         for k in etiquetas_long]
+
+    H_long, p_long = stats.kruskal(*muestras_long)
+    rechaza_long   = p_long < 0.05
+
+    resultados_kw.append({
+        "agrupacion": "Longitud de mascara",
+        "n_grupos":   len(etiquetas_long),
+        "H":          H_long,
+        "p":          p_long,
+        "rechaza":    rechaza_long
+    })
+
+    print(f"  KW Longitud:      H = {H_long:.4f}   p = {p_long:.6f}   {'RECHAZA H0' if rechaza_long else 'No rechaza H0'}")
+
+    medias     = [np.mean(m) for m in muestras_long]
+    df_long    = {"longitud": [], "entropia": []}
+    for k, m in zip(etiquetas_long, muestras_long):
+        df_long["longitud"].extend([k] * len(m))
+        df_long["entropia"].extend(m.tolist())
+
+    fig, ax = plt.subplots(figsize=(14, 5))
+    fig.patch.set_facecolor("white")
+    sns.boxplot(x=df_long["longitud"], y=df_long["entropia"],
+                palette="Blues", ax=ax, linewidth=0.8, fliersize=1)
+    ax.plot(range(len(etiquetas_long)), medias, "o--",
+            color=palette[4], markersize=4, label="Media")
+    ax.set_title(f"Kruskal-Wallis — Entropia por longitud de mascara\nH = {H_long:.4f}  |  p = {p_long:.6f}  |  {'RECHAZA H0' if rechaza_long else 'No rechaza H0'}", fontsize=12)
+    ax.set_xlabel("Longitud de mascara")
+    ax.set_ylabel("Entropia media")
+    ax.legend()
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_KW_DIR}/kw_longitud.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    def clasificar_tipo(mascara):
+        """
+        Clasifica una mascara segun el tipo dominante de sus caracteres.
+
+        Args:
+            mascara (str): Cadena de caracteres tipo mascara (ej. 'LLLDDD').
+
+        Returns:
+            str: Una de las etiquetas: 'Solo L', 'Solo D', 'Solo U' o 'Mixta'.
+        """
+        chars = set(mascara)
+        if chars <= {"L"}:
+            return "Solo L"
+        if chars <= {"D"}:
+            return "Solo D"
+        if chars <= {"U"}:
+            return "Solo U"
+        if chars <= {"S"}:
+            return "Solo S"
+        return "Mixta"
+
+    tipos       = np.array([clasificar_tipo(m) for m in mascaras])
+    grupos_tipo = defaultdict(list)
+
+    for tip, ent, frq in zip(tipos, entropias, frecuencias):
+        grupos_tipo[tip].append((ent, frq))
+
+    etiquetas_tipo = sorted(grupos_tipo.keys())
+    muestras_tipo  = [expandir([e for e, _ in grupos_tipo[k]],
+                               [f for _, f in grupos_tipo[k]])
+                      for k in etiquetas_tipo]
+
+    H_tipo, p_tipo = stats.kruskal(*muestras_tipo)
+    rechaza_tipo   = p_tipo < 0.05
+
+    resultados_kw.append({
+        "agrupacion": "Tipo dominante",
+        "n_grupos":   len(etiquetas_tipo),
+        "H":          H_tipo,
+        "p":          p_tipo,
+        "rechaza":    rechaza_tipo
+    })
+
+    print(f"  KW Tipo dominante: H = {H_tipo:.4f}   p = {p_tipo:.6f}   {'RECHAZA H0' if rechaza_tipo else 'No rechaza H0'}")
+
+    medias_tipo = [np.mean(m) for m in muestras_tipo]
+    df_tipo     = {"tipo": [], "entropia": []}
+    for k, m in zip(etiquetas_tipo, muestras_tipo):
+        df_tipo["tipo"].extend([k] * len(m))
+        df_tipo["entropia"].extend(m.tolist())
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    fig.patch.set_facecolor("white")
+    sns.boxplot(x=df_tipo["tipo"], y=df_tipo["entropia"],
+                palette="Blues", ax=ax, linewidth=0.8, fliersize=1)
+    ax.plot(range(len(etiquetas_tipo)), medias_tipo, "o--",
+            color=palette[4], markersize=5, label="Media")
+    ax.set_title(f"Kruskal-Wallis — Entropia por tipo de mascara\nH = {H_tipo:.4f}  |  p = {p_tipo:.6f}  |  {'RECHAZA H0' if rechaza_tipo else 'No rechaza H0'}", fontsize=12)
+    ax.set_xlabel("Tipo de mascara")
+    ax.set_ylabel("Entropia media")
+    ax.legend()
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_KW_DIR}/kw_tipo.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    def rango_entropia(e):
+        """
+        Clasifica un valor de entropia en uno de tres rangos predefinidos.
+
+        Args:
+            e (float): Valor de entropia media.
+
+        Returns:
+            str: Etiqueta del rango: 'Baja (<1.5)', 'Media (1.5-2.5)' o 'Alta (>=2.5)'.
+        """
+        if e < 1.5:
+            return "Baja (<1.5)"
+        if e < 2.5:
+            return "Media (1.5-2.5)"
+        return "Alta (>=2.5)"
+
+    rangos       = np.array([rango_entropia(e) for e in entropias])
+    grupos_rango = defaultdict(list)
+
+    for rng, ent, frq in zip(rangos, entropias, frecuencias):
+        grupos_rango[rng].append((ent, frq))
+
+    orden_rangos  = ["Baja (<1.5)", "Media (1.5-2.5)", "Alta (>=2.5)"]
+    etiquetas_rng = [r for r in orden_rangos if r in grupos_rango]
+    muestras_rng  = [expandir([e for e, _ in grupos_rango[k]],
+                              [f for _, f in grupos_rango[k]])
+                     for k in etiquetas_rng]
+
+    H_rng, p_rng = stats.kruskal(*muestras_rng)
+    rechaza_rng  = p_rng < 0.05
+
+    resultados_kw.append({
+        "agrupacion": "Rango de entropia",
+        "n_grupos":   len(etiquetas_rng),
+        "H":          H_rng,
+        "p":          p_rng,
+        "rechaza":    rechaza_rng
+    })
+
+    print(f"  KW Rango entropia: H = {H_rng:.4f}   p = {p_rng:.6f}   {'RECHAZA H0' if rechaza_rng else 'No rechaza H0'}")
+
+    medias_rng = [np.mean(m) for m in muestras_rng]
+    df_rng     = {"rango": [], "entropia": []}
+    for k, m in zip(etiquetas_rng, muestras_rng):
+        df_rng["rango"].extend([k] * len(m))
+        df_rng["entropia"].extend(m.tolist())
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    fig.patch.set_facecolor("white")
+    sns.boxplot(x=df_rng["rango"], y=df_rng["entropia"],
+                palette="Blues", order=etiquetas_rng, ax=ax, linewidth=0.8, fliersize=1)
+    ax.plot(range(len(etiquetas_rng)), medias_rng, "o--",
+            color=palette[4], markersize=5, label="Media")
+    ax.set_title(f"Kruskal-Wallis — Entropia por rango\nH = {H_rng:.4f}  |  p = {p_rng:.6f}  |  {'RECHAZA H0' if rechaza_rng else 'No rechaza H0'}", fontsize=12)
+    ax.set_xlabel("Rango de entropia")
+    ax.set_ylabel("Entropia media")
+    ax.legend()
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_KW_DIR}/kw_rango.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    with open(OUT_KW_TXT, "w", encoding="utf-8") as f:
+        f.write("=== Kruskal-Wallis sobre entropias por agrupacion (alpha = 5%) ===\n\n")
+        f.write(f"{'Agrupacion':<25} {'N grupos':<10} {'H_stat':<12} {'p-valor':<14} {'Resultado'}\n")
+        f.write("-" * 75 + "\n")
+        for r in resultados_kw:
+            estado = "RECHAZA H0" if r["rechaza"] else "No rechaza H0"
+            f.write(f"{r['agrupacion']:<25} {r['n_grupos']:<10} {r['H']:<12.4f} {r['p']:<14.6f} {estado}\n")
+        f.write("\nNota: muestras expandidas por frecuencia (cap 500k por mascara)\n")
+
+    print(f"\n  -> {OUT_KW_TXT} guardado")
+    print(f"  -> Graficos en {OUT_KW_DIR}/")
+
+
+
+
 # main
 if __name__ == "__main__":
 
@@ -220,3 +476,6 @@ if __name__ == "__main__":
     # Metodos no parametricos
     print("Calculando KS contra Benford...")
     ks_benford(0.1)
+
+    print("Calculando Kruskal-Wallis sobre entropias...")
+    kruskal_wallis_entropias()
