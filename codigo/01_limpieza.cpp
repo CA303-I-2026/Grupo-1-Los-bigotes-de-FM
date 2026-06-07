@@ -19,13 +19,13 @@ using namespace std;
 // Estructura para manejo de datos por letras
 struct Data {
     string password;
-    char w[16] = {0};
+    vector<char> w;
 };
 
 // Estructura para manejo de datos por chuncks
 struct Datac {
     string password;
-    string chunks[8];
+    vector<string> chunks;
 };
 
 // Estructura para de dist de Ley de Benford
@@ -142,7 +142,7 @@ class cleaner {
         }
 
         // Funcion para encontrar los chunks
-        void tochunks() {
+        void tochunks(int maxC) {
 
             vector<string> list;
 
@@ -150,7 +150,7 @@ class cleaner {
 
                 list = chunksdetector(datacomp[i].password);
 
-                for(size_t j = 0; j < list.size() && j < 8; j++) {
+                for(size_t j = 0; j < list.size() && (int)j < maxC; j++) { // Cambiasr el 8 por el maximo de chunks deseados
 
                     datacomp[i].chunks[j] = list[j];
 
@@ -161,11 +161,11 @@ class cleaner {
         }
 
         // Funcion para partir en letras
-        void toletters() {
+        void toletters(int maxL) {
 
             for(size_t i = 0; i < datacom.size(); i++) {
 
-                for(size_t j = 0; j < datacom[i].password.length(); j++) {
+                for(size_t j = 0; j < datacom[i].password.length() && (int)j < maxL; j++) {
 
                     datacom[i].w[j] = datacom[i].password[j];
 
@@ -184,7 +184,7 @@ class cleaner {
 
                 fLoc << datacom[i].password;
 
-                for (size_t j = 0; j < 16; j++) {
+                for (size_t j = 0; j < datacom[i].w.size(); j++) { // Cambiar el 16 para guardar el maximo deseado del largo de las contraseñas
 
                     fLoc << ",";
 
@@ -213,8 +213,7 @@ class cleaner {
 
                 fLoc << datacomp[i].password;
 
-                for (size_t j = 0; j < 8; j++) {
-
+                for (size_t j = 0; j < datacomp[i].chunks.size(); j++) { // Cambiar el 8 para guardar el maximo deseado de chunks
                     fLoc << ",";
 
                     if (datacomp[i].chunks[j] != "") {
@@ -234,19 +233,21 @@ class cleaner {
         }
 
         // Funcion para pasar de txt a data
-        void txttodata() {
+        void txttodata(int maxL, int maxC) {
 
             ifstream fLoc("../datos/originales/rockyou.txt");
             string line;
 
             while (getline(fLoc, line)) {
 
-                if (!line.empty() && line.length() <= 16) {
+                if (!line.empty() && line.length() <= 16) { // Aca se puede cambiar el largo maximo de los caracteres admitidos
 
                     Data a;
                     Datac b;
                     a.password = line;
+                    a.w.resize(maxL, '\0');
                     b.password = line;
+                    b.chunks.resize(maxC);
                     datacom.push_back(a);
                     datacomp.push_back(b);
 
@@ -263,17 +264,42 @@ class cleaner {
 // main
 int main() {
 
+    int maxLetras = 16;
+    int maxChunks = 8;
+
+    char opcion;
+    cout << "Bienvenido al menu de limpieza de datos" << endl;
+    
+    cout << "Maximo de letras actual: " << maxLetras << " | Desea cambiarlo? (s/n): ";
+    cin >> opcion;
+    if (opcion == 's' || opcion == 'S') {
+        cout << "Ingrese el nuevo maximo de letras: ";
+        cin >> maxLetras;
+    }
+
+    cout << "Maximo de chunks actual: " << maxChunks << " | Desea cambiarlo? (s/n): ";
+    cin >> opcion;
+    if (opcion == 's' || opcion == 'S') {
+        cout << "Ingrese el nuevo maximo de chunks: ";
+        cin >> maxChunks;
+    }
+
+    cout << "\nUsando maxLetras = " << maxLetras << ", maxChunks = " << maxChunks << "\n" << endl;
+
+
+    cout << "Cargando los datos" << endl;
+
     cleaner datos;
-    datos.txttodata();
+    datos.txttodata(maxLetras, maxChunks);
 
-    cout << "carga terminada" << endl;
+    cout << "Carga terminada" << endl;
 
-    datos.toletters();
+    datos.toletters(maxLetras);
     datos.datatotxt();
 
-    cout << "letras terminadas" << endl;
+    cout << "Letras terminadas" << endl;
 
-    datos.tochunks();
+    datos.tochunks(maxChunks);
     datos.datatotxtc();
 
     cout << "chunks terminados" << endl;
