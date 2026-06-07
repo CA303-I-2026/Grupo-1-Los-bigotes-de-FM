@@ -377,6 +377,83 @@ class descriptivo {
 
             fEnt.close();
 
+            // Guardar resumen de entropias
+            double sumS = 0, sumD = 0;
+            double sumS2 = 0, sumD2 = 0;
+            float minS = newdata[0].entropyS, maxS = newdata[0].entropyS;
+            float minD = newdata[0].entropyD, maxD = newdata[0].entropyD;
+            size_t n = newdata.size();
+
+            for (size_t i = 0; i < n; i++) {
+
+                sumS  += newdata[i].entropyS;
+                sumD  += newdata[i].entropyD;
+                sumS2 += newdata[i].entropyS * newdata[i].entropyS;
+                sumD2 += newdata[i].entropyD * newdata[i].entropyD;
+
+                if (newdata[i].entropyS < minS) minS = newdata[i].entropyS;
+                if (newdata[i].entropyS > maxS) maxS = newdata[i].entropyS;
+                if (newdata[i].entropyD < minD) minD = newdata[i].entropyD;
+                if (newdata[i].entropyD > maxD) maxD = newdata[i].entropyD;
+
+            }
+
+            double mediaS = sumS / n;
+            double mediaD = sumD / n;
+            double varS   = (sumS2 / n) - (mediaS * mediaS);
+            double varD   = (sumD2 / n) - (mediaD * mediaD);
+            double sdS    = sqrt(varS);
+            double sdD    = sqrt(varD);
+
+            // Percentiles (ordenar copias)
+            vector<float> sortedS(n), sortedD(n);
+            for (size_t i = 0; i < n; i++) {
+                sortedS[i] = newdata[i].entropyS;
+                sortedD[i] = newdata[i].entropyD;
+            }
+            sort(sortedS.begin(), sortedS.end());
+            sort(sortedD.begin(), sortedD.end());
+
+            auto pct = [&](vector<float>& v, double p) -> float {
+                return v[min((size_t)(p * n), n - 1)];
+            };
+
+            ofstream fSum("../datos/procesados/rockyoueresumen.txt");
+
+            fSum << "=== Resumen de entropias ===\n\n";
+            fSum << "Total contraseñas: " << n << "\n\n";
+
+            fSum << "=== Entropia de Shannon ===\n";
+            fSum << "Min:      " << fixed << setprecision(4) << minS  << "\n";
+            fSum << "Max:      " << fixed << setprecision(4) << maxS  << "\n";
+            fSum << "Media:    " << fixed << setprecision(4) << mediaS << "\n";
+            fSum << "Varianza: " << fixed << setprecision(4) << varS  << "\n";
+            fSum << "Desv std: " << fixed << setprecision(4) << sdS   << "\n";
+            fSum << "P10: "      << fixed << setprecision(4) << pct(sortedS, 0.10) << "\n";
+            fSum << "P25: "      << fixed << setprecision(4) << pct(sortedS, 0.25) << "\n";
+            fSum << "P50: "      << fixed << setprecision(4) << pct(sortedS, 0.50) << "\n";
+            fSum << "P75: "      << fixed << setprecision(4) << pct(sortedS, 0.75) << "\n";
+            fSum << "P90: "      << fixed << setprecision(4) << pct(sortedS, 0.90) << "\n";
+            fSum << "P95: "      << fixed << setprecision(4) << pct(sortedS, 0.95) << "\n";
+            fSum << "P99: "      << fixed << setprecision(4) << pct(sortedS, 0.99) << "\n";
+
+            fSum << "\n=== Entropia de Densidad ===\n";
+            fSum << "Min:      " << fixed << setprecision(4) << minD  << "\n";
+            fSum << "Max:      " << fixed << setprecision(4) << maxD  << "\n";
+            fSum << "Media:    " << fixed << setprecision(4) << mediaD << "\n";
+            fSum << "Varianza: " << fixed << setprecision(4) << varD  << "\n";
+            fSum << "Desv std: " << fixed << setprecision(4) << sdD   << "\n";
+            fSum << "P10: "      << fixed << setprecision(4) << pct(sortedD, 0.10) << "\n";
+            fSum << "P25: "      << fixed << setprecision(4) << pct(sortedD, 0.25) << "\n";
+            fSum << "P50: "      << fixed << setprecision(4) << pct(sortedD, 0.50) << "\n";
+            fSum << "P75: "      << fixed << setprecision(4) << pct(sortedD, 0.75) << "\n";
+            fSum << "P90: "      << fixed << setprecision(4) << pct(sortedD, 0.90) << "\n";
+            fSum << "P95: "      << fixed << setprecision(4) << pct(sortedD, 0.95) << "\n";
+            fSum << "P99: "      << fixed << setprecision(4) << pct(sortedD, 0.99) << "\n";
+
+            fSum.close();
+            
+
             // Guardar distribucion de caracteres por posicion
             ofstream fDist("../datos/procesados/rockyouedist.txt");
 
