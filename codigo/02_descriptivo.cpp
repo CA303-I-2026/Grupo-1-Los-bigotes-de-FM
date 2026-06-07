@@ -549,7 +549,28 @@ class descriptivo {
 
             // Escritura resumen — sin cambio
             ofstream fSum("../datos/procesados/rockyoumasksresumen.txt");
-            // ... igual que antes ...
+            
+            fSum << "=== Mascaras de formato (ponderadas por frecuencia) ===\n\n";
+            fSum << "Total passwords (con repeticion): " << total << "\n";
+            fSum << "Mascaras unicas encontradas: " << maskSorted.size() << "\n\n";
+
+            fSum << "=== Cobertura acumulada top mascaras ===\n";
+            fSum << "top_n,cobertura\n";
+            long long acc = 0;
+            for (size_t i = 0; i < maskSorted.size(); i++) {
+                acc += maskSorted[i].second;
+                if (i < 10 || i == 24 || i == 49 || i == 99) {
+                    fSum << (i+1) << "," << fixed << setprecision(6) << (double)acc / total << "\n";
+                }
+            }
+
+            fSum << "\n=== Patrones comprimidos (runs) ===\n";
+            fSum << "patron,frecuencia,proporcion\n";
+            for (size_t i = 0; i < patSorted.size(); i++) {
+                fSum << patSorted[i].first << "," << patSorted[i].second << ","
+                    << fixed << setprecision(6) << (double)patSorted[i].second / total << "\n";
+            }
+
             fSum.close();
 
             // Escritura frecuencias — se añaden las nuevas columnas
@@ -715,7 +736,8 @@ int main() {
     int maxChunks = 8;
 
     char opcion;
-    cout << "=== Configuracion de parametros ===" << endl;
+    char opcion1;
+    cout << "Bienvenido al menu de descriptivo de datos" << endl;
 
     cout << "Maximo de letras actual: " << maxLetras << " | Desea cambiarlo? (s/n): ";
     cin >> opcion;
@@ -725,39 +747,40 @@ int main() {
     }
 
     cout << "Maximo de chunks actual: " << maxChunks << " | Desea cambiarlo? (s/n): ";
-    cin >> opcion;
-    if (opcion == 's' || opcion == 'S') {
+    cin >> opcion1;
+    if (opcion1 == 's' || opcion1 == 'S') {
         cout << "Ingrese el nuevo maximo de chunks: ";
         cin >> maxChunks;
     }
 
     cout << "\nUsando maxLetras=" << maxLetras << ", maxChunks=" << maxChunks << "\n" << endl;
 
+    cout << "Cargando datos" << endl;
 
     descriptivo datos;
     datos.txttodataNew(maxLetras, maxChunks);
 
-    cout << "carga terminada" << endl;
+    cout << "Carga terminada" << endl;
 
     datos.makedist();
     datos.makebenford();
     datos.makeentropy();
     datos.datatotxtNew();
 
-    cout << "dist, benford y entropias terminadas" << endl;
+    cout << "Dist, benford y entropias terminadas" << endl;
 
     datos.makedistFreq(maxLetras);
     datos.makebenfordFreq(maxChunks);
 
-    cout << "dist y benford freq terminadas" << endl;
+    cout << "Dist y benford freq terminadas" << endl;
 
     datos.makeLengthStatsFreq();
 
-    cout << "length stats terminadas" << endl;
+    cout << "Length stats terminadas" << endl;
 
     datos.makeMasksFreq(maxLetras);
 
-    cout << "mascaras terminadas" << endl;
+    cout << "Mascaras terminadas" << endl;
 
     return 0;
 
