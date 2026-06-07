@@ -4,7 +4,7 @@
 # Generado con Claude (Anthropic), inspirado y basado en la logica estructural
 # de los programas originales 01_limpieza.cpp y 02_descriptivo.cpp
 # escritos por Anthonny Flores Rojas
-# Correguido y revisado por Anthonny Flores Rojas
+# Corregido y revisado por Anthonny Flores Rojas
 #
 # Instalar dependencia: pip install tiktoken
 # Correr: python 02_tokenizer.py
@@ -50,8 +50,7 @@ class Tokenizer:
         self.data:        list[DataToken] = []
         self.digit_dists: list[DigitDist] = []
         self.max_digits:  int             = 0
-        self.max_len:     int             = 16
-        self.max_chunks:  int             = 8
+        self.max_len:     int | None      = None
 
     # Funcion para tokenizar una palabra
     def tokenize_word(self, word: str) -> DataToken:
@@ -81,7 +80,8 @@ class Tokenizer:
                 else:
                     word = parts[0]
 
-                if word and len(word) <= self.max_len:
+                # Filtrar por largo solo si max_len esta definido
+                if word and (self.max_len is None or len(word) <= self.max_len):
                     words.append(word)
 
         print(f"  {len(words)} palabras leidas, tokenizando...")
@@ -176,7 +176,7 @@ class Tokenizer:
             f.write("=== Resumen de sumas de tokens ===\n\n")
             f.write(f"Encoding usado:   {ENCODING_NAME}\n")
             f.write(f"Total palabras:   {n}\n")
-            f.write(f"Max letras usado: {self.max_len}\n")
+            f.write(f"Max letras usado: {'completo' if self.max_len is None else self.max_len}\n")
             f.write(f"Suma minima:      {min(sums)}\n")
             f.write(f"Suma maxima:      {max(sums)}\n")
             f.write(f"Media:            {mean:.4f}\n")
@@ -201,16 +201,19 @@ if __name__ == "__main__":
 
     # Menu de configuracion
     print("=== Configuracion de parametros ===")
+    print("Maximo de letras:")
+    print("  1. Usar 16 (predeterminado)")
+    print("  2. Usar largo completo de las contraseñas")
 
-    opcion = input(f"Maximo de letras actual: {tok.max_len} | Desea cambiarlo? (s/n): ").strip().lower()
-    if opcion == 's':
-        tok.max_len = int(input("Ingrese el nuevo maximo de letras: ").strip())
+    opcion = input("Elija una opcion (1/2): ").strip()
+    if opcion == '2':
+        tok.max_len = None
+        print("Usando largo completo")
+    else:
+        tok.max_len = 16
+        print("Usando maximo de 16")
 
-    opcion = input(f"Maximo de chunks actual: {tok.max_chunks} | Desea cambiarlo? (s/n): ").strip().lower()
-    if opcion == 's':
-        tok.max_chunks = int(input("Ingrese el nuevo maximo de chunks: ").strip())
-
-    print(f"\nUsando maxLetras = {tok.max_len}, maxChunks = {tok.max_chunks}\n")
+    print()
 
     print("Leyendo y tokenizando...")
     tok.read_and_tokenize(INPUT)
