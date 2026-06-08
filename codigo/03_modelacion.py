@@ -128,14 +128,6 @@ def ks_benford(alpha=0.05):
         estado  = "RECHAZA H0" if rechaza else "No rechaza H0"
 
         mad = float(np.mean(np.abs(prob_empirica - prob_teorica)))
-        if mad < 0.006:
-            mad_result = "Muy cercana"
-        elif mad < 0.012:
-            mad_result = "Aceptable"
-        elif mad < 0.015:
-            mad_result = "Marginal"
-        else:
-            mad_result = "No conformidad"
 
         resultados.append({
             "posicion":   pos_num,
@@ -143,11 +135,10 @@ def ks_benford(alpha=0.05):
             "D":          D,
             "D_alpha":    D_alpha,
             "rechaza":    rechaza,
-            "mad":        mad,
-            "mad_result": mad_result
+            "mad":        mad
         })
 
-        print(f"  Posicion {pos_num}: n = {int(total):<12} D = {D:.6f}   D_alpha = {D_alpha:.6f}   {estado:<12} MAD = {mad:.6f}   {mad_result}")
+        print(f"  Posicion {pos_num}: n = {int(total):<12} D = {D:.6f}   D_alpha = {D_alpha:.6f}   {estado:<12} MAD = {mad:.6f}   {mad}")
 
         x     = np.array(digitos_validos)
         ancho = 0.35
@@ -199,7 +190,7 @@ def ks_benford(alpha=0.05):
 
         for r in resultados:
             estado = "RECHAZA" if r["rechaza"] else "NO rechaza"
-            f.write(f"{r['posicion']:<6} {r['n']:<14} {r['D']:<12.6f} {r['D_alpha']:<12.6f} {estado:<14} {r['mad']:<12.6f} {r['mad_result']}\n")
+            f.write(f"{r['posicion']:<6} {r['n']:<14} {r['D']:<12.6f} {r['D_alpha']:<12.6f} {estado:<14} {r['mad']:<12.6f}\n")
 
         rechazadas = sum(1 for r in resultados if r["rechaza"])
         f.write(f"\nPosiciones que rechazan H0: {rechazadas} / {len(resultados)}\n")
@@ -211,7 +202,7 @@ def ks_benford(alpha=0.05):
 
 
 
-def kruskal_wallis_entropias():
+def kruskal_wallis_entropias(cap_expand = 500000):
     """
     Calcula la prueba de Kruskal-Wallis sobre las entropias medias de las mascaras
     agrupadas por tres criterios: longitud de mascara, tipo dominante de caracteres
@@ -284,9 +275,9 @@ def kruskal_wallis_entropias():
 
     grupos_long_valid = {k: v for k, v in grupos_long.items() if len(v) >= 2}
     etiquetas_long    = sorted(grupos_long_valid.keys())
-    muestras_long     = [expandir([e for e, _ in grupos_long_valid[k]],
-                                  [f for _, f in grupos_long_valid[k]])
-                         for k in etiquetas_long]
+    muestras_long = [expandir([e for e, _ in grupos_long_valid[k]],
+                           [f for _, f in grupos_long_valid[k]], cap_expand)
+                  for k in etiquetas_long]
 
     H_long, p_long = stats.kruskal(*muestras_long)
     rechaza_long   = p_long < 0.05
@@ -398,13 +389,13 @@ def kruskal_wallis_entropias():
             e (float): Valor de entropia media.
 
         Returns:
-            str: Etiqueta del rango: 'Baja (<1.5)', 'Media (1.5-2.5)' o 'Alta (>=2.5)'.
+            str: Etiqueta del rango: 'Baja (<2.4464)', 'Media (2.4464-2.9477)' o 'Alta (>=2.9477)'.
         """
-        if e < 1.5:
-            return "Baja (<1.5)"
-        if e < 2.5:
-            return "Media (1.5-2.5)"
-        return "Alta (>=2.5)"
+        if e < 2.4464:
+            return "Baja (<2.4464)"
+        if e < 2.9477:
+            return "Media (2.4464-2.9477)"
+        return "Alta (>=2.9477)"
 
     rangos       = np.array([rango_entropia(e) for e in entropias])
     grupos_rango = defaultdict(list)
@@ -412,7 +403,7 @@ def kruskal_wallis_entropias():
     for rng, ent, frq in zip(rangos, entropias, frecuencias):
         grupos_rango[rng].append((ent, frq))
 
-    orden_rangos  = ["Baja (<1.5)", "Media (1.5-2.5)", "Alta (>=2.5)"]
+    orden_rangos  = ["Baja (<2.4464)", "Media (2.4464-2.9477)", "Alta (>=2.9477)"]
     etiquetas_rng = [r for r in orden_rangos if r in grupos_rango]
     muestras_rng  = [expandir([e for e, _ in grupos_rango[k]],
                               [f for _, f in grupos_rango[k]])
@@ -466,7 +457,7 @@ def kruskal_wallis_entropias():
     print(f"  -> Graficos en {OUT_KW_DIR}/")
 
 
-def spearman_longitud_entropia():
+def spearman_longitud_entropia(cap_spear = 200_000):
     """
     Calcula la correlacion de Spearman entre la longitud de la mascara y su
     entropia media, en dos variantes: sin ponderar (una observacion por mascara)
@@ -508,7 +499,7 @@ def spearman_longitud_entropia():
 
     rho_raw, p_raw = stats.spearmanr(longitudes, entropias)
 
-    cap     = 200_000
+    cap = cap_spear
     lon_exp = []
     ent_exp = []
 
@@ -656,7 +647,7 @@ def analizar_patrones_mascaras():
     longitudes = np.array([len(m) for m in mascaras])
  
     # ------------------------------------------------------------------ #
-    # 1. DONUT — composicion de tipos                                      #
+    # 1. Composicion de tipos                                      #
     # ------------------------------------------------------------------ #
     solo_L = np.array([s == {"L"}              for s in chars_set])
     solo_D = np.array([s == {"D"}              for s in chars_set])
@@ -986,17 +977,117 @@ def analizar_patrones_mascaras():
 # main
 if __name__ == "__main__":
 
+    alpha_ks   = 0.05
+    cap_expand = 500_000
+    cap_spear  = 200_000
+
+    print("=" * 50)
+    print("  Bienvenido al menu de pruebas estadisticas")
+    print("=" * 50)
+
+    opcion = input(f"\nAlpha actual: {alpha_ks} | ¿Desea cambiarlo? (s/n): ").strip().lower()
+    if opcion == 's':
+        try:
+            alpha_ks = float(input("Ingrese el nuevo alpha (ej. 0.01, 0.05, 0.10): "))
+        except ValueError:
+            print("  Valor inválido, se usará alpha = 0.05")
+            alpha_ks = 0.05
+
+    opcion = input(f"\nCap de expansión KW actual: {cap_expand} | ¿Desea cambiarlo? (s/n): ").strip().lower()
+    if opcion == 's':
+        try:
+            cap_expand = int(input("Ingrese el nuevo cap de expansión (ej. 100000): "))
+        except ValueError:
+            print("  Valor inválido, se usará cap = 500000")
+            cap_expand = 500_000
+
+    opcion = input(f"\nCap de expansión Spearman actual: {cap_spear} | ¿Desea cambiarlo? (s/n): ").strip().lower()
+    if opcion == 's':
+        try:
+            cap_spear = int(input("Ingrese el nuevo cap Spearman (ej. 50000): "))
+        except ValueError:
+            print("  Valor inválido, se usará cap = 200000")
+            cap_spear = 200_000
+
+    print(f"\nUsando alpha={alpha_ks}, cap_expand={cap_expand}, cap_spear={cap_spear}\n")
+    print("=" * 50)
     print("=== Pruebas estadisticas ===\n")
 
-    # Metodos no parametricos
+    # PUNTO 3
+    #
+    # Pregunta de investigación (implicita en el proyecto):
+    # En progreso
+    #
+    # El modelo seleccionado combina tres (por el momento) pruebas no parametricas:
+    #   1. KS vs Benford  → ajuste de distribucion por posicion de dígito
+    #   2. Kruskal-Wallis → diferencias de entropía entre grupos (longitud / tipo / rango)
+    #   3. Spearman       → relacion monotonica entre longitud y entropía
+    #
+    # Juntas, responden si los patrones de contraseñas son predecibles
+    # (Benford) y si la estructura interna (longitud, tipo) discrimina
+    # la aleatoriedad medida por entropía. Esto permite concluir parcialmente
+    # sobre la vulnerabilidad estructural de las contraseñas analizadas
+
     print("Calculando KS contra Benford...")
-    ks_benford(0.1)
+    # Compara la CDF empirica de digitos por posicion contra
+    # la CDF teorica de Benford. Si D > D_alpha se rechaza H0, indicando
+    # que los digitos NO siguen Benford -> patron diferente de benford
+    ks_benford(alpha_ks)
 
     print("Calculando Kruskal-Wallis sobre entropias...")
+    # Prueba si la distribucion de entropia difiere entre grupos.
+    # Al rechazar H0 en longitud y tipo dominante se confirma que la estructura
+    # de la mascara si predice la entropia, respondiendo parcialmente la pregunta
+    # sobre predictibilidad de contrasenas segun su patron de caracteres.
     kruskal_wallis_entropias()
 
     print("Calculando Spearman longitud vs entropia...")
+    # Cuantifica la fuerza y direccion de la relacion monotonica.
+    # Un rho alto y positivo confirma que contrasenas mas largas son mas
+    # entropicas, lo que respalda la recomendacion de longitud minima.
     spearman_longitud_entropia()
+
+    
+    # PUNTO 4
+    #
+    # Criterios para calificar si el modelo está bien ajustado:
+    #
+    # [A] Tamano de muestra (n):
+    #     - n >> 10 000 en todas las pruebas -> alta potencia estadistica.
+    #     - Ojo: con n muy grande hasta diferencias chiquitas salen
+    #       significativas. Por eso se mira tambien D, MAD, H y rho
+    #       para evaluar relevancia practica, no solo estadistica.
+    #
+    # [B] KS — ajuste a Benford:
+    #     - Se reporta MAD (Mean Absolute Deviation) ademas del estadistico D.
+    #     - Si todas las posiciones rechazan H0 pero el MAD es bajo,
+    #       el rechazo se debe al n enorme, no a desviaciones reales.
+    #
+    # [C] Kruskal-Wallis — supuestos:
+    #     - No pide normalidad (ya se cumple por construccion).
+    #     - Necesita al menos 2 observaciones por grupo (eso se filtra en el codigo).
+    #     - El cap de frecuencia es el riesgo: si es muy alto puede inflar H.
+    #       Conviene probar con distintos caps para ver si los resultados se mantienen.
+    #     - El agrupamiento por rango de entropia es obvio que da significativo
+    #       (los grupos se definen con la misma variable). Se usa solo como descriptivo,
+    #       no como prueba inferencial.
+    #
+    # [D] Spearman — robustez de la correlacion:
+    #     - No asume linealidad ni normalidad -> sirve para datos ordinales
+    #       y distribuciones sesgadas de contrasenas.
+    #     - Se comparan version sin ponderar y ponderada; si rho se mantiene,
+    #       la correlacion es robusta a la distribucion de frecuencias.
+    #     - Un p ~ 0 con n gigante no dice mucho: lo que importa es el rho
+    #       (si |rho| > 0.7 -> correlacion fuerte).
+    #
+    # [E] Consistencia global:
+    #     - Si KS rechaza Benford, KW separa grupos y Spearman da rho alto,
+    #       las pruebas son consistentes: los digitos no son aleatorios
+    #       y la longitud/tipo los modula. Eso habla bien del modelo.
+    #     - Si alguna prueba no rechaza H0, se anota como hallazgo,
+    #       no como fallo del modelo.
+
+
 
     print("Analizando los patrones de las mascaras...")
     analizar_patrones_mascaras()
