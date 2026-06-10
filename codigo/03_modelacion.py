@@ -2,7 +2,7 @@
 # Pruebas estadisticas sobre los datos procesados
 # Hecho por Anthonny Flores Rojas (C32975)
 #
-# Correr: python 03_pruebas.py
+# Correr: python 03_modelacion.py
 
 # Librerias
 import os
@@ -28,7 +28,292 @@ OUT               = "../datos/procesados/pruebas_resumen.txt"
 palette           = sns.color_palette("Blues", 10)
 
 
+# 1.2. Analisis descriptivo completo
+def analisis_descriptivo():
+    """
+    Realiza un analisis descriptivo completo sobre los datos de contraseñas
 
+    Args:
+        None
+
+    Returns:
+        None: Imprime estadisticos descriptivos y guarda graficos
+         en ../datos/procesados/graficos_descriptivo/.
+
+    Notes:
+        Todos los estadisticos de longitud y entropia se calculan sin ponderar 
+        (una observación por mascara unica) y ponderado por frecuencia 
+        (cada mascara cuenta tantas veces como contraseñas reales la usan). 
+        La version ponderada es la que mejor representa el comportamiento 
+        real del dataset RockYou.
+    """
+
+    OUT_DESC_DIR = "../datos/procesados/graficos_descriptivo"
+    OUT_DESC_TXT = "../datos/procesados/descriptivo_resumen.txt"
+    os.makedirs(OUT_DESC_DIR, exist_ok=True)
+
+    mascaras    = []
+    frecuencias = []
+    entropias   = []
+
+    with open(ROCKYOUMASKS, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            mascaras.append(row["mascara"])
+            frecuencias.append(int(row["frecuencia"]))
+            entropias.append(float(row["entropia_media"]))
+
+    mascaras    = np.array(mascaras)
+    frecuencias = np.array(frecuencias, dtype=float)
+    entropias   = np.array(entropias,   dtype=float)
+    longitudes  = np.array([len(m) for m in mascaras], dtype=float)
+    total_pw    = frecuencias.sum()
+
+    # Estadisticas descriptivas de longitud
+    lon_media      = np.mean(longitudes)
+    lon_media_pond = np.average(longitudes, weights=frecuencias)
+    lon_mediana    = np.median(longitudes)
+    lon_std        = np.std(longitudes)
+    lon_std_pond   = np.sqrt(np.average((longitudes - lon_media_pond)**2, weights=frecuencias))
+    lon_min        = int(longitudes.min())
+    lon_max        = int(longitudes.max())
+    lon_q1         = np.percentile(longitudes, 25)
+    lon_q3         = np.percentile(longitudes, 75)
+
+    # Estadisticas descriptivas de entropia
+    ent_media      = np.mean(entropias)
+    ent_media_pond = np.average(entropias, weights=frecuencias)
+    ent_mediana    = np.median(entropias)
+    ent_std        = np.std(entropias)
+    ent_std_pond   = np.sqrt(np.average((entropias - ent_media_pond)**2, weights=frecuencias))
+    ent_min        = entropias.min()
+    ent_max        = entropias.max()
+    ent_q1         = np.percentile(entropias, 25)
+    ent_q3         = np.percentile(entropias, 75)
+
+    print("\n=== Analisis Descriptivo ===\n")
+    print(f"  Mascaras unicas : {len(mascaras):>12,}")
+    print(f"  Contraseñas     : {int(total_pw):>12,}")
+    print()
+    print(f"  {'Estadistico':<28} {'Sin ponderar':>14} {'Ponderado':>14}")
+    print(f"  {'-'*58}")
+    print(f"  {'Longitud — media':<28} {lon_media:>14.2f} {lon_media_pond:>14.2f}")
+    print(f"  {'Longitud — mediana':<28} {lon_mediana:>14.2f} {'—':>14}")
+    print(f"  {'Longitud — std':<28} {lon_std:>14.2f} {lon_std_pond:>14.2f}")
+    print(f"  {'Longitud — min':<28} {lon_min:>14} {'—':>14}")
+    print(f"  {'Longitud — max':<28} {lon_max:>14} {'—':>14}")
+    print(f"  {'Longitud — Q1':<28} {lon_q1:>14.2f} {'—':>14}")
+    print(f"  {'Longitud — Q3':<28} {lon_q3:>14.2f} {'—':>14}")
+    print()
+    print(f"  {'Entropía — media':<28} {ent_media:>14.4f} {ent_media_pond:>14.4f}")
+    print(f"  {'Entropía — mediana':<28} {ent_mediana:>14.4f} {'—':>14}")
+    print(f"  {'Entropía — std':<28} {ent_std:>14.4f} {ent_std_pond:>14.4f}")
+    print(f"  {'Entropía — min':<28} {ent_min:>14.4f} {'—':>14}")
+    print(f"  {'Entropía — max':<28} {ent_max:>14.4f} {'—':>14}")
+    print(f"  {'Entropía — Q1':<28} {ent_q1:>14.4f} {'—':>14}")
+    print(f"  {'Entropía — Q3':<28} {ent_q3:>14.4f} {'—':>14}")
+
+    # Histograma de longitudes
+    fig, axes = plt.subplots(1, 2, figsize=(13, 4))
+    fig.patch.set_facecolor("white")
+
+    lon_int   = longitudes.astype(int)
+    bins      = range(lon_min, lon_max + 2)
+    counts_u  = np.bincount(lon_int - lon_min, minlength=lon_max - lon_min + 1)
+    counts_p  = np.zeros(lon_max - lon_min + 1)
+    for l, f in zip(lon_int, frecuencias):
+        counts_p[l - lon_min] += f
+    counts_p /= total_pw / 100   # porcentaje
+
+    ax = axes[0]
+    ax.set_facecolor("white")
+    ax.bar(range(lon_min, lon_max + 1), counts_u, color=palette[6], alpha=0.88)
+    ax.set_title("Distribución de longitud\n(sin ponderar — máscaras únicas)", fontsize=11)
+    ax.set_xlabel("Longitud")
+    ax.set_ylabel("Frecuencia (máscaras)")
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+
+    ax = axes[1]
+    ax.set_facecolor("white")
+    ax.bar(range(lon_min, lon_max + 1), counts_p, color=palette[8], alpha=0.88)
+    ax.set_title("Distribución de longitud\n(ponderada — contraseñas reales)", fontsize=11)
+    ax.set_xlabel("Longitud")
+    ax.set_ylabel("% contraseñas")
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+
+    plt.tight_layout()
+    plt.savefig(f"{OUT_DESC_DIR}/desc_01_longitudes.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    # Histograma de entropías
+    fig, axes = plt.subplots(1, 2, figsize=(13, 4))
+    fig.patch.set_facecolor("white")
+
+    ax = axes[0]
+    ax.set_facecolor("white")
+    ax.hist(entropias, bins=40, color=palette[6], alpha=0.88, edgecolor="white")
+    ax.axvline(ent_media,   color=palette[9], linewidth=1.5, linestyle="--", label=f"Media: {ent_media:.2f}")
+    ax.axvline(ent_mediana, color=palette[4], linewidth=1.5, linestyle=":",  label=f"Mediana: {ent_mediana:.2f}")
+    ax.set_title("Distribución de entropía media\n(sin ponderar)", fontsize=11)
+    ax.set_xlabel("Entropía media")
+    ax.set_ylabel("Frecuencia (máscaras)")
+    ax.legend(fontsize=9)
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+
+    # Entropía ponderada expandida (muestra representativa de hasta 500k por máscara)
+    ent_exp = []
+    for e, f in zip(entropias, frecuencias):
+        ent_exp.extend([e] * min(int(f), 500_000))
+    ent_exp = np.array(ent_exp)
+
+    ax = axes[1]
+    ax.set_facecolor("white")
+    ax.hist(ent_exp, bins=40, color=palette[8], alpha=0.88, edgecolor="white")
+    ax.axvline(ent_media_pond, color=palette[9], linewidth=1.5, linestyle="--", label=f"Media pond: {ent_media_pond:.2f}")
+    ax.set_title("Distribución de entropía media\n(ponderada por frecuencia)", fontsize=11)
+    ax.set_xlabel("Entropía media")
+    ax.set_ylabel("Frecuencia")
+    ax.legend(fontsize=9)
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+
+    plt.tight_layout()
+    plt.savefig(f"{OUT_DESC_DIR}/desc_02_entropias.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    # Top 20 mascaras mas frecuentes
+    idx_top20 = np.argsort(frecuencias)[-20:][::-1]
+    top_mascaras = mascaras[idx_top20]
+    top_freqs    = frecuencias[idx_top20]
+    top_pcts     = top_freqs / total_pw * 100
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    fig.patch.set_facecolor("white")
+    bars = ax.barh(top_mascaras[::-1], top_pcts[::-1], color=palette[6], alpha=0.88)
+    ax.bar_label(bars, fmt="%.2f%%", fontsize=8, padding=3)
+    ax.set_xlabel("% contraseñas")
+    ax.set_title("Top 20 máscaras más frecuentes\n(ponderado por frecuencia)", fontsize=12)
+    sns.despine(ax=ax)
+    ax.grid(axis="x", linestyle="--", alpha=0.4)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_DESC_DIR}/desc_03_top20_mascaras.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    # Distribucion de frecuencias de mascaras (escala logaritmica)
+    fig, ax = plt.subplots(figsize=(9, 4))
+    fig.patch.set_facecolor("white")
+    ax.set_facecolor("white")
+    ax.hist(np.log10(frecuencias + 1), bins=50, color=palette[7], alpha=0.88, edgecolor="white")
+    ax.set_title("Distribución de frecuencia de máscaras\n(escala log₁₀)", fontsize=12)
+    ax.set_xlabel("log₁₀(frecuencia + 1)")
+    ax.set_ylabel("Cantidad de máscaras")
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_DESC_DIR}/desc_04_dist_frecuencias_log.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    # Boxplots entropía por longitud (longitudes 1–20)
+    df_bl = {"longitud": [], "entropia": []}
+    for lon_val in range(1, 21):
+        mask = longitudes == lon_val
+        if mask.sum() == 0:
+            continue
+        df_bl["longitud"].extend([lon_val] * int(mask.sum()))
+        df_bl["entropia"].extend(entropias[mask].tolist())
+
+    fig, ax = plt.subplots(figsize=(13, 4))
+    fig.patch.set_facecolor("white")
+    ax.set_facecolor("white")
+    sns.boxplot(x=df_bl["longitud"], y=df_bl["entropia"], palette="Blues", ax=ax, linewidth=0.8, fliersize=1)
+    ax.set_title("Entropía por longitud de máscara (sin ponderar)", fontsize=12)
+    ax.set_xlabel("Longitud")
+    ax.set_ylabel("Entropía media")
+    sns.despine(ax=ax)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_DESC_DIR}/desc_05_boxplot_entropia_longitud.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    # Distribucion de digitos por posicion 
+    with open(TOKENS_DIST, "r", encoding="utf-8") as f:
+        reader   = csv.DictReader(f)
+        cols     = reader.fieldnames
+        pos_cols = [c for c in cols if c.startswith("pos")]
+        digitos_desc = []
+        conteos_desc = {col: [] for col in pos_cols}
+        for row in reader:
+            digitos_desc.append(int(row["digit"]))
+            for col in pos_cols:
+                conteos_desc[col].append(int(row[col]))
+
+    digitos_arr = np.array(digitos_desc)
+
+    fig, axes = plt.subplots(2, min(3, len(pos_cols)), figsize=(14, 7), sharey=False)
+    fig.patch.set_facecolor("white")
+    axes_flat = axes.flatten() if len(pos_cols) > 1 else [axes]
+
+    for i, col in enumerate(pos_cols[:6]):
+        conteos_arr = np.array(conteos_desc[col], dtype=float)
+        total_col   = conteos_arr.sum()
+        if total_col == 0:
+            continue
+        prob = conteos_arr / total_col
+        ax   = axes_flat[i]
+        ax.set_facecolor("white")
+        ax.bar(digitos_arr, prob, color=palette[6], alpha=0.88)
+        ax.set_title(f"Posición {i+1} — dist. dígitos", fontsize=10)
+        ax.set_xlabel("Dígito")
+        ax.set_ylabel("Probabilidad")
+        ax.set_xticks(digitos_arr)
+        sns.despine(ax=ax)
+        ax.grid(axis="y", linestyle="--", alpha=0.4)
+
+    for j in range(len(pos_cols), len(axes_flat)):
+        axes_flat[j].set_visible(False)
+
+    plt.suptitle("Distribución empírica de dígitos por posición (descriptivo)", fontsize=12, y=1.01)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_DESC_DIR}/desc_06_digitos_por_posicion.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    # Resumen en texto
+    lineas = []
+    def pr(t=""):
+        lineas.append(t)
+
+    pr("=" * 65)
+    pr("  ANÁLISIS DESCRIPTIVO — RockYou procesado")
+    pr("=" * 65)
+    pr(f"  Máscaras únicas  : {len(mascaras):>10,}")
+    pr(f"  Contraseñas      : {int(total_pw):>10,}")
+    pr()
+    pr(f"  {'Estadístico':<30} {'Sin pond.':>12} {'Ponderado':>12}")
+    pr(f"  {'-'*56}")
+    pr(f"  {'Longitud media':<30} {lon_media:>12.2f} {lon_media_pond:>12.2f}")
+    pr(f"  {'Longitud mediana':<30} {lon_mediana:>12.2f} {'—':>12}")
+    pr(f"  {'Longitud std':<30} {lon_std:>12.2f} {lon_std_pond:>12.2f}")
+    pr(f"  {'Longitud [min, max]':<30} [{lon_min}, {lon_max}]")
+    pr(f"  {'Longitud Q1 / Q3':<30} {lon_q1:>12.2f} / {lon_q3:.2f}")
+    pr()
+    pr(f"  {'Entropía media':<30} {ent_media:>12.4f} {ent_media_pond:>12.4f}")
+    pr(f"  {'Entropía mediana':<30} {ent_mediana:>12.4f} {'—':>12}")
+    pr(f"  {'Entropía std':<30} {ent_std:>12.4f} {ent_std_pond:>12.4f}")
+    pr(f"  {'Entropía [min, max]':<30} [{ent_min:.4f}, {ent_max:.4f}]")
+    pr(f"  {'Entropía Q1 / Q3':<30} {ent_q1:>12.4f} / {ent_q3:.4f}")
+    pr()
+    pr(f"  Gráficos en: {OUT_DESC_DIR}/")
+
+    with open(OUT_DESC_TXT, "w", encoding="utf-8") as f:
+        f.write("\n".join(lineas) + "\n")
+
+    print(f"\n  -> {OUT_DESC_TXT} guardado")
+    print(f"  -> Gráficos en {OUT_DESC_DIR}/")
+
+# Funcion de la prueba KS
 def ks_benford(alpha=0.05):
     """
     Calcula el estadistico Kolmogorov-Smirnov comparando la distribucion empirica
@@ -36,7 +321,7 @@ def ks_benford(alpha=0.05):
 
     Args:
         alpha (float): Nivel de significancia para el valor critico de Kolmogorov.
-                       Por defecto 0.05.
+        Por defecto 0.05.
 
     Returns:
         None: Guarda graficos PNG por posicion y un resumen en texto plano.
@@ -46,12 +331,20 @@ def ks_benford(alpha=0.05):
         Posicion 1: n = 3248901     D = 0.012400   D_alpha = 0.000754   RECHAZA H0   MAD = 0.008100   Aceptable
 
     Notes:
-        Usa la formula generalizada de Benford para calcular la probabilidad esperada
-        de cada digito en cada posicion. El valor critico D_alpha se calcula
-        analiticamente como 1.36 / sqrt(n), reemplazando scipy para evitar
-        dependencias adicionales. La MAD clasifica la conformidad en cuatro niveles:
-        Muy cercana, Aceptable, Marginal y No conformidad.
+        Usa la formula generalizada de Benford (para posiciones n-esimas) para 
+        calcular la probabilidad esperada de cada digito en cada posicion. 
+        El valor critico D_alpha se calcula analiticamente como 1.36 / sqrt(n), 
+        reemplazando scipy para evitar dependencias adicionales. La MAD clasifica 
+        la conformidad en cuatro niveles: Muy cercana, Aceptable, Marginal y No conformidad.
     """
+
+    # Justificacion de la seleccion de alpha = 0.05
+    # Se elige ya que el segun las literaturas un alpha mas pequeño seria mas estricto, pero con muestras
+    # masivas como RockYou (~14M contraseñasxfrecuencias) cualquier alpha razonable rechazaria H0
+    # por el tamaño de n. Lo relevante aquí no es solo si se rechaza, sino cuanto se
+    # desvia la distribución real de Benford (medido por MAD (Mean Absolute Deviation)), por lo que alpha actua
+    # como umbral formal mientras MAD provee la magnitud practica de la desviacion.
+    # Esto permite responder parcialmente la pregunta de investigacion
 
     os.makedirs(OUT_DIR, exist_ok=True)
 
@@ -124,6 +417,16 @@ def ks_benford(alpha=0.05):
 
         D       = np.max(np.abs(cdf_empirica - cdf_teorica))
         D_alpha = 1.36 / math.sqrt(total)
+
+        # D_alpha = 1.36 / sqrt(n) es la aproximacion asintotica del valor critico de la 
+        # prueba de Kolmogorov–Smirnov para un valor alpha = 0.05.
+        # Con n en el orden de millones, D_alpha es extremadamente pequeño (~0.00075),
+        # lo que hace casi inevitable rechazar H0. Por eso se complementa con MAD;
+        # si D > D_alpha pero MAD < 0.006, la desviacion es estadisticamente
+        # significativa pero practicamente pequeña. Esto es clave para interpretar
+        # si los dígitos de contraseñas se desvian de Benford de forma relevante
+        # (indicador de no-aleatoriedad y predecibilidad estructural).
+
         rechaza = D > D_alpha
         estado  = "RECHAZA H0" if rechaza else "No rechaza H0"
 
@@ -201,7 +504,6 @@ def ks_benford(alpha=0.05):
     print(f"  -> Graficos en {OUT_DIR}/")
 
 
-
 def kruskal_wallis_entropias(cap_expand = 500000):
     """
     Calcula la prueba de Kruskal-Wallis sobre las entropias medias de las mascaras
@@ -228,6 +530,20 @@ def kruskal_wallis_entropias(cap_expand = 500000):
         El resultado de la agrupacion por rango de entropia es trivialmente
         significativo por construccion y debe interpretarse solo como descriptivo.
     """
+
+    # Selección de Kruskal-Wallis y del cap de expansion:
+    # Se elige KW (no ANOVA) porque las distribuciones de entropía por grupo no son
+    # normales, estan sesgadas y tienen colas largas, como se ve en el descriptivo.
+    # KW solo requiere que las muestras sean independientes y que las distribuciones
+    # tengan la misma forma bajo H0, lo cual es razonable aquí.
+    # El cap de 500k controla el costo computacional al expandir por frecuencia; se
+    # eligio como balance entre representatividad (no truncar demasiado mascaras muy
+    # comunes) y memoria RAM disponible (ya que no tenemos computadores superpotentes). 
+    # Cambiar el cap a 100k o 1M no deberia alterar el signo de los resultados 
+    # dado el tamaño del dataset, pero si puede afectar el valor exacto del estadistico H.
+    # Responde parcialmente la pregunta de investigacion, si la estructura de la
+    # mascara (longitud y tipo de caracteres) discrimina la entropía, entonces las
+    # contraseñas son predecibles segun su patron, lo que implica vulnerabilidad medible.
 
     OUT_KW_DIR = "../datos/procesados/graficos_kw"
     OUT_KW_TXT = "../datos/procesados/kw_entropias_resumen.txt"
@@ -275,9 +591,7 @@ def kruskal_wallis_entropias(cap_expand = 500000):
 
     grupos_long_valid = {k: v for k, v in grupos_long.items() if len(v) >= 2}
     etiquetas_long    = sorted(grupos_long_valid.keys())
-    muestras_long = [expandir([e for e, _ in grupos_long_valid[k]],
-                           [f for _, f in grupos_long_valid[k]], cap_expand)
-                  for k in etiquetas_long]
+    muestras_long = [expandir([e for e, _ in grupos_long_valid[k]], [f for _, f in grupos_long_valid[k]], cap_expand) for k in etiquetas_long]
 
     H_long, p_long = stats.kruskal(*muestras_long)
     rechaza_long   = p_long < 0.05
@@ -342,9 +656,7 @@ def kruskal_wallis_entropias(cap_expand = 500000):
         grupos_tipo[tip].append((ent, frq))
 
     etiquetas_tipo = sorted(grupos_tipo.keys())
-    muestras_tipo  = [expandir([e for e, _ in grupos_tipo[k]],
-                               [f for _, f in grupos_tipo[k]])
-                      for k in etiquetas_tipo]
+    muestras_tipo  = [expandir([e for e, _ in grupos_tipo[k]], [f for _, f in grupos_tipo[k]]) for k in etiquetas_tipo]
 
     H_tipo, p_tipo = stats.kruskal(*muestras_tipo)
     rechaza_tipo   = p_tipo < 0.05
@@ -367,10 +679,8 @@ def kruskal_wallis_entropias(cap_expand = 500000):
 
     fig, ax = plt.subplots(figsize=(8, 5))
     fig.patch.set_facecolor("white")
-    sns.boxplot(x=df_tipo["tipo"], y=df_tipo["entropia"],
-                palette="Blues", ax=ax, linewidth=0.8, fliersize=1)
-    ax.plot(range(len(etiquetas_tipo)), medias_tipo, "o--",
-            color=palette[4], markersize=5, label="Media")
+    sns.boxplot(x=df_tipo["tipo"], y=df_tipo["entropia"], palette="Blues", ax=ax, linewidth=0.8, fliersize=1)
+    ax.plot(range(len(etiquetas_tipo)), medias_tipo, "o--", color=palette[4], markersize=5, label="Media")
     ax.set_title(f"Kruskal-Wallis — Entropia por tipo de mascara\nH = {H_tipo:.4f}  |  p = {p_tipo:.6f}  |  {'RECHAZA H0' if rechaza_tipo else 'No rechaza H0'}", fontsize=12)
     ax.set_xlabel("Tipo de mascara")
     ax.set_ylabel("Entropia media")
@@ -405,9 +715,7 @@ def kruskal_wallis_entropias(cap_expand = 500000):
 
     orden_rangos  = ["Baja (<2.4464)", "Media (2.4464-2.9477)", "Alta (>=2.9477)"]
     etiquetas_rng = [r for r in orden_rangos if r in grupos_rango]
-    muestras_rng  = [expandir([e for e, _ in grupos_rango[k]],
-                              [f for _, f in grupos_rango[k]])
-                     for k in etiquetas_rng]
+    muestras_rng  = [expandir([e for e, _ in grupos_rango[k]], [f for _, f in grupos_rango[k]]) for k in etiquetas_rng]
 
     H_rng, p_rng = stats.kruskal(*muestras_rng)
     rechaza_rng  = p_rng < 0.05
@@ -430,10 +738,8 @@ def kruskal_wallis_entropias(cap_expand = 500000):
 
     fig, ax = plt.subplots(figsize=(8, 5))
     fig.patch.set_facecolor("white")
-    sns.boxplot(x=df_rng["rango"], y=df_rng["entropia"],
-                palette="Blues", order=etiquetas_rng, ax=ax, linewidth=0.8, fliersize=1)
-    ax.plot(range(len(etiquetas_rng)), medias_rng, "o--",
-            color=palette[4], markersize=5, label="Media")
+    sns.boxplot(x=df_rng["rango"], y=df_rng["entropia"], palette="Blues", order=etiquetas_rng, ax=ax, linewidth=0.8, fliersize=1)
+    ax.plot(range(len(etiquetas_rng)), medias_rng, "o--", color=palette[4], markersize=5, label="Media")
     ax.set_title(f"Kruskal-Wallis — Entropia por rango\nH = {H_rng:.4f}  |  p = {p_rng:.6f}  |  {'RECHAZA H0' if rechaza_rng else 'No rechaza H0'}", fontsize=12)
     ax.set_xlabel("Rango de entropia")
     ax.set_ylabel("Entropia media")
@@ -480,6 +786,19 @@ def spearman_longitud_entropia(cap_spear = 200_000):
         Un rho positivo indica que mascaras mas largas tienden a tener mayor entropia.
     """
 
+    # Seleccion de Spearman (no Pearson) y del cap de 200k
+    # Spearman es adecuado porque la relacion longitud-entropía no tiene por que ser
+    # lineal, a partir de cierta longitud la entropía puede estabilizarse o
+    # crecer más lento. Spearman captura cualquier relación monotona sin asumir
+    # linealidad ni normalidad, lo que es más honesto con datos de contraseñas.
+    # El cap de 200k (menor que el de KW) se eligio porque en Spearman se trabaja
+    # con dos arrays completos del mismo tamaño, y el costo de memoria crece más
+    # rapido. Con 200k el resultado es estable; bajar a 50k o subir a 500k no
+    # cambia el signo ni la magnitud relevante del rho.
+    # Responde la pregunta de investigación cuantificando ¿qué tan fuerte es la
+    # relacion entre longitud y aleatoriedad? Un rho alto (>0.7) implica que
+    # recomendar longitud minima tiene fundamento estadístico en este dataset.
+
     OUT_SP_TXT = "../datos/procesados/spearman_resumen.txt"
 
     longitudes  = []
@@ -522,8 +841,7 @@ def spearman_longitud_entropia(cap_spear = 200_000):
     ax1   = axes[0]
     sizes = np.sqrt(frecuencias / frecuencias.max()) * 80
 
-    sns.scatterplot(x=longitudes, y=entropias, size=sizes, sizes=(5, 80),
-                    color=palette[3], alpha=0.5, edgecolor="none", legend=False, ax=ax1)
+    sns.scatterplot(x=longitudes, y=entropias, size=sizes, sizes=(5, 80), color=palette[3], alpha=0.5, edgecolor="none", legend=False, ax=ax1)
 
     z     = np.polyfit(longitudes, entropias, 1)
     p_fit = np.poly1d(z)
@@ -554,8 +872,7 @@ def spearman_longitud_entropia(cap_spear = 200_000):
     ax2.grid(axis="y", linestyle="--", alpha=0.4)
 
     plt.tight_layout()
-    plt.savefig("../datos/procesados/graficos_kw/spearman_longitud_entropia.png",
-                dpi=150, bbox_inches="tight", facecolor="white")
+    plt.savefig("../datos/procesados/graficos_kw/spearman_longitud_entropia.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
 
     with open(OUT_SP_TXT, "w", encoding="utf-8") as f:
@@ -567,15 +884,15 @@ def spearman_longitud_entropia(cap_spear = 200_000):
         f.write("\nNota: version ponderada repite cada mascara segun su frecuencia (cap 200k)\n")
         f.write("Longitud calculada como len(mascara)\n")
 
-
     print(f"\n  -> {OUT_SP_TXT} guardado")
     print(f"  -> Grafico en ../datos/procesados/graficos_kw/spearman_longitud_entropia.png")
+
 
 def analizar_patrones_mascaras():
     """
     Analiza patrones estructurales en las mascaras de contrasennas ponderadas por frecuencia
     y genera una suite de graficos descriptivos integrados.
- 
+
     Graficos generados:
         - Barras composicion de tipos (Solo L, Solo D, L+D, etc.)
         - Barras horizontales de inicio y final por tipo de caracter
@@ -585,56 +902,56 @@ def analizar_patrones_mascaras():
         - Scatter: longitud vs entropia media (burbuja por frecuencia)
         - Heatmap de bigramas de transicion entre tipos
         - Barras de posicion del primer D (sufijo numerico)
- 
+
     Args:
         None
- 
+
     Returns:
         None: Guarda graficos PNG en OUT_PAT_DIR y resumen de texto en OUT_PAT_TXT.
- 
+
     Example:
         >>> analizar_patrones_mascaras()
         [patrones] composicion guardada
         [patrones] heatmap correlacion guardado
         ...
- 
+
     Notes:
         Todos los calculos se ponderan por frecuencia de mascara salvo donde
         se indica. El heatmap de correlacion muestra el porcentaje de contrasennas
         que contienen ambos tipos simultaneamente, normalizado por el menor
         de los dos marginals (coeficiente de Jaccard ponderado).
     """
- 
+
     OUT_PAT_DIR = "../datos/procesados/graficos_patrones"
     OUT_PAT_TXT = "../datos/procesados/patrones_mascaras_resumen.txt"
     os.makedirs(OUT_PAT_DIR, exist_ok=True)
- 
+
     mascaras    = []
     frecuencias = []
     entropias   = []
- 
+
     with open(ROCKYOUMASKS, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             mascaras.append(row["mascara"])
             frecuencias.append(int(row["frecuencia"]))
             entropias.append(float(row["entropia_media"]))
- 
+
     mascaras    = np.array(mascaras)
     frecuencias = np.array(frecuencias, dtype=float)
     entropias   = np.array(entropias,   dtype=float)
     total_pw    = frecuencias.sum()
- 
+
     def wpct(mask_bool):
         return frecuencias[mask_bool].sum() / total_pw * 100
- 
+
     chars_set = [set(m) for m in mascaras]
- 
+
     tiene = {
         t: np.array([t in s for s in chars_set])
         for t in ["L", "U", "D", "S"]
     }
- 
+
     def bloques(m):
         if not m:
             return ""
@@ -643,12 +960,9 @@ def analizar_patrones_mascaras():
             if c != r[-1]:
                 r.append(c)
         return "".join(r)
- 
+
     longitudes = np.array([len(m) for m in mascaras])
- 
-    # ------------------------------------------------------------------ #
-    # 1. Composicion de tipos                                      #
-    # ------------------------------------------------------------------ #
+
     solo_L = np.array([s == {"L"}              for s in chars_set])
     solo_D = np.array([s == {"D"}              for s in chars_set])
     solo_U = np.array([s == {"U"}              for s in chars_set])
@@ -659,15 +973,11 @@ def analizar_patrones_mascaras():
     LUD    = np.array([s == {"L","U","D"}      for s in chars_set])
     LUDS   = np.array([s == {"L","U","D","S"}  for s in chars_set])
     otros  = ~(solo_L | solo_D | solo_U | solo_S | LD | LU | LS | LUD | LUDS)
- 
-    etiquetas_donut = ["Solo L", "Solo D", "Solo U", "L+D", "L+U", "L+S",
-                       "L+U+D", "L+U+D+S", "Solo S", "Otros"]
+
+    etiquetas_donut = ["Solo L", "Solo D", "Solo U", "L+D", "L+U", "L+S", "L+U+D", "L+U+D+S", "Solo S", "Otros"]
     mascaras_donut  = [solo_L, solo_D, solo_U, LD, LU, LS, LUD, LUDS, solo_S, otros]
     valores_donut   = [wpct(m) for m in mascaras_donut]
-    colores_donut   = [palette[9], palette[7], palette[5], palette[8],
-                       palette[6], palette[4], palette[3], palette[2],
-                       palette[1], palette[0]]
- 
+
     fig, ax = plt.subplots(figsize=(9, 5))
     fig.patch.set_facecolor("white")
     sns.barplot(x=etiquetas_donut, y=valores_donut, palette="Blues", ax=ax)
@@ -681,17 +991,14 @@ def analizar_patrones_mascaras():
     plt.savefig(f"{OUT_PAT_DIR}/01_composicion_tipos.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
     print("  [patrones] composicion guardada")
- 
-    # ------------------------------------------------------------------ #
-    # 2. BARRAS DOBLES — inicio y final por tipo                          #
-    # ------------------------------------------------------------------ #
+
     tipos        = ["L", "D", "U", "S"]
     pct_inicio   = [wpct(np.array([m[0]  == t for m in mascaras])) for t in tipos]
     pct_final    = [wpct(np.array([m[-1] == t for m in mascaras])) for t in tipos]
- 
+
     x     = np.arange(len(tipos))
     ancho = 0.35
- 
+
     fig, ax = plt.subplots(figsize=(7, 4))
     fig.patch.set_facecolor("white")
     bars1 = ax.bar(x - ancho/2, pct_inicio, ancho, color=palette[7], alpha=0.9, label="Inicia con")
@@ -709,14 +1016,11 @@ def analizar_patrones_mascaras():
     plt.savefig(f"{OUT_PAT_DIR}/02_inicio_final.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
     print("  [patrones] inicio/final guardada")
- 
-    # ------------------------------------------------------------------ #
-    # 3. HEATMAP — correlacion (Jaccard ponderado) entre tipos            #
-    # ------------------------------------------------------------------ #
+
     tipos4 = ["L", "U", "D", "S"]
     n4     = len(tipos4)
     mat    = np.zeros((n4, n4))
- 
+
     for i, ti in enumerate(tipos4):
         for j, tj in enumerate(tipos4):
             if i == j:
@@ -726,7 +1030,7 @@ def analizar_patrones_mascaras():
                 cualquiera = tiene[ti] | tiene[tj]
                 denom    = frecuencias[cualquiera].sum()
                 mat[i, j] = (frecuencias[ambos].sum() / denom * 100) if denom > 0 else 0
- 
+
     fig, ax = plt.subplots(figsize=(5, 4))
     fig.patch.set_facecolor("white")
     sns.heatmap(
@@ -748,15 +1052,12 @@ def analizar_patrones_mascaras():
     plt.savefig(f"{OUT_PAT_DIR}/03_heatmap_correlacion_tipos.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
     print("  [patrones] heatmap correlacion guardado")
- 
-    # ------------------------------------------------------------------ #
-    # 4. BARRAS — distribucion de longitudes (hasta 20)                   #
-    # ------------------------------------------------------------------ #
+
     lons_validas = range(1, 21)
     pct_lon      = []
     for l in lons_validas:
         pct_lon.append(wpct(longitudes == l))
- 
+
     fig, ax = plt.subplots(figsize=(10, 4))
     fig.patch.set_facecolor("white")
     barras = ax.bar(list(lons_validas), pct_lon, color=palette[6], alpha=0.88)
@@ -771,19 +1072,16 @@ def analizar_patrones_mascaras():
     plt.savefig(f"{OUT_PAT_DIR}/04_longitud.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
     print("  [patrones] longitud guardada")
- 
-    # ------------------------------------------------------------------ #
-    # 5. BARRAS HORIZONTALES — top 15 estructuras de bloque               #
-    # ------------------------------------------------------------------ #
+
     bloque_freq = {}
     for m, f in zip(mascaras, frecuencias):
         b = bloques(m)
         bloque_freq[b] = bloque_freq.get(b, 0) + f
- 
+
     top15_bloques = sorted(bloque_freq.items(), key=lambda x: -x[1])[:15]
     bl_labels     = [b for b, _ in top15_bloques]
     bl_vals       = [v / total_pw * 100 for _, v in top15_bloques]
- 
+
     fig, ax = plt.subplots(figsize=(7, 5))
     fig.patch.set_facecolor("white")
     bars = ax.barh(bl_labels[::-1], bl_vals[::-1], color=palette[6], alpha=0.88)
@@ -796,10 +1094,7 @@ def analizar_patrones_mascaras():
     plt.savefig(f"{OUT_PAT_DIR}/05_bloques.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
     print("  [patrones] bloques guardada")
- 
-    # ------------------------------------------------------------------ #
-    # 6. SCATTER burbuja — longitud vs entropia media                     #
-    # ------------------------------------------------------------------ #
+
     lon_media_por_lon = {}
     for l in range(1, 31):
         mask = longitudes == l
@@ -809,12 +1104,12 @@ def analizar_patrones_mascaras():
             "ent_pond": np.average(entropias[mask], weights=frecuencias[mask]),
             "frec":     frecuencias[mask].sum()
         }
- 
+
     xs    = list(lon_media_por_lon.keys())
     ys    = [lon_media_por_lon[l]["ent_pond"] for l in xs]
     sz_f  = np.array([lon_media_por_lon[l]["frec"] for l in xs])
     sz    = np.sqrt(sz_f / sz_f.max()) * 600
- 
+
     fig, ax = plt.subplots(figsize=(10, 5))
     fig.patch.set_facecolor("white")
     sc = ax.scatter(xs, ys, s=sz, c=palette[7], alpha=0.7, edgecolors=palette[9], linewidths=0.5)
@@ -832,14 +1127,11 @@ def analizar_patrones_mascaras():
     plt.savefig(f"{OUT_PAT_DIR}/06_longitud_vs_entropia.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
     print("  [patrones] scatter longitud-entropia guardada")
- 
-    # ------------------------------------------------------------------ #
-    # 7. HEATMAP — bigramas de transicion entre tipos                     #
-    # ------------------------------------------------------------------ #
+
     tipos_ord  = ["L", "U", "D", "S"]
     trans_mat  = np.zeros((4, 4))
     t_idx      = {t: i for i, t in enumerate(tipos_ord)}
- 
+
     trans_total = 0.0
     for m, f in zip(mascaras, frecuencias):
         for k in range(len(m) - 1):
@@ -847,9 +1139,9 @@ def analizar_patrones_mascaras():
             if a in t_idx and b2 in t_idx:
                 trans_mat[t_idx[a], t_idx[b2]] += f
                 trans_total += f
- 
+
     trans_pct = trans_mat / trans_total * 100 if trans_total > 0 else trans_mat
- 
+
     fig, ax = plt.subplots(figsize=(5, 4))
     fig.patch.set_facecolor("white")
     sns.heatmap(
@@ -870,10 +1162,7 @@ def analizar_patrones_mascaras():
     plt.savefig(f"{OUT_PAT_DIR}/07_heatmap_transiciones.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
     print("  [patrones] heatmap transiciones guardado")
- 
-    # ------------------------------------------------------------------ #
-    # 8. BARRAS — posicion del primer D (mascaras con D)                  #
-    # ------------------------------------------------------------------ #
+
     tipos_pos = ["D", "L", "U", "S"]
     for t in tipos_pos:
         with_t    = [(m, f) for m, f in zip(mascaras, frecuencias) if t in m]
@@ -901,10 +1190,6 @@ def analizar_patrones_mascaras():
         plt.close()
         print(f"  [patrones] posición primer {t} guardada")
 
- 
-    # ------------------------------------------------------------------ #
-    # 9. BARRAS — longitud del sufijo numerico (mascaras que terminan D)  #
-    # ------------------------------------------------------------------ #
     term_D     = [(m, f) for m, f in zip(mascaras, frecuencias) if m[-1] == "D"]
     total_tD   = sum(f for _, f in term_D)
     sufijo_len = {}
@@ -914,11 +1199,11 @@ def analizar_patrones_mascaras():
             if c == "D": suf += 1
             else: break
         sufijo_len[suf] = sufijo_len.get(suf, 0) + f
- 
+
     suf_items  = sorted(sufijo_len.items(), key=lambda x: x[0])
     suf_labels = [f"{s} D" for s, _ in suf_items]
     suf_vals   = [v / total_tD * 100 for _, v in suf_items]
- 
+
     fig, ax = plt.subplots(figsize=(7, 4))
     fig.patch.set_facecolor("white")
     bars = ax.bar(suf_labels, suf_vals, color=palette[5], alpha=0.88)
@@ -932,14 +1217,11 @@ def analizar_patrones_mascaras():
     plt.savefig(f"{OUT_PAT_DIR}/09_sufijo_numerico.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
     print("  [patrones] sufijo numerico guardada")
- 
-    # ------------------------------------------------------------------ #
-    # 10. RESUMEN TXT                                                      #
-    # ------------------------------------------------------------------ #
+
     lineas = []
     def pr(t=""):
         lineas.append(t)
- 
+
     pr("=" * 65)
     pr("  PATRONES EN MASCARAS (ponderado por frecuencia)")
     pr("=" * 65)
@@ -966,10 +1248,10 @@ def analizar_patrones_mascaras():
     pr(f"  {np.average(longitudes, weights=frecuencias):.2f} caracteres")
     pr()
     pr(f"Graficos en: {OUT_PAT_DIR}/")
- 
+
     with open(OUT_PAT_TXT, "w", encoding="utf-8") as f:
         f.write("\n".join(lineas) + "\n")
- 
+
     print(f"\n  -> {OUT_PAT_TXT} guardado")
     print(f"  -> Graficos en {OUT_PAT_DIR}/")
 
@@ -981,113 +1263,66 @@ if __name__ == "__main__":
     cap_expand = 500_000
     cap_spear  = 200_000
 
-    print("=" * 50)
     print("  Bienvenido al menu de pruebas estadisticas")
-    print("=" * 50)
 
     opcion = input(f"\nAlpha actual: {alpha_ks} | ¿Desea cambiarlo? (s/n): ").strip().lower()
     if opcion == 's':
         try:
-            alpha_ks = float(input("Ingrese el nuevo alpha (ej. 0.01, 0.05, 0.10): "))
+            alpha_ks = float(input("Ingrese el nuevo alpha: "))
         except ValueError:
-            print("  Valor inválido, se usará alpha = 0.05")
+            print("  Valor invalido, se usara alpha = 0.05")
             alpha_ks = 0.05
 
-    opcion = input(f"\nCap de expansión KW actual: {cap_expand} | ¿Desea cambiarlo? (s/n): ").strip().lower()
+    opcion = input(f"\nCap de expansion KW actual: {cap_expand} | ¿Desea cambiarlo? (s/n): ").strip().lower()
     if opcion == 's':
         try:
-            cap_expand = int(input("Ingrese el nuevo cap de expansión (ej. 100000): "))
+            cap_expand = int(input("Ingrese el nuevo cap de expansion: "))
         except ValueError:
-            print("  Valor inválido, se usará cap = 500000")
+            print("  Valor invalido, se usara cap = 500000")
             cap_expand = 500_000
 
     opcion = input(f"\nCap de expansión Spearman actual: {cap_spear} | ¿Desea cambiarlo? (s/n): ").strip().lower()
     if opcion == 's':
         try:
-            cap_spear = int(input("Ingrese el nuevo cap Spearman (ej. 50000): "))
+            cap_spear = int(input("Ingrese el nuevo cap Spearman: "))
         except ValueError:
-            print("  Valor inválido, se usará cap = 200000")
+            print("  Valor invalido, se usara cap = 200000")
             cap_spear = 200_000
 
     print(f"\nUsando alpha={alpha_ks}, cap_expand={cap_expand}, cap_spear={cap_spear}\n")
     print("=" * 50)
-    print("=== Pruebas estadisticas ===\n")
 
-    # PUNTO 3
-    #
-    # Pregunta de investigación (implicita en el proyecto):
-    # En progreso
-    #
-    # El modelo seleccionado combina tres (por el momento) pruebas no parametricas:
-    #   1. KS vs Benford  → ajuste de distribucion por posicion de dígito
-    #   2. Kruskal-Wallis → diferencias de entropía entre grupos (longitud / tipo / rango)
-    #   3. Spearman       → relacion monotonica entre longitud y entropía
-    #
-    # Juntas, responden si los patrones de contraseñas son predecibles
-    # (Benford) y si la estructura interna (longitud, tipo) discrimina
-    # la aleatoriedad medida por entropía. Esto permite concluir parcialmente
-    # sobre la vulnerabilidad estructural de las contraseñas analizadas
+    print("\n=== Anaisis Descriptivo ===\n")
+    analisis_descriptivo()
+
+    print("\n=== Pruebas estadisticas ===\n")
+
+    # El modelo seleccionado combina tres pruebas no paramétricas:
+    #   1. KS vs Benford, ajuste de distribución por posición de digito
+    #   2. Kruskal-Wallis, diferencias de entropía entre grupos (longitud / tipo / rango)
+    #   3. Spearman, relacion monotona entre longitud y entropía
 
     print("Calculando KS contra Benford...")
-    # Compara la CDF empirica de digitos por posicion contra
-    # la CDF teorica de Benford. Si D > D_alpha se rechaza H0, indicando
-    # que los digitos NO siguen Benford -> patron diferente de benford
+    # Compara la CDF empirica de digitos por posicion contra la CDF teorica
+    # de Benford. Si D > D_alpha se rechaza H0, indicando que los dígitos NO
+    # siguen Benford, patron diferente al esperado bajo aleatoriedad natural
     ks_benford(alpha_ks)
 
     print("Calculando Kruskal-Wallis sobre entropias...")
-    # Prueba si la distribucion de entropia difiere entre grupos.
+    # Prueba si la distribucion de entropía difiere entre grupos.
     # Al rechazar H0 en longitud y tipo dominante se confirma que la estructura
-    # de la mascara si predice la entropia, respondiendo parcialmente la pregunta
-    # sobre predictibilidad de contrasenas segun su patron de caracteres.
-    kruskal_wallis_entropias()
+    # de la mascara si predice la entropía, respondiendo parcialmente la pregunta
+    # sobre predictibilidad de contraseñas según su patrón de caracteres.
+    kruskal_wallis_entropias(cap_expand)
 
-    print("Calculando Spearman longitud vs entropia...")
-    # Cuantifica la fuerza y direccion de la relacion monotonica.
-    # Un rho alto y positivo confirma que contrasenas mas largas son mas
-    # entropicas, lo que respalda la recomendacion de longitud minima.
-    spearman_longitud_entropia()
-
-    
-    # PUNTO 4
-    #
-    # Criterios para calificar si el modelo está bien ajustado:
-    #
-    # [A] Tamano de muestra (n):
-    #     - n >> 10 000 en todas las pruebas -> alta potencia estadistica.
-    #     - Ojo: con n muy grande hasta diferencias chiquitas salen
-    #       significativas. Por eso se mira tambien D, MAD, H y rho
-    #       para evaluar relevancia practica, no solo estadistica.
-    #
-    # [B] KS — ajuste a Benford:
-    #     - Se reporta MAD (Mean Absolute Deviation) ademas del estadistico D.
-    #     - Si todas las posiciones rechazan H0 pero el MAD es bajo,
-    #       el rechazo se debe al n enorme, no a desviaciones reales.
-    #
-    # [C] Kruskal-Wallis — supuestos:
-    #     - No pide normalidad (ya se cumple por construccion).
-    #     - Necesita al menos 2 observaciones por grupo (eso se filtra en el codigo).
-    #     - El cap de frecuencia es el riesgo: si es muy alto puede inflar H.
-    #       Conviene probar con distintos caps para ver si los resultados se mantienen.
-    #     - El agrupamiento por rango de entropia es obvio que da significativo
-    #       (los grupos se definen con la misma variable). Se usa solo como descriptivo,
-    #       no como prueba inferencial.
-    #
-    # [D] Spearman — robustez de la correlacion:
-    #     - No asume linealidad ni normalidad -> sirve para datos ordinales
-    #       y distribuciones sesgadas de contrasenas.
-    #     - Se comparan version sin ponderar y ponderada; si rho se mantiene,
-    #       la correlacion es robusta a la distribucion de frecuencias.
-    #     - Un p ~ 0 con n gigante no dice mucho: lo que importa es el rho
-    #       (si |rho| > 0.7 -> correlacion fuerte).
-    #
-    # [E] Consistencia global:
-    #     - Si KS rechaza Benford, KW separa grupos y Spearman da rho alto,
-    #       las pruebas son consistentes: los digitos no son aleatorios
-    #       y la longitud/tipo los modula. Eso habla bien del modelo.
-    #     - Si alguna prueba no rechaza H0, se anota como hallazgo,
-    #       no como fallo del modelo.
-
-
+    print("Calculando Spearman longitud vs entropía...")
+    # Cuantifica la fuerza y direccion de la relacion monotona.
+    # Un rho alto y positivo confirma que contraseñas mas largas son mas
+    # entopicas, lo que respalda con evidencia estadistica la recomendación
+    # estandar de longitud mínima en politicas de seguridad.
+    # Complementa KW al dar una medida continua de la relación, no solo si
+    # los grupos difieren.
+    spearman_longitud_entropia(cap_spear)
 
     print("Analizando los patrones de las mascaras...")
     analizar_patrones_mascaras()
