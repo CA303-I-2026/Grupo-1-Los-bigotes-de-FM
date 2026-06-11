@@ -117,19 +117,19 @@ reference-section-title: "Bibliografía"
 \addcontentsline{toc}{section}{Audiencia del proyecto}
 \markboth{Audiencia del proyecto}{Audiencia del proyecto}
 
-«Esta semana, le diría a [audiencia] que...»  Pendiente
+Esta semana, le diría a nuestra audiencia que aplicar una tokenización con el modelo cl100k, permitió seguir mejor las distribuciones de Benford en los dígitos, solo que se cumple de la posición 3 en adelante, aún falta acomodar los datos de forma que se cumplan también en las primeras dos, este resultado se detalla más adelante. 
 
 \section*{Rastro de decisiones}
 \addcontentsline{toc}{section}{Rastro de decisiones}
 \markboth{Rastro de decisiones}{Rastro de decisiones}
 
-
+No se descartó ninguna metodología, en su lugar se implementó la idea del prodfesor de tokenizar las contraseñas para poder hacer un mejor trabajo con las distribuciones de Benford de sus dígitos y con el test KS, para no perder la información de la parte de letras de las contraseñas. 
 
 \section*{Respuesta a retroalimentación}
 \addcontentsline{toc}{section}{Respuesta a retroalimentación}
 \markboth{Respuesta a retroalimentación}{Respuesta a retroalimentación}
 
-
+En la pasada bitácora los puntos que se nos bajaron fueron en ortografía, por lo cual para esta bitácora se tomó muchísimo más cuidado con este aspecto. 
 
 \section*{Log de contribuciones}
 \addcontentsline{toc}{section}{Log de contribuciones}
@@ -139,13 +139,13 @@ reference-section-title: "Bibliografía"
 \centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Integrante} & \textbf{Sección / Tarea} \\
+\textbf{Integrante} & \textbf{Tarea} \\
 \hline
 Anthonny Flores Rojas (C32975) & 
 \begin{minipage}[t]{7cm}
 \vspace{2pt}
 \begin{itemize}
-    \item 
+    \item Parte 1.1 Depuración del código, colaboración con 1.2, diario de aprendizaje, colaboración fichas de literatura.
 \end{itemize}
 \vspace{2pt}
 \end{minipage} \\
@@ -154,7 +154,7 @@ Andrey González Bastos (C33329) &
 \begin{minipage}[t]{7cm}
 \vspace{2pt}
 \begin{itemize}
-    \item 
+    \item 1.3 Fichas de resultados, colaboración fichas de literatura, colaboración con 1.2.
 \end{itemize}
 \vspace{2pt}
 \end{minipage} \\
@@ -163,7 +163,7 @@ Randal Picado Bermúdez (C36024) &
 \begin{minipage}[t]{7cm}
 \vspace{2pt}
 \begin{itemize}
-    \item 
+    \item 1.4 Ordenamiento de los elementos de reporte, 1,5 La imagen que cuenta la historia, 2 Arco narrativo, colaboración con fichas de literatura.
 \end{itemize}
 \vspace{2pt}
 \end{minipage} \\
@@ -172,7 +172,7 @@ Leonardo Vega Aragón (C38313) &
 \begin{minipage}[t]{7cm}
 \vspace{2pt}
 \begin{itemize}
-    \item 
+    \item 3 Parte de escritura, 4 Parte de reflexión, colaboración con fichas de literatura. 
 \end{itemize}
 \vspace{2pt}
 \end{minipage} \\
@@ -1205,11 +1205,11 @@ El modelo reveló que las contraseñas del dataset RockYou siguen patrones prede
 \markboth{Diario de aprendizaje}{Diario de aprendizaje}
 \stepcounter{chapter}
 
-
-% 3 a 5 oraciones respondiendo:
-% ¿Qué saben ahora que no sabían al entregar la Bitácora #2?
-% Enfóquense en el proceso (¿qué fue difícil?, ¿qué salió diferente a lo planeado?),
-% no en los resultados técnicos.
+\begin{itemize}
+ \item Conocemos el proceso de tokenización del lenguaje natural hacia vectores numéricos; estos tienen un mayor peso cuando aportan más información al modelo.
+ \item Aprendimos que los primeros dígitos de las contraseñas no siguen la distribución de Benford debido a patrones internos como fechas y otros.
+ \item La búsqueda de literatura nos enseñó que no siempre es fácil comprender la información en ellos, y a veces resulta difícil reducirla a un resumen.
+\end{itemize}
 
 
 \chapter*{Registro del uso de IA}
