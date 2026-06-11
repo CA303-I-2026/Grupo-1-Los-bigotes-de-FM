@@ -427,21 +427,28 @@ Leonardo Vega Aragón (C38313) &
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|X|X|}
 \hline
 \textbf{Primarios} & \textbf{Secundarios} \\
 \hline
-Teoría A  & Teoría B  \\
-Idea A    & Idea B    \\
-Resultado A & Resultado B \\
-Resultado C & Resultado D \\
+1. Entropía de Shannon como medida de aleatoriedad & 1. Ley de Zipf en contraseñas (Wang et al., 2017) \\
 \hline
-\end{tabular}
+2. Distribución de dígitos por posición (tokenización CL100K) & 2. Modelos de Markov para contraseñas (Ma et al., 2014) \\
+\hline
+3. Desviación respecto a la Ley de Benford (posiciones 1 y 2) & 3. Redes neuronales para predicción de contraseñas (Olsen, 2018) \\
+\hline
+4. Estructura de máscaras y su relación con entropía (KW) & 4. Análisis fallido: Benford directo sobre dígitos sin tokenizar \\
+\hline
+5. Longitud como predictor de entropía (Spearman) & 5. Bigramas de transición entre tipos de caracteres \\
+\hline
+6. Patrones posicionales: consonante-vocal, dígitos al final & \\
+\hline
+\end{tabularx}
 \caption{Elementos de reporte}
 \end{table}
 
-\subsection*{Orden de escritura}
-\addcontentsline{toc}{subsection}{Orden de escritura}
+\subsection*{Ordenamiento por secciones}
+\addcontentsline{toc}{subsection}{Ordenamiento por secciones}
 
 \begin{table}[H]
 \centering
@@ -449,35 +456,43 @@ Resultado C & Resultado D \\
 \hline
 \textbf{Sección} & \textbf{Temas a tratar} \\
 \hline
-Introducción &
+\textbf{Introducción} &
 \begin{minipage}[t]{\linewidth}
 \vspace{2pt}
 \begin{enumerate}
-    \item  (Primario)
-    \item  (Primario)
-    \item  (Secundario)
+    \item Predecibilidad de contraseñas humanas --- Keszthelyi (Primario)
+    \item Entropía como medida de seguridad --- Bonneau (Primario)
+    \item Ley de Benford y datos naturales --- Caputi (Primario)
+    \item Ley de Zipf en contraseñas --- Wang et al. (Secundario)
 \end{enumerate}
 \vspace{2pt}
 \end{minipage} \\
 \hline
-Metodología &
+\textbf{Metodología} &
 \begin{minipage}[t]{\linewidth}
 \vspace{2pt}
 \begin{enumerate}
-    \item Detalle de los datos. (Primario)
-    \item  (Primario)
-    \item  (Secundario)
-    \item Diagnóstico del modelo. (Primario)
+    \item Dataset RockYou y preprocesamiento (Primario)
+    \item Tokenización CL100K y extracción de dígitos (Primario)
+    \item Prueba KS contra Benford por posición (Primario)
+    \item Máscaras de contraseña y entropía de Shannon (Primario)
+    \item Kruskal-Wallis por longitud y tipo dominante (Primario)
+    \item Correlación de Spearman longitud-entropía (Primario)
+    \item Modelos de Markov como contexto comparativo (Secundario)
 \end{enumerate}
 \vspace{2pt}
 \end{minipage} \\
 \hline
-Resultados &
+\textbf{Resultados} &
 \begin{minipage}[t]{\linewidth}
 \vspace{2pt}
 \begin{enumerate}
-    \item  (Primario)
-    \item  (Secundario)
+    \item Posiciones 1 y 2 se desvían de Benford; posiciones 3+ coinciden por uniformidad (Primario)
+    \item Distribución uniforme de dígitos desde posición 3 (Primario)
+    \item Tipo de máscara determina nivel de entropía --- KW (Primario)
+    \item Longitud predice entropía --- Spearman (Primario)
+    \item Patrón consonante-vocal y dígitos al final (Primario)
+    \item Bigramas de transición entre tipos (Secundario)
 \end{enumerate}
 \vspace{2pt}
 \end{minipage} \\
