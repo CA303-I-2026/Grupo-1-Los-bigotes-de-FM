@@ -683,223 +683,406 @@ Este análisis fallido dejó una lección importante: no siempre se llega al res
 fue concebida.
 	
 
-
-
-
-
 \section*{Construcción de fichas de resultados}
 \addcontentsline{toc}{section}{Construcción de fichas de resultados}
 \markboth{Construcción de fichas de resultados}{Construcción de fichas de resultados}
 
 
 
-% ---------- FICHA 1 ----------
-\subsection*{Ficha de resultado 1}
-\addcontentsline{toc}{subsection}{Ficha de resultado 1}
+---------- FICHA 1 ----------
 
-\textbf{Nivel descriptivo}
+\section*{Nivel descriptivo (¿qué encontraron?)} 
 
-\textit{Titular:} 
+\subsection*{Titular}
 
-\textit{Nombre del hallazgo/resultado:} 
+No se cumple similitd en las distribuciones con tokenización en la posición 1. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
 
-\textit{Resumen en una oración:} 
+KS y Benford no concuerdan en la primera posición de las contraseñas tokenizadas con cl100k base. 
 
-\textit{Método o análisis que lo produjo:} 
+\subsection*{Resumen en una oración}
 
-\textit{Evidencia:} 
+Para la primera posición de la contraseña, se cumple Benford teóricamente pero no lo suficiente para pasar el test KS. 
 
-\textbf{Nivel analítico}
+\subsection*{Método o análisis que lo produjo}
 
-\textit{Conexión con la pregunta de investigación:} 
+Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similiar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
 
-\textit{Contraste con la literatura:} 
+\subsection*{Evidencia}
 
-\textit{Lo que NO explica este resultado:} 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/ks_pos1.png}
+    \caption{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
 
-\textit{Implicación para el siguiente paso:} 
 
-% ---------- FICHA 2 ----------
-\subsection*{Ficha de resultado 2}
-\addcontentsline{toc}{subsection}{Ficha de resultado 2}
+\section*{Nivel analítico (¿qué significa?)}
 
-\textbf{Nivel descriptivo}
+\subsection*{Conexión con la pregunta de investigación}
 
-\textit{Titular:} 
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 1 en las contraseñas siguen Benford, no lo suficiente para pasar KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
 
-\textit{Nombre del hallazgo/resultado:} 
+\subsection*{Contraste con la literatura}
 
-\textit{Resumen en una oración:} 
+Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 1. 
 
-\textit{Método o análisis que lo produjo:} 
+\subsection*{Lo que NO explica este resultado}
 
-\textit{Evidencia:} 
+Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 1. 
 
-\textbf{Nivel analítico}
+\subsection*{Implicación para el siguiente paso}
 
-\textit{Conexión con la pregunta de investigación:} 
+Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
 
-\textit{Contraste con la literatura:} 
 
-\textit{Lo que NO explica este resultado:} 
+---------- FICHA 2 ----------
 
-\textit{Implicación para el siguiente paso:} 
+\section*{Nivel descriptivo (¿qué encontraron?)} 
 
-% ---------- FICHA 3 ----------
-\subsection*{Ficha de resultado 3}
-\addcontentsline{toc}{subsection}{Ficha de resultado 3}
+\subsection*{Titular}
 
-\textbf{Nivel descriptivo}
+No se cumple similitd en las distribuciones con tokenización en la posición 2. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
 
-\textit{Titular:} 
+KS y Benford no concuerdan en la segunda posición de las contraseñas tokenizadas con cl100k base. 
 
-\textit{Nombre del hallazgo/resultado:} 
+\subsection*{Resumen en una oración}
 
-\textit{Resumen en una oración:} 
+Para la segunda posición de la contraseña, no concuerdan KS y Benford. 
 
-\textit{Método o análisis que lo produjo:} 
+\subsection*{Método o análisis que lo produjo}
 
-\textit{Evidencia:} 
+Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similiar a la Benford teórica, al menos en la posición 2, pero no lo suficiente para lograr pasar el test KS, por lo cual se rechaza Ho. 
 
-\textbf{Nivel analítico}
+\subsection*{Evidencia}
 
-\textit{Conexión con la pregunta de investigación:} 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/ks_pos2.png}
+    \caption{KS y Benford para posición 2 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
 
-\textit{Contraste con la literatura:} 
 
-\textit{Lo que NO explica este resultado:} 
+\section*{Nivel analítico (¿qué significa?)}
 
-\textit{Implicación para el siguiente paso:} 
+\subsection*{Conexión con la pregunta de investigación}
 
-% ---------- FICHA 4 ----------
-\subsection*{Ficha de resultado 4}
-\addcontentsline{toc}{subsection}{Ficha de resultado 4}
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 2 en las contraseñas siguen Benford, no pasando KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
 
-\textbf{Nivel descriptivo}
+\subsection*{Contraste con la literatura}
 
-\textit{Titular:} 
+Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 2. 
 
-\textit{Nombre del hallazgo/resultado:} 
+\subsection*{Lo que NO explica este resultado}
 
-\textit{Resumen en una oración:} 
+Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 2. 
 
-\textit{Método o análisis que lo produjo:} 
+\subsection*{Implicación para el siguiente paso}
 
-\textit{Evidencia:} 
+Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
 
-\textbf{Nivel analítico}
+---------- FICHA 3 ----------
 
-\textit{Conexión con la pregunta de investigación:} 
+\section*{Nivel descriptivo (¿qué encontraron?)} 
 
-\textit{Contraste con la literatura:} 
+\subsection*{Titular}
 
-\textit{Lo que NO explica este resultado:} 
+Se cumple similitd en las distribuciones con tokenización en la posición 3. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
 
-\textit{Implicación para el siguiente paso:} 
+Se puede afirmar KS y Benford en la tercera posición de las contraseñas tokenizadas con cl100k base. 
 
-% ---------- FICHA 5 ----------
-\subsection*{Ficha de resultado 5}
-\addcontentsline{toc}{subsection}{Ficha de resultado 5}
+\subsection*{Resumen en una oración}
 
-\textbf{Nivel descriptivo}
+Para la tercera posición de la contraseña tokenizada, se sigue Benford. 
 
-\textit{Titular:} 
+\subsection*{Método o análisis que lo produjo}
 
-\textit{Nombre del hallazgo/resultado:} 
+Se usó la tokenización con base cl100k base, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que se sigue una distribución similiar a la Benford teórica, al menos en la posición 3. 
 
-\textit{Resumen en una oración:} 
+\subsection*{Evidencia}
 
-\textit{Método o análisis que lo produjo:} 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/ks_pos3.png}
+    \caption{KS y Benford para posición 3 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
 
-\textit{Evidencia:} 
 
-\textbf{Nivel analítico}
+\section*{Nivel analítico (¿qué significa?)}
 
-\textit{Conexión con la pregunta de investigación:} 
+\subsection*{Conexión con la pregunta de investigación}
 
-\textit{Contraste con la literatura:} 
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 3 en las contraseñas siguen Benford, comprobado con KS. 
 
-\textit{Lo que NO explica este resultado:} 
+\subsection*{Contraste con la literatura}
 
-\textit{Implicación para el siguiente paso:} 
+Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 3. 
 
-% ---------- FICHA 6 ----------
-\subsection*{Ficha de resultado 6}
-\addcontentsline{toc}{subsection}{Ficha de resultado 6}
+\subsection*{Lo que NO explica este resultado}
 
-\textbf{Nivel descriptivo}
+Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford, este resultado solo nos guía para la posición 3. 
 
-\textit{Titular:} 
+\subsection*{Implicación para el siguiente paso}
 
-\textit{Nombre del hallazgo/resultado:} 
+Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
 
-\textit{Resumen en una oración:} 
 
-\textit{Método o análisis que lo produjo:} 
+---------- FICHA 4 ----------
+\section*{Nivel descriptivo (¿qué encontraron?)} 
 
-\textit{Evidencia:} 
+\subsection*{Titular}
 
-\textbf{Nivel analítico}
+Se cumple similitd en las distribuciones con tokenización en la posición 4. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
 
-\textit{Conexión con la pregunta de investigación:} 
+Se puede afirmar KS y Benford en la cuarta posición de las contraseñas tokenizadas con cl100k base. 
 
-\textit{Contraste con la literatura:} 
+\subsection*{Resumen en una oración}
 
-\textit{Lo que NO explica este resultado:} 
+Para la cuarta posición de la contraseña tokenizada, se sigue Benford. 
 
-\textit{Implicación para el siguiente paso:} 
+\subsection*{Método o análisis que lo produjo}
 
-% ---------- FICHA 7 ----------
-\subsection*{Ficha de resultado 7}
-\addcontentsline{toc}{subsection}{Ficha de resultado 7}
+Se usó la tokenización con base cl100k base, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que se sigue una distribución similiar a la Benford teórica, al menos en la posición 4. 
 
-\textbf{Nivel descriptivo}
+\subsection*{Evidencia}
 
-\textit{Titular:} 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/ks_pos4.png}
+    \caption{KS y Benford para posición 4 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
 
-\textit{Nombre del hallazgo/resultado:} 
 
-\textit{Resumen en una oración:} 
+\section*{Nivel analítico (¿qué significa?)}
 
-\textit{Método o análisis que lo produjo:} 
+\subsection*{Conexión con la pregunta de investigación}
 
-\textit{Evidencia:} 
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 4 en las contraseñas tokenizadas siguen Benford, comprobado con KS.
 
-\textbf{Nivel analítico}
+\subsection*{Contraste con la literatura}
 
-\textit{Conexión con la pregunta de investigación:} 
+Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 4. 
 
-\textit{Contraste con la literatura:} 
+\subsection*{Lo que NO explica este resultado}
 
-\textit{Lo que NO explica este resultado:} 
+Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford, este resultado solo nos guía para la posición 4. 
 
-\textit{Implicación para el siguiente paso:} 
+\subsection*{Implicación para el siguiente paso}
 
-% ---------- FICHA 8 ----------
-\subsection*{Ficha de resultado 8}
-\addcontentsline{toc}{subsection}{Ficha de resultado 8}
+Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
 
-\textbf{Nivel descriptivo}
+\section*{Comparación explícita}
 
-\textit{Titular:} 
+Para la posición 3 en adelante, se descubrió que todas las posiciones siguen Benford comprobado con KS, resultado inesperado pues se venía sin poder seguir en las posiciones anteriores (1) y 82) respectivamente .Esto es un resultado curioso, pues esperábamos que en todas las posiciones se cumpliera Benford y no solo a partir de la tercera posición en adelante. 
 
-\textit{Nombre del hallazgo/resultado:} 
+Esto sucede pues aunque la posición 1 y 2 "siguen Benford", no lo hacen de forma que también se pase el test KS. Esto último es sumamente importante y aquí recae la magia de todo, que no basta con parecer que la siga, sino que se tiene que acoplar también a pasar por test formales para poder efectivamente comprobarlo y no hacerlo simplemente a ojo. 
 
-\textit{Resumen en una oración:} 
+Sin embargo, esta discrepancia hace que se tengan que buscar nuevos métodos de tokenización o de manipulación de los mismos para ver si en algún caso o uso se sigue Benford como se cree según la literatura (en todas las posiciones). 
 
-\textit{Método o análisis que lo produjo:} 
 
-\textit{Evidencia:} 
+---------- FICHA 5 ----------
 
-\textbf{Nivel analítico}
+\section*{Nivel descriptivo (¿qué encontraron?)} 
 
-\textit{Conexión con la pregunta de investigación:} 
+\subsection*{Titular}
 
-\textit{Contraste con la literatura:} 
+Las máscaras determinan mucho la entropía. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
 
-\textit{Lo que NO explica este resultado:} 
+Distribuciones de la entropía según la máscara que se haya utilizado. 
 
-\textit{Implicación para el siguiente paso:} 
+\subsection*{Resumen en una oración}
+
+Los cinco tipos de máscara producen distribuciones de entropía completamente diferentes.
+
+\subsection*{Método o análisis que lo produjo}
+
+Se usó la prueba de Kruskal-Wallis sobre entropías, se separaron las máscaras de la siguiente forma: Mixta, solo dígitos, solo letras, solo caracteres especiales o solo mayúsculas. Usando para las entropías los siguientes rangos: bajo (H $<$ 2.4464), medio (2.4464 $\leq$ H $<$ 2.9477), alto(H $\geq $2.9477). Este agrupamiento es descriptivo, no inferencial, pues la variable de agrupación coincide con la variable de respuesta.
+
+\subsection*{Evidencia}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/kw_tipo.png}
+    \caption{Kruskal-Wallis - Entropía por tipo de máscara}
+    \label{fig:miimagen}
+\end{figure}
+
+
+\section*{Nivel analítico (¿qué significa?)}
+
+\subsection*{Conexión con la pregunta de investigación}
+
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre las entropías (desordenes) en las contraseñas, en este caso ahora sabemos que la entropía varía según cómo esté hecha la contraseña, si es mixta con todo posee una alta entropía como es esperado y si es solo de caracteres especiales pues tiende a tener una menor entropía. 
+
+\subsection*{Contraste con la literatura}
+
+Esto tiene relación directa con nuestra ficha de literatura relacionada a la prueba de KW de los autores de APS 240, paper donde se explica como aplicar este test para resultados como el obtenido anteriormente. 
+
+\subsection*{Lo que NO explica este resultado}
+
+Este resultado no nos arroja la aleatoriedad de las contraseñas o si son naturales, simplemente nos arroja el resultado de diferentes entropías según queramos tener diferentes estructuras de contraseñas. 
+
+\subsection*{Implicación para el siguiente paso}
+
+Nos toca averiguar si este resultado nos ayuda a determinar la aleatoriedad de las contraseñas que los usuarios escogen. 
+
+---------- FICHA 6 ----------
+
+\section*{Nivel descriptivo (¿qué encontraron?)} 
+
+\subsection*{Titular}
+
+Las longitudes de las contraseñas determinan su entropía. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
+
+Las máscaras según la longitud de la contraseña determina su entropía.  
+
+\subsection*{Resumen en una oración}
+
+A mayor longitud de la contraseña, mayor entropía se espera según el test Kruskal-Wallis. 
+
+\subsection*{Método o análisis que lo produjo}
+
+Se usó la prueba de Kruskal-Wallis sobre entropías, se separaron las máscaras de la siguiente forma: según la longitud de la máscara. 
+
+\subsection*{Evidencia}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/kw_longitud.png}
+    \caption{Kruskal-Wallis - Entropía por longitud de máscara}
+    \label{fig:miimagen}
+\end{figure}
+
+
+\section*{Nivel analítico (¿qué significa?)}
+
+\subsection*{Conexión con la pregunta de investigación}
+
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre las entropías (desordenes) en las contraseñas, en este caso ahora sabemos que la entropía es creciente según la longitud, lo cual es un resultado esperado pero se debía comprobar. 
+
+\subsection*{Contraste con la literatura}
+
+Esto tiene relación directa con nuestra ficha de literatura relacionada a la prueba de KW de los autores de APS 240, paper donde se explica como aplicar este test para resultados como el obtenido anteriormente. También, se ve como la entropía tiene que ver con la seguridad de las contraseñas, tal como lo planteó Reaz(2024), el cual planteaba que a una mayor entropía, más complicado es de predecir el valor de una observación, en este caso, de una contraseña. 
+
+\subsection*{Lo que NO explica este resultado}
+
+Este resultado no nos arroja la aleatoriedad de las contraseñas o que tan seguras son, simplemente nos arroja el resultado de diferentes entropías según la longitud de las mismas. 
+
+\subsection*{Implicación para el siguiente paso}
+
+Nos toca averiguar si este resultado nos ayuda a determinar la aleatoriedad de las contraseñas que los usuarios escogen. 
+
+
+---------- FICHA 7 ----------
+\section*{Nivel descriptivo (¿qué encontraron?)} 
+
+\subsection*{Titular}
+
+Las probabilidades de aparecer tienden a ser las mismas en dado momento. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
+
+Distribución empírica de dígitos por posición (análisis descriptivo).
+
+\subsection*{Resumen en una oración}
+
+Después de la posición 3, las probabilidades de que un dígito salga es casi uniforme.
+
+\subsection*{Método o análisis que lo produjo}
+
+Se realizó un análisis descriptivo de los datos de RockYou para poder determinar la distribución empírica de los dígitos por posición. 
+
+\subsection*{Evidencia}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/desc_06_digitos_por_posicion.png}
+    \caption{Distribución empírica de dígitos por posición}
+    \label{fig:miimagen}
+\end{figure}
+
+
+\section*{Nivel analítico (¿qué significa?)}
+
+\subsection*{Conexión con la pregunta de investigación}
+
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre como se distribuyen los dígitos por posición en las contraseñas, esto nos puede dar una pista de como las personas escogen los dígitos según la posición, se ve claramente como el que más varía es la primera posición, por lo que podemos concluir que esa posición es la más vulnerable a cambios según el usuario, la segunda también, después de eso, vemos como los cambios en los dígitos casi se puede asegurar que lleva una distribución uniforme y su probabilidad "de salir" es igual independientemente del dígito escogido. Todo esto nos ayuda a comprender mejor como los usuarios crean sus contraseñas y que tan aleatorias pueden llegar a ser. 
+
+\subsection*{Contraste con la literatura}
+
+Este hallazgo es propio y característico de la base de datos seleccionada, sin embargo, para la primera posición, se puede inferir como se cumple la ley de Benford y de hecho es un resultado de una ficha anterior, por lo que esto nos alimenta la creencia de que las claves siguen Benford pero hay que comprobarlo, esto ligado a la litertura de Caputi(2019).
+
+\subsection*{Lo que NO explica este resultado}
+
+Este resultado no nos arroja la aleatoriedad de las contraseñas o que dígitos se usan más que otros o como las contraseñas son escritas, solo nos denota la probabilidad de obtener cierto dígito en n posición. 
+
+\subsection*{Implicación para el siguiente paso}
+
+Ahora sigue hacer más análisis exploratorio para ver como podemos acomodar las demás posiciones a la ley de Benford o algo por el estilo.
+
+---------- FICHA 8 ----------
+
+\section*{Nivel descriptivo (¿qué encontraron?)} 
+
+\subsection*{Titular}
+
+Es súper probable pasar de una letra a otra en una contraseña. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
+
+Biogramas de transición entre tipos de caracteres. 
+
+\subsection*{Resumen en una oración}
+
+Según la matriz, es muy probable pasar de una letra a otra, seguido de dígito a dígito. 
+
+\subsection*{Método o análisis que lo produjo}
+
+Se realizó un conteo y se calculó la probabilidad para cada transición con la muestra total. Se tienen 4x4 contadores que van contando las probabilidades. 
+
+\subsection*{Evidencia}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/07_heatmap_transiciones.png}
+    \caption{Biograma de transición entre tipos}
+    \label{fig:miimagen}
+\end{figure}
+
+
+\section*{Nivel analítico (¿qué significa?)}
+
+\subsection*{Conexión con la pregunta de investigación}
+
+La matriz anterior nos permite comprender mejor como se van construyendo las contraseñas de parte de los usuarios. Vemos como es sumamente probable pasar de una letra a otra, también, es muy probable pasar de un dígito a otro, entonces podemos concluir un comportamiento de orden de parte de las contraseñas, donde por ejemplo es sumamente raro saltar de un caracter especial a otro. Esto nos puede ayudar a entender y modelar mejor la aleatoriedad de las contraseñas para así contestar la pregunta de investigación. 
+
+\subsection*{Contraste con la literatura}
+
+Este hallazgo es propio y característico de la base de datos seleccionada, sin embargo, lo podemos asociar al concepto de entropía estudiado por Reaz(2024) el cual nos plantea que la entropía es como una medida del orden, lo cual vemos que se puede entender con esta matriz ya que se tiende a seguir un orden natural saltando entre el mismo tipo de caracteres. 
+
+\subsection*{Lo que NO explica este resultado}
+
+Este resultado no dice como se distribuyen las contraseñas, este resultado únicamente nos explica un poco el orden que se sigue al momento de crearlas para nosotros poder entender un poco mejor el concepto de entropía aplicado acá. 
+
+\subsection*{Implicación para el siguiente paso}
+
+Ahora nos toca medir mejor la entropía con métodos más rigurosos. 
+
 
 \section*{Ordenamiento de los elementos de reporte}
 \addcontentsline{toc}{section}{Ordenamiento de los elementos de reporte}
