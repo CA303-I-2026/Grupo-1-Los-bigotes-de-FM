@@ -1510,6 +1510,8 @@ Además, se hicieron nuevas implementaciones al apartado metodológico, en prime
 
 La sección de conceptos básicos y la de teorías y principios no fue necesario modificarla, pues dichos conceptos siguen siendo relevantes pese al cambio de enfoque del proyecto .
 
+\newpage
+
 \subsection{V de Gowin}
 
 \begin{center}
