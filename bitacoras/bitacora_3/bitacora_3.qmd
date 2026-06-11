@@ -1,0 +1,556 @@
+---
+title: ""
+format:
+  pdf:
+    pdf-engine: xelatex
+    documentclass: book
+    classoption: [letterpaper, 12pt, oneside]
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    geometry:
+      - left=2.54cm
+      - right=2.54cm
+      - top=2.54cm
+      - bottom=2.54cm
+    fontsize: 10pt
+    linestretch: 1
+    indent: true
+    cite-method: biblatex
+    biblatexoptions: "style=apa, backend=biber, doi=true, isbn=false"
+    header-includes: |
+      % Fuente y formato
+      \usepackage{fontspec}
+      %\setmainfont{Latin Modern Roman}
+      \usepackage[spanish]{babel}
+      \usepackage{textcomp}
+      \usepackage{indentfirst}
+      \usepackage{float}
+      \usepackage{tikz}
+      \usetikzlibrary{positioning,babel,calc}
+      \usepackage{tabularx}
+      \usepackage{geometry}
+      \geometry{margin=2.5cm}
+      \setlength{\parindent}{2em}
+      \setlength{\parskip}{0pt}
+
+      % Matemáticas
+      \usepackage{amsmath}
+      \usepackage{amsthm}
+      \usepackage{amsfonts}
+      \usepackage{mathtools}
+      \usepackage{setspace}
+      \usepackage{ltablex}
+      \keepXColumns
+
+      % Tablas
+      \usepackage{booktabs}
+      \usepackage{array}
+
+      % Listas
+      \usepackage{enumitem}
+
+      % Colores
+      \usepackage[dvipsnames]{xcolor}
+
+      % Gráficos
+      \usepackage{tikz}
+      \usepackage{pgfplots}
+      \pgfplotsset{compat=1.18}
+      \usepackage{graphicx}
+      \usepackage{longtable}
+
+      % Encabezados
+      \usepackage{fancyhdr}
+      \pagestyle{fancy}
+      \fancyhf{}
+      \renewcommand{\headrulewidth}{0pt}
+      \renewcommand{\chaptername}{Capítulo}
+      
+      % Entornos matemáticos
+      \newtheorem{definition}{Definición}[section]
+      \newtheorem{axiom}{Axioma}[section]
+      \newtheorem{theorem}{Teorema}[section]
+      \newtheorem{corollary}{Corolario}[section]
+      \newtheorem{lemma}{Lema}[section]
+      \newtheorem{proposition}{Proposición}[section]
+      \newtheorem{result}{Resultado}[section]
+      \renewcommand{\proofname}{Demostración}
+
+      % PORTADA
+      \AtBeginDocument{
+        \begin{titlepage}
+          \begin{center}
+            \vspace*{-2.5cm}
+            \includegraphics[width=1\textwidth]{figuras/UCR.png}
+            \\
+            \LARGE Escuela de Matemáticas \\[0.75cm]
+            \LARGE Estadística Actuarial I (CA0303) \\[1cm]
+            \large Bitácora \#3 \\[0.75cm]
+            \large Prof: Maikol Solís \\[1.5cm]
+            \large Estudiantes: \\[1cm]
+            \large Anthonny Flores Rojas (C32975) \\[0.75cm]
+            \large Andrey González Bastos (C33329) \\[0.75cm]
+            \large Randal Picado Bermúdez (C36024) \\[0.75cm]
+            \large Leonardo Vega Aragón (C38313) \\[1.5cm]
+            \large Fecha: 10/06/2026 \\[1cm]
+          \end{center}
+        \end{titlepage}
+      }
+
+bibliography: ../../referencias/referencias.bib
+
+csl: apa.csl   
+reference-section-title: "Bibliografía"
+---
+
+
+
+\setcounter{page}{1}
+
+\chapter*{Preparación}
+\addcontentsline{toc}{chapter}{Preparación}
+\markboth{Preparación}{Preparación}
+
+\section*{Audiencia del proyecto}
+\addcontentsline{toc}{section}{Audiencia del proyecto}
+\markboth{Audiencia del proyecto}{Audiencia del proyecto}
+
+«Esta semana, le diría a [audiencia] que...»  Pendiente
+
+\section*{Rastro de decisiones}
+\addcontentsline{toc}{section}{Rastro de decisiones}
+\markboth{Rastro de decisiones}{Rastro de decisiones}
+
+
+
+\section*{Respuesta a retroalimentación}
+\addcontentsline{toc}{section}{Respuesta a retroalimentación}
+\markboth{Respuesta a retroalimentación}{Respuesta a retroalimentación}
+
+
+
+\section*{Log de contribuciones}
+\addcontentsline{toc}{section}{Log de contribuciones}
+\markboth{Log de contribuciones}{Log de contribuciones}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Integrante} & \textbf{Sección / Tarea} \\
+\hline
+Anthonny Flores Rojas (C32975) & 
+\begin{minipage}[t]{7cm}
+\vspace{2pt}
+\begin{itemize}
+    \item 
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Andrey González Bastos (C33329) & 
+\begin{minipage}[t]{7cm}
+\vspace{2pt}
+\begin{itemize}
+    \item 
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Randal Picado Bermúdez (C36024) & 
+\begin{minipage}[t]{7cm}
+\vspace{2pt}
+\begin{itemize}
+    \item 
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Leonardo Vega Aragón (C38313) & 
+\begin{minipage}[t]{7cm}
+\vspace{2pt}
+\begin{itemize}
+    \item 
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabular}
+\caption{Log de contribuciones --- Bitácora \#3}
+\end{table}
+
+
+\chapter*{Parte de planificación}
+\addcontentsline{toc}{chapter}{Parte de planificación}
+\markboth{Parte de planificación}{Parte de planificación}
+\stepcounter{chapter}
+
+
+\section*{Análisis de modelación}
+\addcontentsline{toc}{section}{Análisis de modelación}
+\markboth{Análisis de modelación}{Análisis de modelación}
+
+
+
+\section*{Propuesta metodológica}
+\addcontentsline{toc}{section}{Propuesta metodológica}
+\markboth{Propuesta metodológica}{Propuesta metodológica}
+
+
+
+\subsection*{Análisis fallido}
+\addcontentsline{toc}{subsection}{Análisis fallido}
+\markboth{Análisis fallido}{Análisis fallido}
+
+
+\section*{Construcción de fichas de resultados}
+\addcontentsline{toc}{section}{Construcción de fichas de resultados}
+\markboth{Construcción de fichas de resultados}{Construcción de fichas de resultados}
+
+
+
+% ---------- FICHA 1 ----------
+\subsection*{Ficha de resultado 1}
+\addcontentsline{toc}{subsection}{Ficha de resultado 1}
+
+\textbf{Nivel descriptivo}
+
+\textit{Titular:} 
+
+\textit{Nombre del hallazgo/resultado:} 
+
+\textit{Resumen en una oración:} 
+
+\textit{Método o análisis que lo produjo:} 
+
+\textit{Evidencia:} 
+
+\textbf{Nivel analítico}
+
+\textit{Conexión con la pregunta de investigación:} 
+
+\textit{Contraste con la literatura:} 
+
+\textit{Lo que NO explica este resultado:} 
+
+\textit{Implicación para el siguiente paso:} 
+
+% ---------- FICHA 2 ----------
+\subsection*{Ficha de resultado 2}
+\addcontentsline{toc}{subsection}{Ficha de resultado 2}
+
+\textbf{Nivel descriptivo}
+
+\textit{Titular:} 
+
+\textit{Nombre del hallazgo/resultado:} 
+
+\textit{Resumen en una oración:} 
+
+\textit{Método o análisis que lo produjo:} 
+
+\textit{Evidencia:} 
+
+\textbf{Nivel analítico}
+
+\textit{Conexión con la pregunta de investigación:} 
+
+\textit{Contraste con la literatura:} 
+
+\textit{Lo que NO explica este resultado:} 
+
+\textit{Implicación para el siguiente paso:} 
+
+% ---------- FICHA 3 ----------
+\subsection*{Ficha de resultado 3}
+\addcontentsline{toc}{subsection}{Ficha de resultado 3}
+
+\textbf{Nivel descriptivo}
+
+\textit{Titular:} 
+
+\textit{Nombre del hallazgo/resultado:} 
+
+\textit{Resumen en una oración:} 
+
+\textit{Método o análisis que lo produjo:} 
+
+\textit{Evidencia:} 
+
+\textbf{Nivel analítico}
+
+\textit{Conexión con la pregunta de investigación:} 
+
+\textit{Contraste con la literatura:} 
+
+\textit{Lo que NO explica este resultado:} 
+
+\textit{Implicación para el siguiente paso:} 
+
+% ---------- FICHA 4 ----------
+\subsection*{Ficha de resultado 4}
+\addcontentsline{toc}{subsection}{Ficha de resultado 4}
+
+\textbf{Nivel descriptivo}
+
+\textit{Titular:} 
+
+\textit{Nombre del hallazgo/resultado:} 
+
+\textit{Resumen en una oración:} 
+
+\textit{Método o análisis que lo produjo:} 
+
+\textit{Evidencia:} 
+
+\textbf{Nivel analítico}
+
+\textit{Conexión con la pregunta de investigación:} 
+
+\textit{Contraste con la literatura:} 
+
+\textit{Lo que NO explica este resultado:} 
+
+\textit{Implicación para el siguiente paso:} 
+
+% ---------- FICHA 5 ----------
+\subsection*{Ficha de resultado 5}
+\addcontentsline{toc}{subsection}{Ficha de resultado 5}
+
+\textbf{Nivel descriptivo}
+
+\textit{Titular:} 
+
+\textit{Nombre del hallazgo/resultado:} 
+
+\textit{Resumen en una oración:} 
+
+\textit{Método o análisis que lo produjo:} 
+
+\textit{Evidencia:} 
+
+\textbf{Nivel analítico}
+
+\textit{Conexión con la pregunta de investigación:} 
+
+\textit{Contraste con la literatura:} 
+
+\textit{Lo que NO explica este resultado:} 
+
+\textit{Implicación para el siguiente paso:} 
+
+% ---------- FICHA 6 ----------
+\subsection*{Ficha de resultado 6}
+\addcontentsline{toc}{subsection}{Ficha de resultado 6}
+
+\textbf{Nivel descriptivo}
+
+\textit{Titular:} 
+
+\textit{Nombre del hallazgo/resultado:} 
+
+\textit{Resumen en una oración:} 
+
+\textit{Método o análisis que lo produjo:} 
+
+\textit{Evidencia:} 
+
+\textbf{Nivel analítico}
+
+\textit{Conexión con la pregunta de investigación:} 
+
+\textit{Contraste con la literatura:} 
+
+\textit{Lo que NO explica este resultado:} 
+
+\textit{Implicación para el siguiente paso:} 
+
+% ---------- FICHA 7 ----------
+\subsection*{Ficha de resultado 7}
+\addcontentsline{toc}{subsection}{Ficha de resultado 7}
+
+\textbf{Nivel descriptivo}
+
+\textit{Titular:} 
+
+\textit{Nombre del hallazgo/resultado:} 
+
+\textit{Resumen en una oración:} 
+
+\textit{Método o análisis que lo produjo:} 
+
+\textit{Evidencia:} 
+
+\textbf{Nivel analítico}
+
+\textit{Conexión con la pregunta de investigación:} 
+
+\textit{Contraste con la literatura:} 
+
+\textit{Lo que NO explica este resultado:} 
+
+\textit{Implicación para el siguiente paso:} 
+
+% ---------- FICHA 8 ----------
+\subsection*{Ficha de resultado 8}
+\addcontentsline{toc}{subsection}{Ficha de resultado 8}
+
+\textbf{Nivel descriptivo}
+
+\textit{Titular:} 
+
+\textit{Nombre del hallazgo/resultado:} 
+
+\textit{Resumen en una oración:} 
+
+\textit{Método o análisis que lo produjo:} 
+
+\textit{Evidencia:} 
+
+\textbf{Nivel analítico}
+
+\textit{Conexión con la pregunta de investigación:} 
+
+\textit{Contraste con la literatura:} 
+
+\textit{Lo que NO explica este resultado:} 
+
+\textit{Implicación para el siguiente paso:} 
+
+\section*{Ordenamiento de los elementos de reporte}
+\addcontentsline{toc}{section}{Ordenamiento de los elementos de reporte}
+\markboth{Ordenamiento de los elementos de reporte}{Ordenamiento de los elementos de reporte}
+
+\subsection*{Elementos primarios y secundarios}
+\addcontentsline{toc}{subsection}{Elementos primarios y secundarios}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Primarios} & \textbf{Secundarios} \\
+\hline
+Teoría A  & Teoría B  \\
+Idea A    & Idea B    \\
+Resultado A & Resultado B \\
+Resultado C & Resultado D \\
+\hline
+\end{tabular}
+\caption{Elementos de reporte}
+\end{table}
+
+\subsection*{Orden de escritura}
+\addcontentsline{toc}{subsection}{Orden de escritura}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Sección} & \textbf{Temas a tratar} \\
+\hline
+Introducción &
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{enumerate}
+    \item  (Primario)
+    \item  (Primario)
+    \item  (Secundario)
+\end{enumerate}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Metodología &
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{enumerate}
+    \item Detalle de los datos. (Primario)
+    \item  (Primario)
+    \item  (Secundario)
+    \item Diagnóstico del modelo. (Primario)
+\end{enumerate}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Resultados &
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{enumerate}
+    \item  (Primario)
+    \item  (Secundario)
+\end{enumerate}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabularx}
+\caption{Orden de escritura del reporte}
+\end{table}
+
+\section*{La imagen que cuenta la historia}
+\addcontentsline{toc}{section}{La imagen que cuenta la historia}
+\markboth{La imagen que cuenta la historia}{La imagen que cuenta la historia}
+
+
+\chapter*{Arco narrativo del proyecto}
+\addcontentsline{toc}{chapter}{Arco narrativo del proyecto}
+\markboth{Arco narrativo del proyecto}{Arco narrativo del proyecto}
+\stepcounter{chapter}
+
+
+«El modelo reveló que \underline{\hspace{5cm}}, lo que significa que \underline{\hspace{5cm}}.»
+
+
+\chapter*{Parte de escritura}
+\addcontentsline{toc}{chapter}{Parte de escritura}
+\markboth{Parte de escritura}{Parte de escritura}
+\stepcounter{chapter}
+
+
+
+\chapter*{Parte de reflexión}
+\addcontentsline{toc}{chapter}{Parte de reflexión}
+\markboth{Parte de reflexión}{Parte de reflexión}
+\stepcounter{chapter}
+
+
+% Revisen y actualicen: objetivos, pregunta de investigación y demás elementos
+% de la UVE con toda la información recopilada hasta ahora.
+
+
+\chapter*{Diario de aprendizaje}
+\addcontentsline{toc}{chapter}{Diario de aprendizaje}
+\markboth{Diario de aprendizaje}{Diario de aprendizaje}
+\stepcounter{chapter}
+
+
+% 3 a 5 oraciones respondiendo:
+% ¿Qué saben ahora que no sabían al entregar la Bitácora #2?
+% Enfóquense en el proceso (¿qué fue difícil?, ¿qué salió diferente a lo planeado?),
+% no en los resultados técnicos.
+
+
+\chapter*{Registro del uso de IA}
+\addcontentsline{toc}{chapter}{Registro del uso de IA}
+\markboth{Registro del uso de IA}{Registro del uso de IA}
+\stepcounter{chapter}
+
+% Documenten cada uso de IA con el formato de la Bitácora #1:
+%   Herramienta / Prompt / Respuesta de la IA / Evaluación / Modificaciones / Aprendizaje
+
+\vspace{1cm}
+
+\textit{Herramienta: }
+
+\textit{Prompt: }
+
+\textit{Respuesta de la IA: }
+
+\textit{Evaluación: }
+
+\textit{Modificaciones: }
+
+\textit{Aprendizaje: }
+
+```{=latex}
+\nocite{}
+```
