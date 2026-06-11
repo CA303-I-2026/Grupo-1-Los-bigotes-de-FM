@@ -248,6 +248,13 @@ Jerry Ma, Weining Yang, Min Luo y Ninghui Li \\ \hline
 
 Metodológico &
 Modelos criptográficos &
+Modelos no paramétricos &
+APS 240: Data Analysis and Statistics with R: Chapter 33 Non-parametric tests & 
+2021 &
+Dylan Z, Bethan J, Philip Warren \\ \hline
+
+Metodológico &
+Modelos criptográficos &
 Análisis de patrones repetitivos en contraseñas humanas mediante algoritmos y visualización sobre el corpus RockYou &
 User Password Repetitive Patterns Analysis and Visualization &
 2015 &
