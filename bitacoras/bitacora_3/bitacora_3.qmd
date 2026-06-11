@@ -63,7 +63,7 @@ format:
 
       % Encabezados
       \usepackage{fancyhdr}
-      \pagestyle{fancy}
+      \pagestyle{plain}
       \fancyhf{}
       \renewcommand{\headrulewidth}{0pt}
       \renewcommand{\chaptername}{Capítulo}
@@ -123,7 +123,7 @@ Esta semana, le diría a nuestra audiencia que aplicar una tokenización con el 
 \addcontentsline{toc}{section}{Rastro de decisiones}
 \markboth{Rastro de decisiones}{Rastro de decisiones}
 
-No se descartó ninguna metodología, en su lugar se implementó la idea del prodfesor de tokenizar las contraseñas para poder hacer un mejor trabajo con las distribuciones de Benford de sus dígitos y con el test KS, para no perder la información de la parte de letras de las contraseñas. 
+No se descartó ninguna metodología, en su lugar se implementó la idea del profesor de tokenizar las contraseñas para poder hacer un mejor trabajo con las distribuciones de Benford de sus dígitos y con el test KS, para no perder la información de la parte de letras de las contraseñas. 
 
 \section*{Respuesta a retroalimentación}
 \addcontentsline{toc}{section}{Respuesta a retroalimentación}
@@ -188,22 +188,21 @@ Leonardo Vega Aragón (C38313) &
 \stepcounter{chapter}
 
 
+
+
 \section*{Análisis de modelación}
-\addcontentsline{toc}{section}{Análisis de modelación}
-\markboth{Análisis de modelación}{Análisis de modelación}
+
 
 En esta parte del trabajo todo se basó en mejorar el código hecho hasta el momento, el mismo se puede ver en el git, más específicamente en la carpeta código (03_modelacion.py).
 
 
 \section*{Propuesta metodológica}
-\addcontentsline{toc}{section}{Propuesta metodológica}
-\markboth{Propuesta metodológica}{Propuesta metodológica}
 
-\section*{1.2 Propuesta Metodológica}
+
 
 \subsection*{Pregunta de investigación}
 
-¿En qué medida los patrones estructurales de las contraseñas del dataset RockYou - su composición de caracteres, longitud y distribución de dígitos - determinan su nuivel de entropía y evidencian que los usuarios no eligen contraseñas de forma aleatoria?
+¿En qué medida los patrones estructurales de las contraseñas del dataset RockYou - su composición de caracteres, longitud y distribución de dígitos - determinan su nivel de entropía y evidencian que los usuarios no eligen contraseñas de forma aleatoria?
 
 \subsection*{Tokenización CL100K sobre las contraseñas}
 
@@ -696,7 +695,7 @@ fue concebida.
 
 \subsection*{Titular}
 
-No se cumple similitd en las distribuciones con tokenización en la posición 1. 
+No se cumple similitud en las distribuciones con tokenización en la posición 1. 
  
 \subsection*{Nombre del hallazgo/resultado}
 
@@ -708,7 +707,7 @@ Para la primera posición de la contraseña, se cumple Benford teóricamente per
 
 \subsection*{Método o análisis que lo produjo}
 
-Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similiar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
+Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
 
 \subsection*{Evidencia}
 
@@ -745,7 +744,7 @@ Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las
 
 \subsection*{Titular}
 
-No se cumple similitd en las distribuciones con tokenización en la posición 2. 
+No se cumple similitud en las distribuciones con tokenización en la posición 2. 
  
 \subsection*{Nombre del hallazgo/resultado}
 
@@ -757,7 +756,7 @@ Para la segunda posición de la contraseña, no concuerdan KS y Benford.
 
 \subsection*{Método o análisis que lo produjo}
 
-Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similiar a la Benford teórica, al menos en la posición 2, pero no lo suficiente para lograr pasar el test KS, por lo cual se rechaza Ho. 
+Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 2, pero no lo suficiente para lograr pasar el test KS, por lo cual se rechaza Ho. 
 
 \subsection*{Evidencia}
 
@@ -793,7 +792,7 @@ Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las
 
 \subsection*{Titular}
 
-Se cumple similitd en las distribuciones con tokenización en la posición 3. 
+Se cumple similitud en las distribuciones con tokenización en la posición 3. 
  
 \subsection*{Nombre del hallazgo/resultado}
 
@@ -805,7 +804,7 @@ Para la tercera posición de la contraseña tokenizada, se sigue Benford.
 
 \subsection*{Método o análisis que lo produjo}
 
-Se usó la tokenización con base cl100k base, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que se sigue una distribución similiar a la Benford teórica, al menos en la posición 3. 
+Se usó la tokenización con base cl100k base, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que se sigue una distribución similar a la Benford teórica, al menos en la posición 3. 
 
 \subsection*{Evidencia}
 
@@ -841,7 +840,7 @@ Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las
 
 \subsection*{Titular}
 
-Se cumple similitd en las distribuciones con tokenización en la posición 4. 
+Se cumple similitud en las distribuciones con tokenización en la posición 4. 
  
 \subsection*{Nombre del hallazgo/resultado}
 
@@ -853,7 +852,7 @@ Para la cuarta posición de la contraseña tokenizada, se sigue Benford.
 
 \subsection*{Método o análisis que lo produjo}
 
-Se usó la tokenización con base cl100k base, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que se sigue una distribución similiar a la Benford teórica, al menos en la posición 4. 
+Se usó la tokenización con base cl100k base, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que se sigue una distribución similar a la Benford teórica, al menos en la posición 4. 
 
 \subsection*{Evidencia}
 
@@ -885,7 +884,7 @@ Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las
 
 \section*{Comparación explícita}
 
-Para la posición 3 en adelante, se descubrió que todas las posiciones siguen Benford comprobado con KS, resultado inesperado pues se venía sin poder seguir en las posiciones anteriores (1) y 82) respectivamente .Esto es un resultado curioso, pues esperábamos que en todas las posiciones se cumpliera Benford y no solo a partir de la tercera posición en adelante. 
+Para la posición 3 en adelante, se descubrió que todas las posiciones siguen Benford comprobado con KS, resultado inesperado pues se venía sin poder seguir en las posiciones anteriores (1) y 82) respectivamente. Esto es un resultado curioso, pues esperábamos que en todas las posiciones se cumpliera Benford y no solo a partir de la tercera posición en adelante. 
 
 Esto sucede pues aunque la posición 1 y 2 "siguen Benford", no lo hacen de forma que también se pase el test KS. Esto último es sumamente importante y aquí recae la magia de todo, que no basta con parecer que la siga, sino que se tiene que acoplar también a pasar por test formales para poder efectivamente comprobarlo y no hacerlo simplemente a ojo. 
 
@@ -910,7 +909,7 @@ Los cinco tipos de máscara producen distribuciones de entropía completamente d
 
 \subsection*{Método o análisis que lo produjo}
 
-Se usó la prueba de Kruskal-Wallis sobre entropías, se separaron las máscaras de la siguiente forma: Mixta, solo dígitos, solo letras, solo caracteres especiales o solo mayúsculas. Usando para las entropías los siguientes rangos: bajo (H $<$ 2.4464), medio (2.4464 $\leq$ H $<$ 2.9477), alto(H $\geq $2.9477). Este agrupamiento es descriptivo, no inferencial, pues la variable de agrupación coincide con la variable de respuesta.
+Se usó la prueba de Kruskal-Wallis sobre entropías, se separaron las máscaras de la siguiente forma: Mixta, solo dígitos, solo letras, solo caracteres especiales o solo mayúsculas. Usando para las entropías los siguientes rangos: bajo (H $<$ 2.4464), medio (2.4464 $\leq$ H $<$ 2.9477), alto(H $\geq$ 2.9477). Este agrupamiento es descriptivo, no inferencial, pues la variable de agrupación coincide con la variable de respuesta.
 
 \subsection*{Evidencia}
 
@@ -1022,7 +1021,7 @@ Se realizó un análisis descriptivo de los datos de RockYou para poder determin
 
 \subsection*{Conexión con la pregunta de investigación}
 
-Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre como se distribuyen los dígitos por posición en las contraseñas, esto nos puede dar una pista de como las personas escogen los dígitos según la posición, se ve claramente como el que más varía es la primera posición, por lo que podemos concluir que esa posición es la más vulnerable a cambios según el usuario, la segunda también, después de eso, vemos como los cambios en los dígitos casi se puede asegurar que lleva una distribución uniforme y su probabilidad "de salir" es igual independientemente del dígito escogido. Todo esto nos ayuda a comprender mejor como los usuarios crean sus contraseñas y que tan aleatorias pueden llegar a ser. 
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos por posición en las contraseñas, esto nos puede dar una pista de cómo las personas escogen los dígitos según la posición, se ve claramente como el que más varía es la primera posición, por lo que podemos concluir que esa posición es la más vulnerable a cambios según el usuario, la segunda también, después de eso, vemos como los cambios en los dígitos casi se puede asegurar que lleva una distribución uniforme y su probabilidad "de salir" es igual independientemente del dígito escogido. Todo esto nos ayuda a comprender mejor como los usuarios crean sus contraseñas y que tan aleatorias pueden llegar a ser. 
 
 \subsection*{Contraste con la literatura}
 
@@ -1070,7 +1069,7 @@ Se realizó un conteo y se calculó la probabilidad para cada transición con la
 
 \subsection*{Conexión con la pregunta de investigación}
 
-La matriz anterior nos permite comprender mejor como se van construyendo las contraseñas de parte de los usuarios. Vemos como es sumamente probable pasar de una letra a otra, también, es muy probable pasar de un dígito a otro, entonces podemos concluir un comportamiento de orden de parte de las contraseñas, donde por ejemplo es sumamente raro saltar de un caracter especial a otro. Esto nos puede ayudar a entender y modelar mejor la aleatoriedad de las contraseñas para así contestar la pregunta de investigación. 
+La matriz anterior nos permite comprender mejor cómo se van construyendo las contraseñas de parte de los usuarios. Vemos como es sumamente probable pasar de una letra a otra, también, es muy probable pasar de un dígito a otro, entonces podemos concluir un comportamiento de orden de parte de las contraseñas, donde por ejemplo es sumamente raro saltar de un carácter especial a otro. Esto nos puede ayudar a entender y modelar mejor la aleatoriedad de las contraseñas para así contestar la pregunta de investigación. 
 
 \subsection*{Contraste con la literatura}
 
@@ -1253,7 +1252,7 @@ limitación real del análisis que vale la pena reconocer.
 \newline
 \textbf{Contraste:} La conclusión de que las personas tienden a repetir patrones en sus contraseñas (en especial con las contraseñas más largas) podría ser una posible explicación a una de las conclusiones obtenidas en \textit{The Science of Guessing}, específicamente aquella que dictaba que aunque se le motive a una persona a usar contraseñas seguras (bajo los criterios usuales), la vulnerabilidad de dichas contraseñas no varía mucho de la de una persona que no se esfuerza activamente en crear contraseñas seguras. 
 \newline
-\textbf{Conclusión propia:} Las conclusiones vistas en \textit{User password repetitive patterns analysis and visualization} resulta de gran relevancia para el presente proyecto, pues muestra que es bastante probable que contraseñas recolectadas de una base de datos dada compartan ciertos patrones ayuden a deducir la probabilidad de que un cierto caracter esté en la i-ésima posición de una contraseña. 
+\textbf{Conclusión propia:} Las conclusiones vistas en \textit{User password repetitive patterns analysis and visualization} resulta de gran relevancia para el presente proyecto, pues muestra que es bastante probable que contraseñas recolectadas de una base de datos dada compartan ciertos patrones que ayuden a deducir la probabilidad de que un cierto carácter esté en la i-ésima posición de una contraseña. 
 
 
 
@@ -1509,7 +1508,6 @@ El cambio más notorio que se dio en la acutalización de la Uve de Dowin, fue e
 Además, se hicieron nuevas implementaciones al apartado metodológico, en primer lugar para reflejar el cambio del enfoque del proyecto y en segundo lugar para agregar herramientas que permitan la elaboración de un proyecto más completo con una nueva pruebas no parámetrica.
 
 La sección de conceptos básicos y la de teorías y principios no fue necesario modificarla, pues dichos conceptos siguen siendo relevantes pese al cambio de enfoque del proyecto .
-
 \newpage
 
 \subsection{V de Gowin}
@@ -1692,7 +1690,7 @@ de bytes de entrada en tokens discretos. Este proceso cuenta con una fase de ent
 
 \chapter*{Registro del uso de IA}
 \addcontentsline{toc}{chapter}{Registro del uso de IA}
-\markboth{Registro del uso de IA}{Registro del uso de IA}
+\subsection{Conceptos Básicos}\markboth{Registro del uso de IA}{Registro del uso de IA}
 \stepcounter{chapter}
 
 \vspace{1cm}
