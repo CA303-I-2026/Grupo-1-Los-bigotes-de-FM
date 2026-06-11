@@ -192,7 +192,8 @@ Leonardo Vega Aragón (C38313) &
 \addcontentsline{toc}{section}{Análisis de modelación}
 \markboth{Análisis de modelación}{Análisis de modelación}
 
-En esta parte del trabajo todo se basó en mejorar el código hecho hasta el momento, el mismo se puede ver en el git, más específicamente en la carpeta código.
+En esta parte del trabajo todo se basó en mejorar el código hecho hasta el momento, el mismo se puede ver en el git, más específicamente en la carpeta código (03_modelacion.py).
+
 
 \section*{Propuesta metodológica}
 \addcontentsline{toc}{section}{Propuesta metodológica}
@@ -1171,6 +1172,7 @@ Ahora nos toca medir mejor la entropía con métodos más rigurosos.
 \addcontentsline{toc}{section}{La imagen que cuenta la historia}
 \markboth{La imagen que cuenta la historia}{La imagen que cuenta la historia}
 
+El gráfico elegido como la visualización más poderosa del proyecto es el de KS y Benford para la posición 1 de las contraseñas tokenizadas con CL100K. Se eligió este gráfico porque es el que mejor ilustra la tensión central del proyecto: los usuarios muestran una tendencia decreciente en la elección de dígitos en las primeras posiciones, similar a Benford, pero sin cumplir las proporciones exactas que la ley predice. En la posición 1 se observa que las barras empíricas tienen la forma decreciente característica de Benford, donde el dígito 1 es el más frecuente y la frecuencia va bajando, pero las alturas no coinciden con suficiente precisión como para pasar el test KS. Esto significa que los humanos tienen preferencias propias al elegir dígitos que se acercan pero no llegan a seguir una distribución natural como Benford, lo cual es evidencia de una predictibilidad parcial pero real. A diferencia de las posiciones 3 y 4, donde tanto la distribución empírica como Benford son casi completamente planas y por eso coinciden, la posición 1 muestra una estructura más rica e informativamente más valiosa. Alguien que viera únicamente esta imagen podría concluir que las contraseñas no son completamente aleatorias en sus primeras posiciones, y que existe una tendencia sistemática en cómo los usuarios eligen sus dígitos iniciales. Esa tendencia, aunque no perfectamente benfordiana, es suficiente para distinguir contraseñas humanas de secuencias verdaderamente aleatorias. Desde la Bitácora #2, la comprensión del problema ha evolucionado considerablemente: antes se analizaban los dígitos sin tokenizar, pero ahora con la tokenización CL100K se puede separar el comportamiento por posición y ver que el patrón humano se concentra en las primeras posiciones. A partir de la posición 3, la distribución empírica se vuelve casi uniforme y coincide con lo que Benford predice para esas posiciones, simplemente porque ambas convergen hacia la uniformidad. Este contraste entre posiciones tempranas y tardías es lo que hace al gráfico de posición 1 narrativamente indispensable: es donde la huella humana es más visible y más explotable. El hecho de que el patrón se diluya progresivamente a lo largo de la contraseña abre preguntas importantes sobre en qué posiciones concentrar el análisis para maximizar la detección de predictibilidad. Si este gráfico fuera la portada del artículo, contaría la historia de que las contraseñas humanas llevan una firma estadística en sus primeras posiciones, imperfecta pero detectable, que las distingue de una secuencia verdaderamente aleatoria. Esa firma, identificada mediante tokenización CL100K y la prueba KS, es el aporte central de este proyecto al análisis de seguridad de contraseñas.
 
 \chapter*{Arco narrativo del proyecto}
 \addcontentsline{toc}{chapter}{Arco narrativo del proyecto}
@@ -1178,7 +1180,7 @@ Ahora nos toca medir mejor la entropía con métodos más rigurosos.
 \stepcounter{chapter}
 
 
-«El modelo reveló que \underline{\hspace{5cm}}, lo que significa que \underline{\hspace{5cm}}.»
+El modelo reveló que las contraseñas del dataset RockYou siguen patrones predecibles en la distribución de sus caracteres por posición y que su nivel de entropía depende tanto de esa distribución como de la longitud de la contraseña, lo que significa que los usuarios no eligen contraseñas de forma aleatoria y que la tokenización CL100K es una herramienta efectiva para traducir esos patrones del lenguaje escrito hacia una representación numérica.
 
 
 \chapter*{Parte de escritura}
