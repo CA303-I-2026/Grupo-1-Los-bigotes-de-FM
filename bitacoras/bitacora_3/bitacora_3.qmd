@@ -42,6 +42,7 @@ format:
       \usepackage{setspace}
       \usepackage{ltablex}
       \keepXColumns
+      
 
       % Tablas
       \usepackage{booktabs}
@@ -191,17 +192,499 @@ Leonardo Vega Aragón (C38313) &
 \addcontentsline{toc}{section}{Análisis de modelación}
 \markboth{Análisis de modelación}{Análisis de modelación}
 
-
+En esta parte del trabajo todo se basó en mejorar el código hecho hasta el momento, el mismo se puede ver en el git, más específicamente en la carpeta código.
 
 \section*{Propuesta metodológica}
 \addcontentsline{toc}{section}{Propuesta metodológica}
 \markboth{Propuesta metodológica}{Propuesta metodológica}
 
+\section*{1.2 Propuesta Metodológica}
+
+\subsection*{Pregunta de investigación}
+
+¿En qué medida los patrones estructurales de las contraseñas del dataset RockYou - su composición de caracteres, longitud y distribución de dígitos - determinan su nuivel de entropía y evidencian que los usuarios no eligen contraseñas de forma aleatoria?
+
+\subsection*{Tokenización CL100K sobre las contraseñas}
+
+\subsubsection*{Motivación}
+
+El tokenizador CL100K usado por GPT-4 transforma cada texto en un vector de embeddings de dimensión alta. Cuando se calcula la norma del vector de tokenización de una contraseña, el resultado es un número real que contiene una distribución de dígitos en cada posición. Si los dígitos presentes en estas normas se desvían de la distribución de Benford, existe evidencia de que los usuarios eligen contraseñas con patrones sistemáticos que el modelo-tokenizador captura de manera predecible, lo que implica vulnerabilidad en la representación interna. Se utiliza la tokenización, ya que es una transformación relativamente ``natural'' del lenguaje humano a dígitos, dado que el tokenizador CL100K fue entrenado sobre datos reales de uso humano según los análisis publicados por OpenAI, lo que permite detectar si los patrones de elección de contraseñas se preservan en la representación interna del modelo.
+
+\subsubsection*{Tokenización CL100K y norma elegida}
+
+Sea $c$ una contraseña del conjunto de datos $\mathcal{C}$. El tokenizador CL100K 
+la transforma en un vector de embeddings:
+
+\begin{equation}
+	\text{CL100K}(c) = \mathbf{v}_c = (v_1, v_2, \ldots, v_d) \in \mathbb{R}^d,
+\end{equation}
+
+donde $d$ es la dimensión del embedding (típicamente $d \approx 100{,}000$ para 
+CL100K).
+
+Se elige la norma de valor absoluto del vector
+
+\begin{equation}
+	\|\mathbf{v}_c\|_1 = \sum_{i=1}^{d} |v_i| \in \mathbb{R}_{\geq 0}.
+	\label{eq:norma_L1}
+\end{equation}
+
+Esta norma fue elegida simplemente por su interpretación directa como la suma total 
+de las magnitudes de las componentes del vector de tokenización, lo que permite 
+extraer la distribución de dígitos en cada posición del número resultante.
+
+Para cada $\|\mathbf{v}_c\|_1$, se extrae el dígito en la posición $n$
+
+\begin{equation}
+	D_n(\|\mathbf{v}_c\|_1) = \left\lfloor \frac{\|\mathbf{v}_c\|_1}{10^{n-1}} \right\rfloor \bmod 10,
+	\qquad n \in \{1, 2, \ldots, N_{\text{max}}\},
+\end{equation}
+
+donde $N_{\text{max}}$ es el número de dígitos de $\|\mathbf{v}_c\|_1$.
 
 
-\subsection*{Análisis fallido}
-\addcontentsline{toc}{subsection}{Análisis fallido}
-\markboth{Análisis fallido}{Análisis fallido}
+\subsection*{Prueba de Kolmogorov-Smirnov contra la distribución de Benford}
+
+\subsubsection*{Motivación}
+
+La Ley de Benford establece que en conjuntos de datos numéricos de origen ``natural'', el dígito $d$ ocupa la primera posición con una frecuencia predecible (Caputi Zunini, 2019). Si los dígitos presentes en contraseñas reales se desvían de esa distribución, existe evidencia de que los usuarios eligen números con sesgos sistemáticos, lo que implica predecibilidad y, en consecuencia, vulnerabilidad. Se elige la prueba KS (y no una chi-cuadrado) porque compara funciones de distribución acumulada completas sin requerir agrupar celdas; con muestras en el orden de millones, la chi-cuadrado infla el estadístico por el tamaño de $n$ sin aportar información sobre la forma de la desviación (Chandola, Banerjee, \& Kumar, 2009; Chandy, Schifano, Yan, \& Zhang, 2025).
+
+\subsubsection*{Distribución teórica de Benford generalizada}
+
+Sea \(D_n \in \{1,\ldots,9\}\) el dígito en la posición \(n\)-ésima, entonces la PDF de Benford para \(n=1\) es
+
+\begin{equation}
+	\mathbb{P}(\{D_1= d\})
+	= \log_{10}\!\left(1 + \frac{1}{d}\right)
+	\label{eq:benford_pos1}
+\end{equation}
+
+Para posiciones $n \geq 2$, la fórmula generalizada integra sobre todos los prefijos de longitud $n-1$, siendo esta
+
+\begin{equation}
+	\mathbb{P}(\{D_n= d\})
+	= \sum_{k=10^{n-2}}^{10^{n-1}-1}
+	\log_{10}\!\left(1 + \frac{1}{10k + d}\right),
+	\qquad d \in \{0,1,\ldots,9\}
+\end{equation}
+
+\subsubsection*{Estadístico KS}
+
+Sea $F_n(x)$ la función de distribución acumulada empírica de los dígitos en la
+posición $p$ y $F_0(x)$ la CDF teórica de Benford. El estadístico
+Kolmogorov-Smirnov es
+
+\begin{equation}
+	D_n = \sup_{x}\,\bigl|F_n(x) - F_0(x)\bigr|
+	\label{eq:ks_stat}
+\end{equation}
+
+\subsubsection*{Distribución límite y valor crítico}
+
+Kolmogorov (1933) demostró que, bajo $H_0$ simple (distribución teórica
+completamente especificada sin parámetros estimados), el estadístico escalado
+converge en distribución
+
+\begin{equation}
+	\sqrt{n}\,D_n \;\xrightarrow{d}\; K, \qquad n \to \infty
+	\label{eq:ks_limit}
+\end{equation}
+
+donde $K$ es la \textbf{distribución de Kolmogorov}, cuya CDF admite la
+representación en serie
+
+\begin{equation}
+	P(K \leq t)
+	= 1 - 2\sum_{j=1}^{\infty}(-1)^{j-1}\,e^{-2j^2t^2}
+	\label{eq:kolmogorov_cdf}
+\end{equation}
+
+Para valores de $t$ no demasiado pequeños, el primer término domina y la
+aproximación de un término es suficiente
+
+\begin{equation}
+	P(K > t) \approx 2\,e^{-2t^2}
+	\label{eq:ks_approx}
+\end{equation}
+
+El cuantil crítico $t_{\alpha}$ se obtiene igualando la expresión anterior
+a $\alpha$ y despejando
+
+\begin{equation}
+	2\,e^{-2t_{\alpha}^2} = \alpha
+	\;\;\Longrightarrow\;\;
+	t_{\alpha} = \sqrt{-\tfrac{1}{2}\ln\!\left(\tfrac{\alpha}{2}\right)}
+	\label{eq:ks_quantile}
+\end{equation}
+
+Para $\alpha = 0.05$ (el alpha escogido)
+
+\begin{equation}
+	t_{0.05}
+	= \sqrt{-\tfrac{1}{2}\ln(0.025)}
+	= \sqrt{\tfrac{3.6889}{2}}
+	= \sqrt{1.8444}
+	\approx 1.3581
+	\label{eq:ks_t005}
+\end{equation}
+
+Dado que la distribución límite es la de $\sqrt{n}\,D_n$, el valor crítico sobre el estadístico muestral es
+
+\begin{equation}
+	D_{\alpha} = \frac{t_{\alpha}}{\sqrt{n}}
+	\;\;\Longrightarrow\;\;
+	D_{0.05} = \frac{1.36}{\sqrt{n}}
+	\label{eq:ks_critical}
+\end{equation}
+
+Se rechaza $H_0$ (los dígitos siguen Benford) cuando $D_n > D_{\alpha}$. Dado que $n \sim 10^6$, el umbral $D_{\alpha}$ es extremadamente pequeño, por lo que se complementa el resultado con la desviación absoluta media (MAD)
+
+\begin{equation}
+	\text{MAD}
+	= \frac{1}{|\mathcal{D}|}\sum_{d \in \mathcal{D}}
+	\bigl|\mathbb{P}_{\text{emp}}(d) -\mathbb{P}_{\text{Benford}}(d)\bigr|
+	\label{eq:mad}
+\end{equation}
+
+donde $\mathcal{D}$ es el conjunto de dígitos válidos para la posición dada. Los umbrales de conformidad son MAD $< 0.006$ (muy cercana), $0.006$--$0.012$ (aceptable), $0.012$-$0.015$ (marginal) y $> 0.015$ (no conformidad) (Negrini, 2012).
+
+\subsubsection*{Conexión con la pregunta de investigación}
+
+Si KS rechaza $H_0$ y MAD indica no conformidad, los dígitos de las contraseñas
+presentan sesgos sistemáticos respecto a una distribución numéricamente
+``natural''.
+
+\subsection*{Análisis de distribución de máscaras de contraseña}
+
+\subsubsection*{Motivación}
+
+Las contraseñas humanas no son cadenas aleatorias, los usuarios exhiben patrones
+estructurales sistemáticos al elegirlas. Para capturar esa estructura sin depender
+del contenido semántico de cada contraseña, se utiliza una representación de
+máscara, que abstrae cada carácter a su tipo. Formalmente, dado el
+alfabeto de tipos $\Sigma = \{L, U, D, S\}$ (minúsculas, mayúsculas, dígitos,
+caracteres especiales), la máscara de una contraseña $P = c_1 c_2 \cdots c_n$ es
+
+\begin{equation}
+	M(P) = \tau(c_1)\,\tau(c_2)\,\cdots\,\tau(c_n),
+	\qquad
+	\tau(c) =
+	\begin{cases}
+		L & c \in \mathcal{L} \\
+		U & c \in \mathcal{U} \\
+		D & c \in \mathcal{D} \\
+		S & c \in \mathcal{S}
+	\end{cases}
+	\label{eq:mascara}
+\end{equation}
+
+Se elige esta representación y no, por ejemplo, $n$-gramas de caracteres, porque
+permite cuantificar la predecibilidad estructural independientemente del
+vocabulario léxico. Si pocas máscaras concentran la mayor parte de las contraseñas,
+el espacio de búsqueda efectivo es mucho menor que el espacio teórico, lo que
+constituye evidencia directa de vulnerabilidad sistemática.
+
+\subsubsection*{Patrones comprimidos}
+
+Para reducir el espacio de máscaras sin perder información sobre la composición,
+se aplica una codificación de longitud de racha (\textit{run-length encoding})
+sobre $M(P)$. Sea $M(P) = t_1^{r_1} t_2^{r_2} \cdots t_k^{r_k}$ la
+descomposición en rachas consecutivas del mismo tipo, entonces el patrón
+comprimido es
+
+\begin{equation}
+	R(P) = t_1 r_1 \; t_2 r_2 \; \cdots \; t_k r_k
+	\label{eq:run}
+\end{equation}
+
+Por ejemplo, la máscara \texttt{LLLLLLDD} se comprime a \texttt{L6D2}. Esta
+representación agrupa contraseñas con la misma composición por bloques, lo que
+facilita el análisis de patrones frecuentes en el dataset. La distribución de
+patrones comprimidos se analiza por frecuencia absoluta $f_j$ y proporción
+relativa $\hat{p}_j = f_j / N$, donde $N$ es el total de contraseñas.
+
+
+\subsubsection*{Conexión con la pregunta de investigación}
+
+Si la distribución de máscaras está fuertemente concentrada, se confirma que los usuarios eligen contraseñas
+con patrones estructurales predecibles. Esto responde la pregunta de
+investigación en su dimensión composicional: no solo los dígitos siguen
+sesgos (KS vs.\ Benford), sino que la estructura completa de la
+contraseña es predecible antes de conocer un solo carácter.
+
+
+\subsection*{Entropía de Shannon y de densidad de contraseñas individuales}
+
+\subsubsection*{Motivación}
+
+A diferencia de los análisis de distribución a nivel de dataset, la entropía
+de una contraseña individual cuantifica la incertidumbre interna de
+su composición, cuán mezclados están los tipos de carácter que la conforman.
+Se elige la entropía de Shannon (Khan \& Wunder, 2024) sobre la distribución
+de tipos dentro de la contraseña porque es una medida establecida de
+incertidumbre que no requiere conocer el vocabulario léxico del usuario,
+es calculable en tiempo $O(|P|)$, y es interpretable directamente como bits
+de información. Frente a métricas de fuerza basadas en combinatoria
+($\log_2 |\mathcal{K}|^{|P|}$), que solo dependen del espacio de caracteres
+y la longitud, la entropía de Shannon captura además la diversidad
+de tipos usados dentro de la contraseña.
+
+\subsubsection*{Definición}
+
+\subsubsection*{Entropía de Shannon}
+
+Sea $P$ una contraseña y sea $p_t$ la proporción del tipo $t \in \Sigma$
+en $P$. La entropía de Shannon de $P$ es
+
+\begin{equation}
+	H_S(P) = -\sum_{t \,\in\, \Sigma} p_t \log_2 p_t
+	\label{eq:shannon}
+\end{equation}
+
+\subsubsection*{Entropía de densidad}
+
+Complementariamente, se define la entropía de densidad como la entropía de
+Shannon normalizada por la longitud de la contraseña
+
+\begin{equation}
+	H_D(P) = \frac{H_S(P)}{|P|}
+	\label{eq:shannon_density}
+\end{equation}
+
+$H_D$ penaliza las contraseñas largas pero uniformes (e.g., \texttt{aaaaaaaaaa}
+tiene $H_S = 0$ independientemente de la longitud) y premia aquellas con alta
+diversidad por carácter. Esta métrica está relacionada con la \textit{Expectation
+	entropy} propuesta por Khan \& Wunder (2024), que escala la información de
+composición por el espacio máximo posible del alfabeto; ambas buscan capturar
+la fortaleza de la contraseña en una escala normalizada.
+
+
+\subsubsection*{Conexión con la pregunta de investigación}
+
+Las estructuras internas repetitivas dentro de las contraseñas son penalizadas 
+por ambas métricas de entropía: $H_S$ captura la falta de diversidad entre tipos 
+de carácter, mientras que $H_D$ la penaliza adicionalmente en función de la 
+longitud. Contraseñas con entropías bajas presentan menor incertidumbre interna 
+y, por lo tanto, mayor predecibilidad desde la perspectiva del atacante. Este 
+resultado se complementa con la prueba de Kruskal-Wallis, que permite determinar 
+si la estructura de la máscara discrimina significativamente el nivel de entropía 
+observado.
+
+
+\subsection*{Prueba de Kruskal-Wallis sobre entropías por grupo}
+
+
+\subsubsection*{Motivación}
+
+Se busca determinar si la estructura de la máscara (longitud y tipo
+dominante de caracteres) discrimina el nivel de entropía. Se elige
+Kruskal-Wallis (KW) en lugar de ANOVA de un factor porque
+
+\begin{itemize}[noitemsep]
+	\item Las distribuciones de entropía por grupo no son normales (asimétricas,
+	con colas largas), como se verifica en el análisis descriptivo.
+	\item KW es una prueba no paramétrica de rangos que no asume homocedasticidad
+	ni normalidad dentro de los grupos.
+\end{itemize}
+
+\subsubsection*{Entropía de Shannon de una máscara}
+
+La entropía media de la máscara $m$ se define como en la ecuación~\eqref{eq:shannon},
+donde $\Sigma = \{L, U, D, S\}$ es el alfabeto de tipos de carácter (minúsculas,
+mayúsculas, dígitos, símbolos) y $p_c$ es la proporción del tipo $c$ en $m$.
+
+\subsubsection*{Estadístico de Kruskal-Wallis}
+
+Dadas $k$ muestras independientes de tamaños $n_1, \ldots, n_k$ con
+$N = \sum_{i=1}^k n_i$ observaciones totales, el estadístico es
+
+\begin{equation}
+	H = \frac{12}{N(N+1)}
+	\sum_{i=1}^{k} \frac{R_i^2}{n_i}
+	\;-\; 3(N+1)
+	\label{eq:kw}
+\end{equation}
+
+donde $R_i$ es la suma de rangos del grupo $i$ sobre el ranking global.
+Bajo $H_0$ (todas las distribuciones son iguales), $H \sim \chi^2_{k-1}$
+para muestras grandes.
+
+\subsubsection*{Ponderación por frecuencia}
+Como cada máscara $m_j$ tiene una frecuencia $f_j$ (número de contraseñas reales
+que la usan), se expande la muestra repitiendo cada observación con su
+frecuencia real:
+
+\begin{equation}
+	\tilde{n}_j = f_j
+	\label{eq:expansion}
+\end{equation}
+
+Para garantizar la reproducibilidad del proyecto, la implementación incluye
+un parámetro de tope $C$ configurable
+
+\begin{equation}
+	\tilde{n}_j = \min(f_j,\; C)
+	\label{eq:cap}
+\end{equation}
+
+En este trabajo se fija $C = 10\,000\,000$, valor que excede la frecuencia
+máxima observada en el dataset RockYou $(f_{\max} = L6$ con $3\,996\,634$ observaciones), por lo
+que el tope es inactivo y se cumple $\tilde{n}_j = f_j$ para toda máscara $m_j$.
+El vector de rangos reproduce así fielmente la distribución real del dataset.
+
+\subsubsection*{Agrupaciones evaluadas}
+
+Se aplica KW bajo tres criterios de agrupación
+
+\begin{enumerate}[noitemsep]
+	\item 
+	Longitud de máscara: grupos $g \in \{1, 2, \ldots, L_{\max}\}$
+	donde $L_{\max}$ es la longitud máxima observada.
+	\item Tipo dominante: \texttt{Solo~L}, \texttt{Solo~D},
+	\texttt{Solo~U}, \texttt{Solo~S}, \texttt{Mixta}.
+	\item Rango de entropía: bajo ($H < 2.4464$, por debajo del percentil 25),
+	medio ($2.4464 \leq H < 2.9477$, entre los percentiles 25 y 75) y
+	alto ($H \geq 2.9477$, por encima del percentil 75). Este agrupamiento
+	es descriptivo, no inferencial, pues la variable de agrupación coincide
+	con la variable de respuesta.
+\end{enumerate}
+
+\subsubsection*{Conexión con la pregunta de investigación}
+
+Si KW rechaza $H_0$ en los criterios de longitud y tipo dominante, se confirma
+que la estructura de la máscara predice significativamente la entropía.
+Esto implica que conocer el patrón de una contraseña reduce la
+incertidumbre sobre su espacio de búsqueda, respondiendo la pregunta en su
+dimensión estructural.
+
+
+
+
+\subsection*{Correlación de Spearman entre longitud y entropía}
+
+\subsubsection*{Motivación}
+
+KW indica si los grupos difieren, pero no cuantifica la dirección ni la fuerza de la relación entre longitud y entropía. Se elige el coeficiente de
+Spearman (y no Pearson) porque
+\begin{itemize}[noitemsep]
+	\item La relación puede ser monótona pero no lineal: la entropía puede
+	estabilizarse a partir de cierta longitud.
+	\item Spearman es robusto ante outliers y no asume normalidad bivariada.
+	\item Es equivalente a Pearson aplicado sobre los rangos, lo que lo hace
+	válido para datos ordinales y distribuciones sesgadas.
+\end{itemize}
+
+\subsubsection*{Coeficiente de Spearman}
+
+Sea $\{(\ell_j,\, h_j)\}_{j=1}^{n}$ el conjunto de pares (longitud de máscara,
+entropía media). El coeficiente de correlación de Spearman se calcula sobre los
+rangos $\{(r_j^{\ell},\, r_j^{h})\}$
+
+\begin{equation}
+	\rho_s
+	= 1 - \frac{6\,\displaystyle\sum_{j=1}^{n} d_j^2}{n(n^2-1)},
+	\qquad d_j = r_j^{\ell} - r_j^{h}
+	\label{eq:spearman_d}
+\end{equation}
+
+O, equivalentemente, como el coeficiente de Pearson de los rangos
+
+\begin{equation}
+	\rho_s
+	= \frac{\displaystyle\sum_{j=1}^{n}
+		\bigl(r_j^{\ell} - \bar{r}^{\ell}\bigr)
+		\bigl(r_j^{h}   - \bar{r}^{h}\bigr)}
+	{\sqrt{\displaystyle\sum_{j=1}^{n}
+			\bigl(r_j^{\ell} - \bar{r}^{\ell}\bigr)^2}
+		\;\sqrt{\displaystyle\sum_{j=1}^{n}
+			\bigl(r_j^{h}   - \bar{r}^{h}\bigr)^2}}
+	\label{eq:spearman_pearson}
+\end{equation}
+
+\subsubsection*{Variantes de cálculo}
+
+Se calculan dos versiones para verificar robustez
+
+\begin{equation}
+	\rho_{\text{raw}} = \rho_s\!\left(\{\ell_j\},\, \{h_j\}\right)
+	\label{eq:spearman_raw}
+\end{equation}
+
+\begin{equation}
+	\rho_{\text{pond}} = \rho_s\!\left(\{\ell_j^{*}\},\, \{h_j^{*}\}\right),
+	\qquad
+	\text{donde } \bigl|\{j^{*} : \ell_{j^*} = \ell_j\}\bigr| = \min(f_j, C')
+	\label{eq:spearman_pond}
+\end{equation}
+
+con $C' = 200\,000$. Si $\rho_{\text{raw}} \approx \rho_{\text{pond}}$, la
+correlación es robusta a la distribución de frecuencias.
+
+\subsubsection*{Interpretación del tamaño del efecto}
+
+\begin{equation}
+	|\rho_s| \in
+	\begin{cases}
+		[0.7,\; 1.0] & \text{correlación fuerte} \\
+		[0.4,\; 0.7) & \text{correlación moderada} \\
+		[0.0,\; 0.4) & \text{correlación débil}
+	\end{cases}
+	\label{eq:rho_interp}
+\end{equation}
+
+\subsubsection*{Conexión con la pregunta de investigación}
+
+Un $\rho_s$ alto y positivo confirma que contraseñas más largas son
+estadísticamente más entrópicas, lo que respalda con evidencia cuantitativa la
+recomendación de longitud mínima en políticas de seguridad. Complementa KW al
+ofrecer una medida continua de la relación: no solo se sabe que los grupos
+difieren, sino cuánto y en qué dirección.
+
+\subsection*{Análisis fallido: Ley de Benford sobre dígitos numéricos de contraseñas}
+
+\subsubsection*{Descripción del intento}
+
+Se intentó aplicar la Ley de Benford directamente sobre la distribución de los 
+dígitos numéricos presentes en las contraseñas y sus subcadenas (\textit{chunks}) 
+numéricos, con la hipótesis de que, al tratarse de un conjunto masivo de datos 
+generado por comportamiento humano, los primeros dígitos seguirían la distribución 
+logarítmica característica de Benford.
+
+\subsubsection*{Por qué no funcionó}
+
+La aplicación resultó inválida por razones tanto empíricas como teóricas. 
+La distribución de caracteres numéricos en datasets de contraseñas no cumple 
+las condiciones de aplicabilidad de la Ley de Benford por varias razones 
+estructurales:
+
+\begin{itemize}[noitemsep]
+	\item \textbf{Patrones de fechas:} Una fracción significativa de los 
+	componentes numéricos corresponde a años (ej. \texttt{1990}, \texttt{2003}), 
+	meses y días, cuya distribución de primeros dígitos está acotada 
+	artificialmente (los años modernos comienzan casi todos con \texttt{1} o 
+	\texttt{2}, los meses con \texttt{0} o \texttt{1}).
+	
+	\item \textbf{Restricciones de longitud:} Las políticas de contraseñas 
+	imponen longitudes mínimas y máximas que truncan el espacio numérico 
+	disponible, eliminando la variación de varios órdenes de magnitud que 
+	Benford requiere para operar.
+	
+	\item \textbf{Sesgos cognitivos del usuario:} Los usuarios concentran 
+	sus elecciones en números redondos, secuencias simples (\texttt{123}, 
+	\texttt{000}) y años de nacimiento, lo que produce una distribución 
+	de primeros dígitos fuertemente no uniforme pero tampoco logarítmica.
+\end{itemize}
+
+Esto fue confirmado tanto mediante la revisión de la literatura especializada como mediante la comparación entre la distribución empírica observada y la distribución teórica de Benford usando el estadístico KS, el cual rechazó $H_0$ con un valor de $D_n$ muy superior al umbral crítico $D_{0.05} = 1.36/\sqrt{n}$ (Bonneau, 2012; Chandy, Schifano, Yan, \& Zhang, 2025).
+
+\subsubsection*{Lección metodológica}
+
+Este análisis fallido dejó una lección importante: no siempre se llega al resultado esperado, y la idea intuitiva de una hipótesis no es suficiente para garantizar su validez empírica. Antes de comprometer recursos en la implementación de un método, es necesario estudiar en profundidad las condiciones de aplicabilidad del mismo, explorar la distribución real de los datos y revisar la literatura para identificar restricciones estructurales que puedan invalidar el enfoque desde el inicio. En este caso, una revisión más cuidadosa de los supuestos de Benford habría anticipado que un dataset de contraseñas, por su naturaleza acotada y culturalmente sesgada, no constituye el tipo de magnitudes de origen ``natural'' para las que la ley 
+fue concebida.
+	
+
+
+
 
 
 \section*{Construcción de fichas de resultados}
