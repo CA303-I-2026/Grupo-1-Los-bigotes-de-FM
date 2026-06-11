@@ -1691,22 +1691,28 @@ de bytes de entrada en tokens discretos. Este proceso cuenta con una fase de ent
 \markboth{Registro del uso de IA}{Registro del uso de IA}
 \stepcounter{chapter}
 
-% Documenten cada uso de IA con el formato de la Bitácora #1:
-%   Herramienta / Prompt / Respuesta de la IA / Evaluación / Modificaciones / Aprendizaje
-
 \vspace{1cm}
+\textit{Herramienta: } Claude (Anthropic)
+\textit{Prompt: } Prompts iterativos para la generación de menús interactivos dentro de los scripts del proyecto, la generación de gráficos en Python y el guardado de los datos procesados.
+\textit{Respuesta de la IA:} El código generado se puede encontrar en los scripts del proyecto, particularmente en los archivos de tokenización y análisis descriptivo.
+\textit{Evaluación:} Cada fragmento de código generado fue revisado y probado por al menos un miembro del equipo, verificando que la lógica fuera correcta y coherente con los objetivos del proyecto.
+\textit{Modificaciones:} Se realizaron ajustes menores de estilo y correcciones puntuales de lógica tras las pruebas de ejecución.
+\textit{Aprendizaje:} Se observó que Claude es capaz de generar código funcional y estructurado para tareas de procesamiento de datos, aunque siempre requiere supervisión humana para garantizar que el resultado sea el esperado.
+\vspace{1cm}
+\textit{Herramienta: } Claude (Anthropic)
+\textit{Prompt: } "Corrige los errores gramaticales y de tildes en el siguiente texto, sin modificar el contenido ni el estilo de redacción." (Texto adjuntado: sección de Metodologías)
+\textit{Respuesta de la IA:} El texto corregido fue incorporado directamente en la sección de Metodologías del informe.
+\textit{Evaluación:} Un miembro del equipo comparó el texto original con el corregido para verificar que no se hubieran alterado el contenido ni la intención de ningún párrafo.
+\textit{Modificaciones:} Ninguna adicional; las correcciones propuestas fueron aceptadas en su totalidad.
+\textit{Aprendizaje:} Claude demostró ser una herramienta confiable para la corrección ortográfica y gramatical de textos académicos en español, reduciendo el tiempo dedicado a la revisión manual.
+\vspace{1cm}
+\textit{Herramienta: } Perplexity
+\textit{Prompt: } Búsqueda de nuevas referencias bibliográficas relevantes para complementar el marco teórico del proyecto, a partir de los temas tratados en el trabajo.
+\textit{Respuesta de la IA:} Perplexity proporcionó referencias adicionales junto con sus respectivos enlaces URL, los cuales fueron incorporados al archivo \texttt{.bib} del proyecto.
+\textit{Evaluación:} Cada referencia sugerida fue revisada por al menos un miembro del equipo para verificar su pertinencia y que correspondiera al tema tratado en el trabajo.
+\textit{Modificaciones:} En algunos casos fue necesario ajustar manualmente el formato de las entradas bibliográficas para que fueran compatibles con el estilo de citación utilizado en el proyecto.
+\textit{Aprendizaje:} Se comprobó que Perplexity puede ser una herramienta útil para la búsqueda de bibliografía académica, aunque la verificación manual de cada fuente sigue siendo indispensable para garantizar su calidad y relevancia.
 
-\textit{Herramienta: }
-
-\textit{Prompt: }
-
-\textit{Respuesta de la IA: }
-
-\textit{Evaluación: }
-
-\textit{Modificaciones: }
-
-\textit{Aprendizaje: }
 
 ```{=latex}
 \nocite{}
