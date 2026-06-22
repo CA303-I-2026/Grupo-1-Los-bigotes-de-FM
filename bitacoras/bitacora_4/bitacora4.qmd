@@ -494,19 +494,15 @@ Finalmente, este trabajo llena un vacío poco explorado: ni los estudios de Benf
 
 \section{Introducción}
 
-El desarrollo de la tecnología y las bases de datos electrónicas han llegado a cambiar el juego de la información. Cada día se les confían más datos personales y sensibles a distintos softwares, ya sea la aplicación bancaria que se usa para realizar una transacción, o tal vez la aplicación de salud que se utilice para medir el estado de la misma, ambas usan datos sumamente sensibles y privados acerca de las personas, su estilo de vida, sus gustos, etc.
-
-Con este desarrollo inminente, las contraseñas han redefinido su importancia en el diario vivir de las personas, antes, cuando se pensaba en una contraseña, se pensaba en una caja fuerte de algún banco que se abría si se digitaba correctamente una sucesión de números que solo los altos mandos conocían, sin embargo, hoy en día, las contraseñas en los entornos digitales representan la seguridad de miles de millones de datos sensibles de millones de usuarios alrededor del mundo, que en caso de filtrarse o saberse, causaría un caos a nivel global.
-
-En la investigación, se usará el sonado caso de la filtración de RockYou, un hackeo que se realizó en el año 2009, del cual se obtuvo un dataset lo suficientemente robusto de contraseñas para poder realizar análisis y estudios posteriores. 
+El desarrollo de la tecnología y las bases de datos electrónicas han llegado a cambiar el juego de la información. Cada día se les confían más datos personales y sensibles a distintos softwares, ya sea la aplicación bancaria que se usa para realizar una transacción, o tal vez la aplicación de salud que se utilice para medir el estado de la misma, ambas usan datos sumamente sensibles y privados acerca de las personas, su estilo de vida, sus gustos, etc. 
+	Con este desarrollo inminente, las contraseñas han redefinido su importancia en el diario vivir de las personas, antes, cuando se pensaba en una contraseña, se pensaba en una caja fuerte de algún banco que se abría si se digitaba correctamente una sucesión de números que solo los altos mandos conocían, sin embargo, hoy en día, las contraseñas en los entornos digitales representan la seguridad de miles de millones de datos sensibles de millones de usuarios alrededor del mundo, que en caso de filtrarse o saberse, causaría un caos a nivel global.
+	En la investigación, se usará el sonado caso de la filtración de RockYou, un hackeo que se realizó en el año 2009, del cual se obtuvo un dataset lo suficientemente robusto de contraseñas para poder realizar análisis y estudios posteriores. 
 	Sabiendo todo lo anterior, resulta fundamental y oportuno, estudiar a detalle la composición de las contraseñas y como los usuarios tienden a elegir estas mismas. Saber la naturaleza de las contraseñas resulta beneficioso para así poder detectar anomalías en bases de datos de contraseñas, así como posibles ataques a los sistemas informáticos de instituciones por ejemplo bancarias, que, de vulnerarse su información, puede causar un desastre económico a nivel nacional o global, dependiendo del alcance de la entidad. 
 	En específico, el tema de la presente investigación se trata de indagar sobre la aleatoriedad de las contraseñas, con la pregunta de investigación planteada por el grupo, ¿En qué medida los patrones estructurales de las contraseñas del dataset RockYou —su composición de caracteres, longitud y distribución de dígitos — determinan su nivel de entropía y evidencian que los usuarios no eligen contraseñas de forma aleatoria?, se pretende descubrir si los humanos toman en cuenta la aleatoriedad o solo se basan en patrones muy conocidos y fáciles de recordar, vulnerando así su seguridad. 
 Es bien conocido que el ser humano tiende a seguir patrones y escapa constantemente de la incertidumbre, es por esto que se puede llegar a medir la aleatoriedad de las contraseñas mediante el concepto de entropía. La entropía, entendida como una medida de aleatoriedad e impredecibilidad, permite cuantificar qué tan difícil es para un atacante adivinar o descifrar una contraseña determinada. Una contraseña con alta entropía implica una mayor cantidad de combinaciones posibles, lo que la hace significativamente más resistente ante ataques de fuerza bruta o de diccionario. Sin embargo, la pregunta que surge de forma natural es si los usuarios, al momento de crear sus contraseñas, realmente priorizan esta aleatoriedad, o si, por el contrario, siguen patrones predecibles dictados por la comodidad y la memoria.
+	Para robustecer el análisis y darle un mayor rigor estadístico, la investigación incorpora herramientas que van más allá de la estadística descriptiva convencional. Por un lado, se aplicará la Ley de Benford, un principio matemático que establece la distribución esperada del primer dígito significativo en conjuntos de datos numéricos de origen natural o no manipulado.
+Por otro lado, se recurrirá a pruebas de bondad de ajuste como la prueba de Kolmogorov-Smirnov y la prueba de Kruskal-Wallis, las cuales permitirán evaluar si la distribución de las contraseñas sigue o se aleja significativamente de lo que cabría esperar bajo un modelo de aleatoriedad pura. La combinación de estos enfoques ofrece una perspectiva tanto descriptiva como inferencial, permitiendo no solo caracterizar los patrones presentes en el dataset, sino también validar estadísticamente la hipótesis de que los usuarios, lejos de actuar al azar, siguen tendencias estructurales profundamente arraigadas al momento de construir sus contraseñas. Adicionalmente, el análisis incorpora un enfoque proveniente del procesamiento de lenguaje natural mediante la tokenización cl100k, el esquema de codificación utilizado por modelos de lenguaje de gran escala como GPT-4. Este proceso consiste en descomponer las contraseñas en unidades mínimas de significado llamadas tokens, esto para poder simplificar el análisis de las contraseñas por la combinación de letras y caracteres. 
 
-Para robustecer el análisis y darle un mayor rigor estadístico, la investigación incorpora herramientas que van más allá de la estadística descriptiva convencional. Por un lado, se aplicará la Ley de Benford, un principio matemático que establece la distribución esperada del primer dígito significativo en conjuntos de datos numéricos de origen natural o no manipulado.
-Por otro lado, se recurrirá a pruebas de bondad de ajuste como la prueba de Kolmogorov-Smirnov y la prueba de Kruskal-Wallis, las cuales permitirán evaluar si la distribución de las contraseñas sigue o se aleja significativamente de lo que cabría esperar bajo un modelo de aleatoriedad pura. 
-
-La combinación de estos enfoques ofrece una perspectiva tanto descriptiva como inferencial, permitiendo no solo caracterizar los patrones presentes en el dataset, sino también validar estadísticamente la hipótesis de que los usuarios, lejos de actuar al azar, siguen tendencias estructurales profundamente arraigadas al momento de construir sus contraseñas. Adicionalmente, el análisis incorpora un enfoque proveniente del procesamiento de lenguaje natural mediante la tokenización cl100k, el esquema de codificación utilizado por modelos de lenguaje de gran escala como GPT-4. Este proceso consiste en descomponer las contraseñas en unidades mínimas de significado llamadas tokens, esto para poder simplificar el análisis de las contraseñas por la combinación de letras y caracteres. 
 
 
 \section{Resumen}
@@ -519,12 +515,357 @@ La combinación de estos enfoques ofrece una perspectiva tanto descriptiva como 
 
 \textbf{Conclusiones:} Los resultados indican que las contraseñas humanas poseen una estructura estadística identificable y parcialmente predecible. La composición de caracteres, la longitud y los patrones de transición influyen significativamente en la entropía observada, evidenciando que los usuarios no seleccionan contraseñas de forma completamente aleatoria.
 
+\newpage 
+
 \section{Ordenamiento final}
 
-\chapter{Revisiones finales}
+\subsection{Título}
+
+Análisis de la entropía y el cumplimiento de la Ley de Benford en contraseñas del dataset RockYou.txt mediante la tokenización de sus sub-cadenas. 
+
+\subsection{Resumen}
+
+\textbf{Antecedentes:} Las contraseñas constituyen el principal mecanismo de autenticación en sistemas digitales; sin embargo, los usuarios suelen construirlas mediante patrones y estructuras predecibles que pueden reducir su seguridad. Esta investigación tuvo como objetivo determinar en qué medida la composición de caracteres, la longitud y la distribución de dígitos de las contraseñas del dataset RockYou influyen en su entropía y evidencian comportamientos no aleatorios.
+
+\textbf{Métodos:} Se analizó el dataset RockYou mediante tokenización CL100K y el cálculo de una representación numérica asociada a cada contraseña. Posteriormente, se evaluó el ajuste a la Ley de Benford mediante la prueba de Kolmogorov-Smirnov (KS), tokenización se calculó la entropía de Shannon y se aplicó la prueba de Kruskal-Wallis para comparar niveles de entropía según el tipo de máscara y la longitud de las contraseñas. Además, se utilizó una prueba chi-cuadrado de independencia sobre una matriz de transiciones entre tipos de caracteres.
+
+\textbf{Resultados:} La prueba KS mostró que las posiciones 1 y 2 se desvían significativamente de la distribución teórica de Benford (D = 0.0985 y D = 0.0108), a partir de la posición 3 no se rechazó el ajuste a dicha ley (D = 0.0003). Asimismo, la prueba de Kruskal-Wallis confirmó diferencias significativas en la entropía según el tipo de máscara (H = 4 366 419.48, p ≈ 0) y la longitud de la contraseña (H = 14 084 456.87, p ≈ 0). Finalmente, la prueba chi-cuadrado rechazó la hipótesis de independencia entre el tipo de carácter de origen y destino, evidenciando patrones estructurales en la construcción de contraseñas.
+
+\textbf{Conclusiones:} Los resultados indican que las contraseñas humanas poseen una estructura estadística identificable y parcialmente predecible. La composición de caracteres, la longitud y los patrones de transición influyen significativamente en la entropía observada, evidenciando que los usuarios no seleccionan contraseñas de forma completamente aleatoria.
+
+\subsection{Palabras clave}
+
+RockYou.txt, Tokenización, Benford, Entropía, Kolmogorov-Smirnoff.
+
+\subsection{Introducción}
+
+El desarrollo de la tecnología y las bases de datos electrónicas han llegado a cambiar el juego de la información. Cada día se les confían más datos personales y sensibles a distintos softwares, ya sea la aplicación bancaria que se usa para realizar una transacción, o tal vez la aplicación de salud que se utilice para medir el estado de la misma, ambas usan datos sumamente sensibles y privados acerca de las personas, su estilo de vida, sus gustos, etc.
+
+En la investigación, se usará el sonado caso de la filtración de RockYou, un hackeo que se realizó en el año 2009, del cual se obtuvo un dataset lo suficientemente robusto de contraseñas para poder realizar análisis y estudios posteriores. Sabiendo todo lo anterior, resulta fundamental y oportuno, estudiar a detalle la composición de las contraseñas y como los usuarios tienden a elegir estas mismas. Saber la naturaleza de las contraseñas resulta beneficioso para así poder detectar anomalías en bases de datos de contraseñas, así como posibles ataques a los sistemas informáticos de instituciones por ejemplo bancarias, que, de vulnerarse su información, puede causar un desastre económico a nivel nacional o global, dependiendo del alcance de la entidad. 
+
+En específico, el tema de la presente investigación se trata de indagar sobre la aleatoriedad de las contraseñas, con la pregunta de investigación planteada por el grupo, ¿En qué medida los patrones estructurales de las contraseñas del dataset RockYou —su composición de caracteres, longitud y distribución de dígitos — determinan su nivel de entropía y evidencian que los usuarios no eligen contraseñas de forma aleatoria?, se pretende descubrir si los humanos toman en cuenta la aleatoriedad o solo se basan en patrones muy conocidos y fáciles de recordar, vulnerando así su seguridad. 
+
+Para robustecer el análisis y darle un mayor rigor estadístico, la investigación incorpora herramientas que van más allá de la estadística descriptiva convencional. Por un lado, se aplicará la Ley de Benford, un principio matemático que establece la distribución esperada del primer dígito significativo en conjuntos de datos numéricos de origen natural o no manipulado.
+Por otro lado, se recurrirá a pruebas de bondad de ajuste como la prueba de Kolmogorov-Smirnov y la prueba de Kruskal-Wallis, las cuales permitirán evaluar si la distribución de las contraseñas sigue o se aleja significativamente de lo que cabría esperar bajo un modelo de aleatoriedad pura. 
+
+\subsection{Metodología}
+
+\subsubsection{Explicación de los datos y descripción}
+
+Los datos se filtraron en diciembre de 2009 debido a una vulnerabilidad de la seguridad de las bases de datos de la compañia RockYou, esta misma permitio que un hacker recolectara la creación de contraseñas de finales de la década de 2000. El origen de los mismos es California, Estados Unidos, pero el impacto fue global al afectar a millones de usuarios internacionales de redes sociales como Facebook y MySpace que utilizaban widgets y aplicaciones sociales dentro de estas propias redes sociales. 
+
+Consiste en 32,603,388 registros de usuarios que fueron extraídos directamente de la base de datos de RockYou tras el hackeo. De estos solo se usa  la lista más utilizada en ciberseguridad (rockyou.txt), que contiene 14,344,386 contraseñas únicas tras eliminar duplicados y limpiar caracteres no válidos. 
+
+Sea $c$ una contraseña del conjunto de datos $\mathcal{C}$. El tokenizador CL100K 
+la transforma en un vector de embeddings:
+
+\begin{equation}
+	\text{CL100K}(c) = \mathbf{v}_c = (v_1, v_2, \ldots, v_d) \in \mathbb{R}^d,
+\end{equation}
+
+donde $d$ es la dimensión del embedding (típicamente $d \approx 100{,}000$ para 
+CL100K).
+
+Se elige la norma de valor absoluto del vector
+
+\begin{equation}
+	\|\mathbf{v}_c\|_1 = \sum_{i=1}^{d} |v_i| \in \mathbb{R}_{\geq 0}.
+	\label{eq:norma_L1}
+\end{equation}
+
+Esta norma fue elegida simplemente por su interpretación directa como la suma total de las magnitudes de las componentes del vector de tokenización, lo que permite extraer la distribución de dígitos en cada posición del número resultante.
+
+\subsection*{Prueba de Kolmogorov-Smirnov contra la distribución de Benford}
+
+La Ley de Benford establece que en conjuntos de datos numéricos de origen ``natural'', el dígito $d$ ocupa la primera posición con una frecuencia predecible (Caputi Zunini, 2019). Si los dígitos presentes en contraseñas reales se desvían de esa distribución, existe evidencia de que los usuarios eligen números con sesgos sistemáticos, lo que implica predecibilidad y, en consecuencia, vulnerabilidad. Se elige la prueba KS (y no una chi-cuadrado) porque compara funciones de distribución acumulada completas sin requerir agrupar celdas; con muestras en el orden de millones, la chi-cuadrado infla el estadístico por el tamaño de $n$ sin aportar información sobre la forma de la desviación (Chandola, Banerjee, \& Kumar, 2009; Chandy, Schifano, Yan, \& Zhang, 2025).
+
+\subsubsection*{Distribución teórica de Benford generalizada}
+
+Sea \(D_n \in \{1,\ldots,9\}\) el dígito en la posición \(n\)-ésima, entonces la PDF de Benford para \(n=1\) es
+
+\begin{equation}
+	\mathbb{P}(\{D_1= d\})
+	= \log_{10}\!\left(1 + \frac{1}{d}\right)
+	\label{eq:benford_pos1}
+\end{equation}
+
+Para posiciones $n \geq 2$, la fórmula generalizada integra sobre todos los prefijos de longitud $n-1$, siendo esta
+
+\begin{equation}
+	\mathbb{P}(\{D_n= d\})
+	= \sum_{k=10^{n-2}}^{10^{n-1}-1}
+	\log_{10}\!\left(1 + \frac{1}{10k + d}\right),
+	\qquad d \in \{0,1,\ldots,9\}
+\end{equation}
+
+\subsubsection*{Estadístico KS}
+
+Sea $F_n(x)$ la función de distribución acumulada empírica de los dígitos en la
+posición $p$ y $F_0(x)$ la CDF teórica de Benford. El estadístico
+Kolmogorov-Smirnov es
+
+\begin{equation}
+	D_n = \sup_{x}\,\bigl|F_n(x) - F_0(x)\bigr|
+	\label{eq:ks_stat}
+\end{equation}
+
+Se rechaza $H_0$ (los dígitos siguen Benford) cuando $D_n > D_{\alpha}$. Dado que $n \sim 10^6$, el umbral $D_{\alpha}$ es extremadamente pequeño, por lo que se complementa el resultado con la desviación absoluta media (MAD)
+
+\begin{equation}
+	\text{MAD}
+	= \frac{1}{|\mathcal{D}|}\sum_{d \in \mathcal{D}}
+	\bigl|\mathbb{P}_{\text{emp}}(d) -\mathbb{P}_{\text{Benford}}(d)\bigr|
+	\label{eq:mad}
+\end{equation}
+
+donde $\mathcal{D}$ es el conjunto de dígitos válidos para la posición dada. Los umbrales de conformidad son MAD $< 0.006$ (muy cercana), $0.006$--$0.012$ (aceptable), $0.012$-$0.015$ (marginal) y $> 0.015$ (no conformidad) (Negrini, 2012).
+
+\subsubsection*{Análisis de distribución de máscaras de contraseña}
+
+Las contraseñas humanas no son cadenas aleatorias, los usuarios exhiben patrones
+estructurales sistemáticos al elegirlas. Para capturar esa estructura sin depender
+del contenido semántico de cada contraseña, se utiliza una representación de
+máscara, que abstrae cada carácter a su tipo. Formalmente, dado el
+alfabeto de tipos $\Sigma = \{L, U, D, S\}$ (minúsculas, mayúsculas, dígitos,
+caracteres especiales), la máscara de una contraseña $P = c_1 c_2 \cdots c_n$ es
+
+\begin{equation}
+	M(P) = \tau(c_1)\,\tau(c_2)\,\cdots\,\tau(c_n),
+	\qquad
+	\tau(c) =
+	\begin{cases}
+		L & c \in \mathcal{L} \\
+		U & c \in \mathcal{U} \\
+		D & c \in \mathcal{D} \\
+		S & c \in \mathcal{S}
+	\end{cases}
+	\label{eq:mascara}
+\end{equation}
+
+
+\subsubsection*{Patrones comprimidos}
+
+Para reducir el espacio de máscaras sin perder información sobre la composición,
+se aplica una codificación de longitud de racha (\textit{run-length encoding})
+sobre $M(P)$. Sea $M(P) = t_1^{r_1} t_2^{r_2} \cdots t_k^{r_k}$ la
+descomposición en rachas consecutivas del mismo tipo, entonces el patrón
+comprimido es
+
+\begin{equation}
+	R(P) = t_1 r_1 \; t_2 r_2 \; \cdots \; t_k r_k
+	\label{eq:run}
+\end{equation}
+
+Por ejemplo, la máscara \texttt{LLLLLLDD} se comprime a \texttt{L6D2}. Esta
+representación agrupa contraseñas con la misma composición por bloques, lo que
+facilita el análisis de patrones frecuentes en el dataset. La distribución de
+patrones comprimidos se analiza por frecuencia absoluta $f_j$ y proporción
+relativa $\hat{p}_j = f_j / N$, donde $N$ es el total de contraseñas.
+
+\subsubsection*{Entropía de Shannon}
+
+Sea $P$ una contraseña y sea $p_t$ la proporción del tipo $t \in \Sigma$
+en $P$. La entropía de Shannon de $P$ es
+
+\begin{equation}
+	H_S(P) = -\sum_{t \,\in\, \Sigma} p_t \log_2 p_t
+	\label{eq:shannon}
+\end{equation}
+
+\subsection*{Prueba de Kruskal-Wallis sobre entropías por grupo}
+
+Se busca determinar si la estructura de la máscara (longitud y tipo
+dominante de caracteres) discrimina el nivel de entropía. Se elige
+Kruskal-Wallis (KW) en lugar de ANOVA de un factor porque
+
+\begin{itemize}[noitemsep]
+	\item Las distribuciones de entropía por grupo no son normales (asimétricas,
+	con colas largas), como se verifica en el análisis descriptivo.
+	\item KW es una prueba no paramétrica de rangos que no asume homocedasticidad
+	ni normalidad dentro de los grupos.
+\end{itemize}
+
+\subsubsection*{Entropía de Shannon de una máscara}
+
+La entropía media de la máscara $m$ se define como en la ecuación~\eqref{eq:shannon},
+donde $\Sigma = \{L, U, D, S\}$ es el alfabeto de tipos de carácter (minúsculas,
+mayúsculas, dígitos, símbolos) y $p_c$ es la proporción del tipo $c$ en $m$.
+
+\subsubsection*{Estadístico de Kruskal-Wallis}
+
+Dadas $k$ muestras independientes de tamaños $n_1, \ldots, n_k$ con
+$N = \sum_{i=1}^k n_i$ observaciones totales, el estadístico es
+
+\begin{equation}
+	H = \frac{12}{N(N+1)}
+	\sum_{i=1}^{k} \frac{R_i^2}{n_i}
+	\;-\; 3(N+1)
+	\label{eq:kw}
+\end{equation}
+
+donde $R_i$ es la suma de rangos del grupo $i$ sobre el ranking global.
+Bajo $H_0$ (todas las distribuciones son iguales), $H \sim \chi^2_{k-1}$
+para muestras grandes.
+
+\subsubsection*{Ponderación por frecuencia}
+Como cada máscara $m_j$ tiene una frecuencia $f_j$ (número de contraseñas reales
+que la usan), se expande la muestra repitiendo cada observación con su
+frecuencia real:
+
+\begin{equation}
+	\tilde{n}_j = f_j
+	\label{eq:expansion}
+\end{equation}
+
+Para garantizar la reproducibilidad del proyecto, la implementación incluye
+un parámetro de tope $C$ configurable
+
+\begin{equation}
+	\tilde{n}_j = \min(f_j,\; C)
+	\label{eq:cap}
+\end{equation}
+
+En este trabajo se fija $C = 10\,000\,000$, valor que excede la frecuencia
+máxima observada en el dataset RockYou $(f_{\max} = L6$ con $3\,996\,634$ observaciones), por lo
+que el tope es inactivo y se cumple $\tilde{n}_j = f_j$ para toda máscara $m_j$.
+El vector de rangos reproduce así fielmente la distribución real del dataset.
+
+\subsubsection*{Agrupaciones evaluadas}
+
+Se aplica KW bajo tres criterios de agrupación
+
+\begin{enumerate}[noitemsep]
+	\item 
+	Longitud de máscara: grupos $g \in \{1, 2, \ldots, L_{\max}\}$
+	donde $L_{\max}$ es la longitud máxima observada.
+	\item Tipo dominante: \texttt{Solo~L}, \texttt{Solo~D},
+	\texttt{Solo~U}, \texttt{Solo~S}, \texttt{Mixta}.
+	\item Rango de entropía: bajo ($H < 2.4464$, por debajo del percentil 25),
+	medio ($2.4464 \leq H < 2.9477$, entre los percentiles 25 y 75) y
+	alto ($H \geq 2.9477$, por encima del percentil 75). Este agrupamiento
+	es descriptivo, no inferencial, pues la variable de agrupación coincide
+	con la variable de respuesta.
+\end{enumerate}
+
+
+\subsection{Resultados}
+
+A partir de ahí, fue momento de usar las pruebas no paramétricas mencionadas al inicio de esta sección. Los primeros resultados se obtuvieron mediante el uso del test Kolmogórov-Smirnov (KS). Dicho test, según Yakir (2013), permite calcular que tanto error existe entre la función de distribución acumulada basada en lo que muestran las observaciones y la distribución teórica. De esta manera, se evaluó si la distribución empírica de los dígitos en la primera posición de las contraseñas tokenizadas se ajusta a la Ley de Benford. Los resultados indican que, aunque visualmente la distribución guarda similitud con la teórica de Benford —con mayor frecuencia del dígito 1—, el test KS rechaza $H_0$ (D = 0.0985), lo que significa que la diferencia es estadísticamente significativa y no puede descartarse como aleatoria, como se muestra en la siguiente figura.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/ks_pos1.png}
+    \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
+
+Esto implica que las contraseñas no son completamente aleatorias en su primera posición: siguen un patrón parcialmente compatible con Benford, pero no con la rigurosidad formal requerida por el test. Este resultado se apoya en la literatura de Caputi (2019) sobre la Ley de Benford y en Chandy et al. (2025) sobre el test KS, y motiva la exploración de las posiciones subsiguientes para determinar si el ajuste mejora a medida que avanza la posición.
+
+En sintonía con anterior, el segundo resultado que se obtuvo (relacionado a los dígitos en la segunda posición), fue que con la misma metodología de tokenización cl100k y el test KS, se llegó a que, al igual que en la posición 1, la distribución empírica muestra una forma visualmente similar a la Ley de Benford, pero el test KS rechaza $H_0$ (D = 0.0108), indicando que el ajuste no es suficiente para confirmar estadísticamente el seguimiento de dicha ley, como se muestra en la siguiente figura.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/ks_pos2.png}
+    \caption*{KS y Benford para posición 2 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
+
+La diferencia con la posición 1 es que el estadístico D es mucho menor, lo que sugiere un mejor ajuste relativo, aunque aún insuficiente. Este resultado consolida la hipótesis de que las primeras posiciones de las contraseñas son las que más se desvían del comportamiento esperado bajo Benford, lo que refuerza que las claves no son completamente aleatorias. Constituye un eslabón clave en la cadena de análisis posicional, orientando la investigación hacia la posición 3 y siguientes para buscar un ajuste formal.
+
+Al realizar un proceso análogo a los anteriores para el tercer dígito se obtuvo resultados diferentes, y fue que el test no rechazó $H_0$ (D = 0.0003), lo que indica que la distribución empírica de los dígitos en esta posición sigue la Ley de Benford de manera estadísticamente aceptable, como bien muestra la siguiente figura.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/ks_pos3.png}
+    \caption*{KS y Benford para posición 3 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
+
+Este es el primer punto de la cadena posicional en el que se confirma formalmente el ajuste a Benford, marcando una ruptura con el comportamiento de las posiciones 1 y 2. El hallazgo es significativo porque demuestra que no basta con la similitud visual para afirmar que una distribución sigue Benford; es imprescindible validarlo con pruebas formales como el test KS. En consonancia con Caputi (2019) y Chandy et al. (2025), este resultado sienta la base para verificar si las posiciones 4 en adelante mantienen el mismo patrón, avanzando hacia una caracterización más completa de la aleatoriedad de las contraseñas.
+
+Similar al caso anterior, el análisis de la cuarta posición de las contraseñas tokenizadas con cl100k confirma, nuevamente, que el test KS no rechaza $H_0$ (D = 0.0003), validando que la distribución de dígitos en esta posición se ajusta formalmente a la Ley de Benford. Esto último se puede mostrar en el gráfico siguiente.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/ks_pos4.png}
+    \caption*{KS y Benford para posición 4 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
+
+Este resultado es consistente con el hallazgo de la posición 3 y forma parte de un patrón más amplio: se determinó que a partir de la posición 3 en adelante, todas las posiciones siguen Benford de forma confirmada por KS, lo cual resulta inesperado dado que las posiciones 1 y 2 no lograron pasar el test. Esto revela que la naturaleza de los dígitos en posiciones iniciales es cualitativamente diferente a la de las posiciones intermedias y finales, y que no basta con la similitud visual para afirmar el seguimiento de una distribución: la validación formal es imprescindible. La discrepancia plantea la necesidad de explorar nuevas estrategias de tokenización que permitan extender el cumplimiento de Benford a todas las posiciones, en línea con Caputi (2019) y Chandy et al. (2025).
+
+
+Luego, para el siguiente resultado se hizo uso de la prueba de Kruskal-Wallis. De acuerdo a Childs, Hindle y Warren (2021), esta prueba consiste en evaluar las diferencias entre dos (o más) muestras. Para lograr esto, las variables deben ser no nominales, las observaciones de cada grupo deben ser independientes y la distribución de las variables de cada grupo deben ser "similares". Gracias a esta prueba se puede ver si existen diferencias significativas entre las distribuciones de varias muestras independientes. Usando lo anterior junto con el concepto de entropía, fue que se compararon las distribuciones de entropía de contraseñas clasificadas según el tipo de máscara: mixta, solo dígitos, solo letras, solo caracteres especiales y solo mayúsculas. El test rechazó $H_0$ con alta significancia $(H = 4,366,419.48, p \approx 0)$, evidenciando que los cinco tipos de máscara producen distribuciones de entropía completamente distintas. El siguiente gráfico permite visualizar esto último.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/kw_tipo.png}
+    \caption*{Kruskal-Wallis - Entropía por tipo de máscara}
+    \label{fig:miimagen}
+\end{figure}
+
+Las contraseñas mixtas presentan la entropía más alta, mientras que las compuestas exclusivamente por caracteres especiales muestran los valores más bajos, contrariamente a lo que podría esperarse intuitivamente. Este agrupamiento es descriptivo y no inferencial, pues la variable de agrupación coincide con la variable de respuesta. El hallazgo enriquece la comprensión del desorden interno en las contraseñas y abre la puerta para determinar si estas diferencias en entropía pueden usarse para cuantificar aleatoriedad real en los pasos siguientes del análisis. Para complmentar lo anterior, se hizo lo mismo pero únicamente con la longitud de la máscara. Los resultados de esto último fue que el test rechazó la hipótesis nula $(H = 14,084,456.87, p \approx 0)$, confirmando que existen diferencias estadísticamente significativas entre grupos, como se muestra en el siguiente gráfico. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figuras/kw_longitud.png}
+    \caption*{Kruskal-Wallis - Entropía por longitud de máscara}
+    \label{fig:miimagen}
+\end{figure}
+
+Visualmente, se aprecia una tendencia creciente y clara: a mayor longitud de la contraseña, mayor es la entropía media esperada, resultado intuitivo pero que era necesario comprobar formalmente. Esto refuerza la relación entre longitud y complejidad planteada por Reaz (2024), quien asocia la entropía a la dificultad de predicción de una contraseña. No obstante, este resultado no determina qué tan aleatorias son las contraseñas ni cuáles son seguras en términos absolutos; únicamente establece que la longitud es un predictor significativo de la entropía, lo que orienta los análisis inferenciales siguientes sobre aleatoriedad real.
+
+Con el fin de complementar el proyecto mediante un análisis separado de lo narrado anteriormente, se realizó un análisis descriptivo de la distribución empírica de los dígitos (0–9) en las primeras seis posiciones de las contraseñas del dataset RockYou. Se observó que la posición 1 presenta una distribución notablemente sesgada, donde los dígitos más bajos aparecen con mayor frecuencia, lo cual es compatible con la Ley de Benford; la posición 2 también muestra variación, aunque menor. A partir de la posición 3, la distribución se vuelve prácticamente uniforme: todos los dígitos tienen probabilidades de aparición muy similares, independientemente de cuál se elija. Lo anterior se ve reflejado en la siguiente figura.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/desc_06_digitos_por_posicion.png}
+    \caption*{Distribución empírica de dígitos por posición}
+    \label{fig:miimagen}
+\end{figure}
+
+
+Esto sugiere que la primera posición es la más informativa para inferir patrones de creación de contraseñas, mientras que las posiciones posteriores son más predecibles en términos de uniformidad. El resultado no mide aleatoriedad directamente ni indica qué dígitos se usan en mayor volumen, pero construye una base empírica para contrastar con la Ley de Benford (Caputi, 2019) en análisis futuros.
+
+Por último, se construyó una matriz de bigramas para analizar las probabilidades de transición entre tipos de caracteres (letras, dígitos, mayúsculas y caracteres especiales) en las contraseñas del dataset RockYou. Los resultados muestran que la transición de letra a letra es, con diferencia, la más frecuente (66.26 \%), seguida de dígito a dígito (23.28 \%), lo que evidencia un comportamiento ordenado en la construcción de contraseñas, como se puede ver en el siguiente gráfico. 
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\textwidth]{figuras/07_heatmap_transiciones.png}
+    \caption*{Biograma de transición entre tipos}
+    \label{fig:miimagen}
+\end{figure}
+
+Esto permitió observar que las transiciones entre tipos distintos, como de carácter especial a otro carácter especial, son prácticamente inexistentes. Este patrón de orden se asocia al concepto de entropía planteado por Reaz (2024), donde la tendencia a permanecer dentro del mismo tipo de carácter refleja baja aleatoriedad entre tipos. Sin embargo, este resultado no describe la distribución general de contraseñas ni sus longitudes, sino únicamente el orden secuencial de sus caracteres, lo cual sienta una base para modelar mejor la entropía en pasos analíticos posteriores.
+
+\subsection{Conclusiones}
+
+Los resultados indican que las contraseñas humanas poseen una estructura estadística identificable y parcialmente predecible. 
+
+La composición de caracteres, la longitud y los patrones de transición influyen significativamente en la entropía observada, evidenciando que los usuarios no seleccionan contraseñas de forma completamente aleatoria.
+
+La prueba KS mostró que las posiciones 1 y 2 se desvían significativamente de la distribución teórica de Benford, mientras que a partir de la posición 3 no se rechaza el ajuste a dicha ley. 
+
+Una limitación es que se eligió arbitrariamente el método de tokenización, ya que es imposible con la capacidad computacional actual, decidir cual modelo es el más eficiente. 
+
+Otra limitación es que el dataset brindado por RockYou.txt está limitado a un sector de la población en específico,lo que provocó que la idea inicial del proyecto de buscar predecir contraseñas no se pudiera llevar acabo, pues en general los resultados no se habrían podido generalizar al resto de la población. 
+
+\subsection{Agradecimientos}
+
+Agradecemos profundamente al profesor Maikol Solís Chacón por su acompañamiento durante la realización de este proyecto. Además, a Jeikel Navarro por su retroalimentación constante durante su realización. 
 
 \chapter{Registro de uso de IA}
 
+Herramienta: Claude (Anthropic)
+Prompt: Prompts iterativos para la generación de gráficos en Python de las nuevas funciones de análisis (chi2_independencia_transiciones y spearman_coocurrencia_tipos) y la corrección  y finalizacions de los algoritmos de las mismas funciones
+Respuesta de la IA: El código generado se incorporó en los scripts del proyecto, particularmente en los módulos de análisis de transiciones y co‑ocurrencia. Se añadieron rutinas para graficar los resultados de Chi‑cuadrado y Spearman, además de ajustes en la lógica de las funciones para evitar fallos en la conversión de datos y en la construcción de matrices.
+Evaluación: Cada fragmento de código fue revisado y probado por al menos un miembro del equipo, verificando que los gráficos se generaran correctamente y que los algoritmos devolvieran resultados coherentes con los objetivos del análisis.
+Modificaciones: Se realizaron correcciones puntuales en la lógica de iteración y en el manejo de valores nulos, además de ajustes menores de estilo en los gráficos para mejorar la legibilidad.
+Aprendizaje: Se observó que Claude es capaz de generar código funcional y estructurado para tareas de análisis estadístico y visualización, aunque siempre requiere supervisión humana para garantizar que los algoritmos se ejecuten sin errores y que los resultados gráficos sean interpretables y útiles para el proyecto.
 
 
 ```{=latex}
