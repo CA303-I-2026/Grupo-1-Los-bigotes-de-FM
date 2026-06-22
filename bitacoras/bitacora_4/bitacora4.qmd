@@ -511,6 +511,14 @@ La combinación de estos enfoques ofrece una perspectiva tanto descriptiva como 
 
 \section{Resumen}
 
+\textbf{Antecedentes:} Las contraseñas constituyen el principal mecanismo de autenticación en sistemas digitales; sin embargo, los usuarios suelen construirlas mediante patrones y estructuras predecibles que pueden reducir su seguridad. Esta investigación tuvo como objetivo determinar en qué medida la composición de caracteres, la longitud y la distribución de dígitos de las contraseñas del dataset RockYou influyen en su entropía y evidencian comportamientos no aleatorios.
+
+\textbf{Métodos:} Se analizó el dataset RockYou mediante tokenización CL100K y el cálculo de una representación numérica asociada a cada contraseña. Posteriormente, se evaluó el ajuste a la Ley de Benford mediante la prueba de Kolmogorov-Smirnov (KS), tokenización se calculó la entropía de Shannon y se aplicó la prueba de Kruskal-Wallis para comparar niveles de entropía según el tipo de máscara y la longitud de las contraseñas. Además, se utilizó una prueba chi-cuadrado de independencia sobre una matriz de transiciones entre tipos de caracteres.
+
+\textbf{Resultados:} La prueba KS mostró que las posiciones 1 y 2 se desvían significativamente de la distribución teórica de Benford (D = 0.0985 y D = 0.0108), a partir de la posición 3 no se rechazó el ajuste a dicha ley (D = 0.0003). Asimismo, la prueba de Kruskal-Wallis confirmó diferencias significativas en la entropía según el tipo de máscara (H = 4 366 419.48, p ≈ 0) y la longitud de la contraseña (H = 14 084 456.87, p ≈ 0). Finalmente, la prueba chi-cuadrado rechazó la hipótesis de independencia entre el tipo de carácter de origen y destino, evidenciando patrones estructurales en la construcción de contraseñas.
+
+\textbf{Conclusiones:} Los resultados indican que las contraseñas humanas poseen una estructura estadística identificable y parcialmente predecible. La composición de caracteres, la longitud y los patrones de transición influyen significativamente en la entropía observada, evidenciando que los usuarios no seleccionan contraseñas de forma completamente aleatoria.
+
 \section{Ordenamiento final}
 
 \chapter{Revisiones finales}
