@@ -1,0 +1,155 @@
+---
+title: ""
+format:
+  pdf:
+    pdf-engine: xelatex
+    documentclass: book
+    classoption: [letterpaper, 12pt, oneside]
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    geometry:
+      - left=2.54cm
+      - right=2.54cm
+      - top=2.54cm
+      - bottom=2.54cm
+    fontsize: 10pt
+    linestretch: 1
+    indent: true
+    cite-method: biblatex
+    biblatexoptions: "style=apa, backend=biber, doi=true, isbn=false"
+    header-includes: |
+      % Fuente y formato
+      \usepackage{fontspec}
+      %\setmainfont{Latin Modern Roman}
+      \usepackage[spanish]{babel}
+      \usepackage{textcomp}
+      \usepackage{indentfirst}
+      \usepackage{float}
+      \usepackage{tikz}
+      \usetikzlibrary{positioning,babel,calc}
+      \usepackage{tabularx}
+      \usepackage{geometry}
+      \geometry{margin=2.5cm}
+      \setlength{\parindent}{2em}
+      \setlength{\parskip}{0pt}
+
+      % Matemáticas
+      \usepackage{amsmath}
+      \usepackage{amsthm}
+      \usepackage{amsfonts}
+      \usepackage{mathtools}
+      \usepackage{setspace}
+      \usepackage{ltablex}
+      \keepXColumns
+      
+
+      % Tablas
+      \usepackage{booktabs}
+      \usepackage{array}
+
+      % Listas
+      \usepackage{enumitem}
+
+      % Colores
+      \usepackage[dvipsnames]{xcolor}
+
+      % Gráficos
+      \usepackage{tikz}
+      \usepackage{pgfplots}
+      \pgfplotsset{compat=1.18}
+      \usepackage{graphicx}
+      \usepackage{longtable}
+
+      % Encabezados
+      \usepackage{fancyhdr}
+      \pagestyle{plain}
+      \fancyhf{}
+      \renewcommand{\headrulewidth}{0pt}
+      \renewcommand{\chaptername}{Capítulo}
+      
+      % Entornos matemáticos
+      \newtheorem{definition}{Definición}[section]
+      \newtheorem{axiom}{Axioma}[section]
+      \newtheorem{theorem}{Teorema}[section]
+      \newtheorem{corollary}{Corolario}[section]
+      \newtheorem{lemma}{Lema}[section]
+      \newtheorem{proposition}{Proposición}[section]
+      \newtheorem{result}{Resultado}[section]
+      \renewcommand{\proofname}{Demostración}
+
+      % PORTADA
+      \AtBeginDocument{
+        \begin{titlepage}
+          \begin{center}
+            \vspace*{-2.5cm}
+            \includegraphics[width=1\textwidth]{figuras/UCR.png}
+            \\
+            \LARGE Escuela de Matemáticas \\[0.75cm]
+            \LARGE Estadística Actuarial I (CA0303) \\[1cm]
+            \large Bitácora \#4 \\[0.75cm]
+            \large Prof: Maikol Solís \\[1.5cm]
+            \large Estudiantes: \\[1cm]
+            \large Anthonny Flores Rojas (C32975) \\[0.75cm]
+            \large Andrey González Bastos (C33329) \\[0.75cm]
+            \large Randal Picado Bermúdez (C36024) \\[0.75cm]
+            \large Leonardo Vega Aragón (C38313) \\[1.5cm]
+            \large Fecha: 22/06/2026 \\[1cm]
+          \end{center}
+        \end{titlepage}
+      }
+
+csl: apa.csl   
+reference-section-title: "Bibliografía"
+---
+
+
+\setcounter{page}{1}
+
+\chapter{Parte de planificación}
+
+\section{Fichas de resultados}
+
+Holi. 
+
+\chapter{Parte de escritura}
+
+\section{Escribir, escribir, escribir}
+
+Holi. 
+
+\section{Conclusión}
+
+Holi. 
+
+\section{Introducción}
+
+El desarrollo de la tecnología y las bases de datos electrónicas han llegado a cambiar el juego de la información. Cada día se les confían más datos personales y sensibles a distintos softwares, ya sea la aplicación bancaria que se usa para realizar una transacción, o tal vez la aplicación de salud que se utilice para medir el estado de la misma, ambas usan datos sumamente sensibles y privados acerca de las personas, su estilo de vida, sus gustos, etc.
+
+Con este desarrollo inminente, las contraseñas han redefinido su importancia en el diario vivir de las personas, antes, cuando se pensaba en una contraseña, se pensaba en una caja fuerte de algún banco que se abría si se digitaba correctamente una sucesión de números que solo los altos mandos conocían, sin embargo, hoy en día, las contraseñas en los entornos digitales representan la seguridad de miles de millones de datos sensibles de millones de usuarios alrededor del mundo, que en caso de filtrarse o saberse, causaría un caos a nivel global.
+
+En la investigación, se usará el sonado caso de la filtración de RockYou, un hackeo que se realizó en el año 2009, del cual se obtuvo un dataset lo suficientemente robusto de contraseñas para poder realizar análisis y estudios posteriores. 
+	Sabiendo todo lo anterior, resulta fundamental y oportuno, estudiar a detalle la composición de las contraseñas y como los usuarios tienden a elegir estas mismas. Saber la naturaleza de las contraseñas resulta beneficioso para así poder detectar anomalías en bases de datos de contraseñas, así como posibles ataques a los sistemas informáticos de instituciones por ejemplo bancarias, que, de vulnerarse su información, puede causar un desastre económico a nivel nacional o global, dependiendo del alcance de la entidad. 
+	En específico, el tema de la presente investigación se trata de indagar sobre la aleatoriedad de las contraseñas, con la pregunta de investigación planteada por el grupo, ¿En qué medida los patrones estructurales de las contraseñas del dataset RockYou —su composición de caracteres, longitud y distribución de dígitos — determinan su nivel de entropía y evidencian que los usuarios no eligen contraseñas de forma aleatoria?, se pretende descubrir si los humanos toman en cuenta la aleatoriedad o solo se basan en patrones muy conocidos y fáciles de recordar, vulnerando así su seguridad. 
+Es bien conocido que el ser humano tiende a seguir patrones y escapa constantemente de la incertidumbre, es por esto que se puede llegar a medir la aleatoriedad de las contraseñas mediante el concepto de entropía. La entropía, entendida como una medida de aleatoriedad e impredecibilidad, permite cuantificar qué tan difícil es para un atacante adivinar o descifrar una contraseña determinada. Una contraseña con alta entropía implica una mayor cantidad de combinaciones posibles, lo que la hace significativamente más resistente ante ataques de fuerza bruta o de diccionario. Sin embargo, la pregunta que surge de forma natural es si los usuarios, al momento de crear sus contraseñas, realmente priorizan esta aleatoriedad, o si, por el contrario, siguen patrones predecibles dictados por la comodidad y la memoria.
+
+Para robustecer el análisis y darle un mayor rigor estadístico, la investigación incorpora herramientas que van más allá de la estadística descriptiva convencional. Por un lado, se aplicará la Ley de Benford, un principio matemático que establece la distribución esperada del primer dígito significativo en conjuntos de datos numéricos de origen natural o no manipulado.
+Por otro lado, se recurrirá a pruebas de bondad de ajuste como la prueba de Kolmogorov-Smirnov y la prueba de Kruskal-Wallis, las cuales permitirán evaluar si la distribución de las contraseñas sigue o se aleja significativamente de lo que cabría esperar bajo un modelo de aleatoriedad pura. 
+
+La combinación de estos enfoques ofrece una perspectiva tanto descriptiva como inferencial, permitiendo no solo caracterizar los patrones presentes en el dataset, sino también validar estadísticamente la hipótesis de que los usuarios, lejos de actuar al azar, siguen tendencias estructurales profundamente arraigadas al momento de construir sus contraseñas. Adicionalmente, el análisis incorpora un enfoque proveniente del procesamiento de lenguaje natural mediante la tokenización cl100k, el esquema de codificación utilizado por modelos de lenguaje de gran escala como GPT-4. Este proceso consiste en descomponer las contraseñas en unidades mínimas de significado llamadas tokens, esto para poder simplificar el análisis de las contraseñas por la combinación de letras y caracteres. 
+
+
+
+\section{Resumen}
+
+\section{Ordenamiento final}
+
+\chapter{Revisiones finales}
+
+\chapter{Registro de uso de IA}
+
+
+
+```{=latex}
+\nocite{*}
+```
