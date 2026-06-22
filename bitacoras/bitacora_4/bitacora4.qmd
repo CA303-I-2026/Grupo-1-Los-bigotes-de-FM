@@ -233,7 +233,7 @@ Un simple conteo con la matriz de transición.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/conteos.jpeg}
-    \caption*{Conteos observados en transición entre tips de datos}
+    \caption*{Conteos observados en transición entre tipos de datos}
     \label{fig:miimagen}
 \end{figure}
 
@@ -271,7 +271,7 @@ Prueba Chi-Cuadrado sobre la matriz de transiciones.
 
 \subsection*{Resumen en una oración}
 
-La prueba chi cuadrado de independecia sobre la matriz de transiciones rechaza la hipotesis nula de independencia entre el tipo origen y destino.
+La prueba chi cuadrado de independencia sobre la matriz de transiciones rechaza la hipótesis nula de independencia entre el tipo origen y destino.
 
 \subsection*{Método o análisis que lo produjo}
 
@@ -311,7 +311,7 @@ Nos toca averiguar si esto afecta la entropía de las contraseñas, lo cual sosp
 \section{Escribir, escribir, escribir}
 
 
-El presente proyecto fue desarrollado con el fin de analizar si las contraseñas de la base de datos \textit{rockyou.txt} seguía la ley de Benford para los primeros 16 dígitos mediante alguna transformación de los datos. Sin embargo, para continuar con el proyecto, fue necesario abarcar varias definiciones, que serán presentadas a continuación.
+El presente proyecto fue desarrollado con el fin de analizar si las contraseñas de la base de datos \textit{rockyou.txt} seguían la ley de Benford para los primeros 16 dígitos mediante alguna transformación de los datos. Sin embargo, para continuar con el proyecto, fue necesario abarcar varias definiciones, que serán presentadas a continuación.
 
 
 \begin{enumerate}
@@ -352,7 +352,7 @@ Al principio de la elaboración del proyecto, se quiso investigar acerca de los 
 
 Luego, se analizó el trabajo \textit{About Passwords}, que complementaba en gran medida lo visto en el párrafo anterior, pues analizaba críticamente varias creencias comunes sobre la seguridad de las contraseñas y sostiene, con argumentos combinatorios y evidencia empírica, que la longitud es un factor mucho más importante que la mera mezcla de mayúsculas, minúsculas, dígitos y símbolos. A partir de filtraciones reales como Hotmail, RockYou, Yahoo! y otros casos masivos, el autor mostró que muchos usuarios siguen eligiendo contraseñas triviales, reutilizadas o basadas en palabras comunes, información personal y patrones previsibles, lo que vuelve muy eficaces los ataques por diccionario, las variantes avanzadas con sustituciones tipo \textit{leet} y los ataques de fuerza bruta fuera de línea. Seguidamente, se discutieron distintos métodos populares de generación de contraseñas, como combinaciones aparentemente aleatorias de caracteres, iniciales de frases, generadores deterministas por sitio y concatenaciones mnemotécnicas de palabras, subrayando que cualquier método conocido o estructuralmente típico puede facilitar el trabajo del atacante si este dispone de información previa o de listas de patrones frecuentes. Luego se presentó un análisis estructural de más de 14 millones de contraseñas únicas de RockYou, donde se observa que predominan las minúsculas, los dígitos y las formas ``palabra + números'', mientras que el uso de mayúsculas y caracteres especiales es relativamente escaso; además, se estima que una estrategia de cracking bien diseñada podría romper una fracción considerable de esas contraseñas en muy poco tiempo. Finalmente, el texto propuso recomendaciones prácticas para construir contraseñas robustas y memorables, por ejemplo mediante frases largas, combinaciones personales no previsibles o palabras inventadas, y concluye que la seguridad real depende tanto de buenos hábitos del usuario como de funciones hash fuertes, políticas organizacionales adecuadas y educación temprana sobre autenticación y riesgos informáticos.
 
-Este texto sugiere fuertemente que el largo de una contraseña influye de manera directamente proporcional en su seguridad, y uno de sus argumentos es que entre más carácteres tiene una contraseña entonces habrían más combinaciones que deberían ser probadas al momento de querer vulnerarla (lo que haría poco probable que un intruso obtenga la respuesta en poco tiempo). Sin embargo, esta posición es contraria a la que ofrecen los autores de \textit{User password repetitive
+Este texto sugiere fuertemente que el largo de una contraseña influye de manera directamente proporcional en su seguridad, y uno de sus argumentos es que entre más caracteres tiene una contraseña entonces habrían más combinaciones que deberían ser probadas al momento de querer vulnerarla (lo que haría poco probable que un intruso obtenga la respuesta en poco tiempo). Sin embargo, esta posición es contraria a la que ofrecen los autores de \textit{User password repetitive
 patterns analysis and
 visualization}, pues estos últimos dejaron claro que aumentar la longitud de una contraseña no necesariamente implica un aumento en la seguridad, pues los humanos tienden a repetir patrones al momento de hacer una secuencia extensa de caracteres.  
 
@@ -447,7 +447,7 @@ Luego, para el siguiente resultado se hizo uso de la prueba de Kruskal-Wallis. D
 
 \newpage
 
-Las contraseñas mixtas presentan la entropía más alta, mientras que las compuestas exclusivamente por caracteres especiales muestran los valores más bajos, contrariamente a lo que podría esperarse intuitivamente. Este agrupamiento es descriptivo y no inferencial, pues la variable de agrupación coincide con la variable de respuesta. El hallazgo enriquece la comprensión del desorden interno en las contraseñas y abre la puerta para determinar si estas diferencias en entropía pueden usarse para cuantificar aleatoriedad real en los pasos siguientes del análisis. Para complmentar lo anterior, se hizo lo mismo pero únicamente con la longitud de la máscara. Los resultados de esto último fue que el test rechazó la hipótesis nula $(H = 14,084,456.87, p \approx 0)$, confirmando que existen diferencias estadísticamente significativas entre grupos, como se muestra en el siguiente gráfico. 
+Las contraseñas mixtas presentan la entropía más alta, mientras que las compuestas exclusivamente por caracteres especiales muestran los valores más bajos, contrariamente a lo que podría esperarse intuitivamente. Este agrupamiento es descriptivo y no inferencial, pues la variable de agrupación coincide con la variable de respuesta. El hallazgo enriquece la comprensión del desorden interno en las contraseñas y abre la puerta para determinar si estas diferencias en entropía pueden usarse para cuantificar aleatoriedad real en los pasos siguientes del análisis. Para complementar lo anterior, se hizo lo mismo pero únicamente con la longitud de la máscara. Los resultados de esto último fue que el test rechazó la hipótesis nula $(H = 14,084,456.87, p \approx 0)$, confirmando que existen diferencias estadísticamente significativas entre grupos, como se muestra en el siguiente gráfico. 
 
 \begin{figure}
     \centering
@@ -763,7 +763,7 @@ A partir de ahí, fue momento de usar las pruebas no paramétricas mencionadas a
 
 Esto implica que las contraseñas no son completamente aleatorias en su primera posición: siguen un patrón parcialmente compatible con Benford, pero no con la rigurosidad formal requerida por el test. Este resultado se apoya en la literatura de Caputi (2019) sobre la Ley de Benford y en Chandy et al. (2025) sobre el test KS, y motiva la exploración de las posiciones subsiguientes para determinar si el ajuste mejora a medida que avanza la posición.
 
-En sintonía con anterior, el segundo resultado que se obtuvo (relacionado a los dígitos en la segunda posición), fue que con la misma metodología de tokenización cl100k y el test KS, se llegó a que, al igual que en la posición 1, la distribución empírica muestra una forma visualmente similar a la Ley de Benford, pero el test KS rechaza $H_0$ (D = 0.0108), indicando que el ajuste no es suficiente para confirmar estadísticamente el seguimiento de dicha ley, como se muestra en la siguiente figura.
+En sintonía con lo anterior, el segundo resultado que se obtuvo (relacionado a los dígitos en la segunda posición), fue que con la misma metodología de tokenización cl100k y el test KS, se llegó a que, al igual que en la posición 1, la distribución empírica muestra una forma visualmente similar a la Ley de Benford, pero el test KS rechaza $H_0$ (D = 0.0108), indicando que el ajuste no es suficiente para confirmar estadísticamente el seguimiento de dicha ley, como se muestra en la siguiente figura.
 
 \begin{figure}
     \centering
@@ -807,7 +807,7 @@ Luego, para el siguiente resultado se hizo uso de la prueba de Kruskal-Wallis. D
     \label{fig:miimagen}
 \end{figure}
 
-Las contraseñas mixtas presentan la entropía más alta, mientras que las compuestas exclusivamente por caracteres especiales muestran los valores más bajos, contrariamente a lo que podría esperarse intuitivamente. Este agrupamiento es descriptivo y no inferencial, pues la variable de agrupación coincide con la variable de respuesta. El hallazgo enriquece la comprensión del desorden interno en las contraseñas y abre la puerta para determinar si estas diferencias en entropía pueden usarse para cuantificar aleatoriedad real en los pasos siguientes del análisis. Para complmentar lo anterior, se hizo lo mismo pero únicamente con la longitud de la máscara. Los resultados de esto último fue que el test rechazó la hipótesis nula $(H = 14,084,456.87, p \approx 0)$, confirmando que existen diferencias estadísticamente significativas entre grupos, como se muestra en el siguiente gráfico. 
+Las contraseñas mixtas presentan la entropía más alta, mientras que las compuestas exclusivamente por caracteres especiales muestran los valores más bajos, contrariamente a lo que podría esperarse intuitivamente. Este agrupamiento es descriptivo y no inferencial, pues la variable de agrupación coincide con la variable de respuesta. El hallazgo enriquece la comprensión del desorden interno en las contraseñas y abre la puerta para determinar si estas diferencias en entropía pueden usarse para cuantificar aleatoriedad real en los pasos siguientes del análisis. Para complementar lo anterior, se hizo lo mismo pero únicamente con la longitud de la máscara. Los resultados de esto último fue que el test rechazó la hipótesis nula $(H = 14,084,456.87, p \approx 0)$, confirmando que existen diferencias estadísticamente significativas entre grupos, como se muestra en el siguiente gráfico. 
 
 \begin{figure}
     \centering
@@ -851,9 +851,9 @@ La composición de caracteres, la longitud y los patrones de transición influye
 
 La prueba KS mostró que las posiciones 1 y 2 se desvían significativamente de la distribución teórica de Benford, mientras que a partir de la posición 3 no se rechaza el ajuste a dicha ley. 
 
-Una limitación es que se eligió arbitrariamente el método de tokenización, ya que es imposible con la capacidad computacional actual, decidir cual modelo es el más eficiente. 
+Una limitación es que se eligió arbitrariamente el método de tokenización, ya que es imposible con la capacidad computacional actual, decidir cúal modelo es el más eficiente. 
 
-Otra limitación es que el dataset brindado por RockYou.txt está limitado a un sector de la población en específico,lo que provocó que la idea inicial del proyecto de buscar predecir contraseñas no se pudiera llevar acabo, pues en general los resultados no se habrían podido generalizar al resto de la población. 
+Otra limitación es que el dataset brindado por RockYou.txt está limitado a un sector de la población en específico, lo que provocó que la idea inicial del proyecto de buscar predecir contraseñas no se pudiera llevar a cabo, pues en general los resultados no se habrían podido generalizar al resto de la población. 
 
 \subsection{Agradecimientos}
 
@@ -862,7 +862,7 @@ Agradecemos profundamente al profesor Maikol Solís Chacón por su acompañamien
 \chapter{Registro de uso de IA}
 
 Herramienta: Claude (Anthropic)
-Prompt: Prompts iterativos para la generación de gráficos en Python de las nuevas funciones de análisis (chi2_independencia_transiciones y spearman_coocurrencia_tipos) y la corrección  y finalizacions de los algoritmos de las mismas funciones
+Prompt: Prompts iterativos para la generación de gráficos en Python de las nuevas funciones de análisis (chi2_independencia_transiciones y spearman_coocurrencia_tipos) y la corrección  y finalizaciones de los algoritmos de las mismas funciones
 Respuesta de la IA: El código generado se incorporó en los scripts del proyecto, particularmente en los módulos de análisis de transiciones y co‑ocurrencia. Se añadieron rutinas para graficar los resultados de Chi‑cuadrado y Spearman, además de ajustes en la lógica de las funciones para evitar fallos en la conversión de datos y en la construcción de matrices.
 Evaluación: Cada fragmento de código fue revisado y probado por al menos un miembro del equipo, verificando que los gráficos se generaran correctamente y que los algoritmos devolvieran resultados coherentes con los objetivos del análisis.
 Modificaciones: Se realizaron correcciones puntuales en la lógica de iteración y en el manejo de valores nulos, además de ajustes menores de estilo en los gráficos para mejorar la legibilidad.
