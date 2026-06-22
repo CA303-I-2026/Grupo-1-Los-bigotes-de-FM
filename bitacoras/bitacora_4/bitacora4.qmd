@@ -103,7 +103,6 @@ csl: apa.csl
 reference-section-title: "Bibliografía"
 ---
 
-
 \setcounter{page}{1}
 
 \chapter{Parte de planificación}
@@ -130,7 +129,7 @@ Se usó la tokenización con base cl100k, para tener mayor control de la parte d
 
 \subsection*{Evidencia}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/co-ocurrencia.jpeg}
     \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
@@ -177,9 +176,11 @@ Para la primera posición de la contraseña, se cumple Benford teóricamente per
 
 Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
 
+\newpage 
+
 \subsection*{Evidencia}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/jaccard.jpeg}
     \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
@@ -211,26 +212,26 @@ Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las
 
 \subsection*{Titular}
 
-No se cumple similitud en las distribuciones con tokenización en la posición 1. 
+La matriz de transiciones revela una fuerte simetría estructural en RockYou. 
  
 \subsection*{Nombre del hallazgo/resultado}
 
-KS y Benford no concuerdan en la primera posición de las contraseñas tokenizadas con cl100k base. 
+Cantidad de transiciones entre origen y destino (en tipos de datos).
 
 \subsection*{Resumen en una oración}
 
-Para la primera posición de la contraseña, se cumple Benford teóricamente pero no lo suficiente para pasar el test KS. 
+La mayor cantidad de transiciones es de letra a letra. 
 
 \subsection*{Método o análisis que lo produjo}
 
-Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
+Un simple conteo con la matriz de transición. 
 
 \subsection*{Evidencia}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/conteos.jpeg}
-    \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \caption*{Conteos observados en transición entre tips de datos}
     \label{fig:miimagen}
 \end{figure}
 
@@ -239,19 +240,19 @@ Se usó la tokenización con base cl100k, para tener mayor control de la parte d
 
 \subsection*{Conexión con la pregunta de investigación}
 
-Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 1 en las contraseñas siguen Benford, no lo suficiente para pasar KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se transicionan los tipos de datos en las contraseñas, descubriendo que hay muchas más transiciones entre letras que de dígito a dígito, esto nos dice que es muy probable pasar de una letra a otra. 
 
 \subsection*{Contraste con la literatura}
 
-Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 1. 
+Esto tiene relación directa con la literatura de (Keszthelyi,2013), pues se relaciona con la creación de buenas contraseñas con facilidad de recordación y que sean simples que es la idea básica del autor, con este gráfico, vemos como la gente sigue patrones pasando casi siempre de letra a letra o de dígito a dígito. 
 
 \subsection*{Lo que NO explica este resultado}
 
-Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 1. 
+Este resultado claramente NO explica que solo se pasa de letra a letra o de dígito a dígito, solo nos explica un conteo por encima de cuantas veces sucede, no nos dice que solo pasa de esa manera. 
 
 \subsection*{Implicación para el siguiente paso}
 
-Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
+Nos toca averiguar si esto apoya la entropía.  
 
 
 ---------- FICHA 4 ----------
@@ -276,7 +277,7 @@ Se usó la tokenización con base cl100k, para tener mayor control de la parte d
 
 \subsection*{Evidencia}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/chi.jpeg}
     \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
