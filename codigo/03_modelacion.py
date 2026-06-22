@@ -1266,7 +1266,7 @@ def chi2_independencia_transiciones(alpha=0.05):
         None
 
     Returns:
-        None: Guarda un grafico de residuos estandarizados y un resumen en texto plano.
+        None: Guarda graficos de conteos y residuos estandarizados y un resumen en texto plano.
 
     Example:
         >>> chi2_independencia_transiciones()
@@ -1338,10 +1338,9 @@ def chi2_independencia_transiciones(alpha=0.05):
     # Residuos estandarizados: (observado - esperado) / sqrt(esperado)
     residuos = (trans_counts - esperados) / np.sqrt(esperados)
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+    # Grafico 1: conteos observados
+    fig, ax1 = plt.subplots(figsize=(5, 4))
     fig.patch.set_facecolor("white")
-
-    ax1 = axes[0]
     ax1.set_facecolor("white")
     sns.heatmap(
         trans_counts,
@@ -1357,8 +1356,13 @@ def chi2_independencia_transiciones(alpha=0.05):
     ax1.set_title("Conteos observados\n(bigramas de transicion)", fontsize=10)
     ax1.set_xlabel("Tipo destino")
     ax1.set_ylabel("Tipo origen")
+    plt.tight_layout()
+    plt.savefig(f"{OUT_CHI2_DIR}/chi2_01_conteos_observados.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
 
-    ax2 = axes[1]
+    # Grafico 2: residuos estandarizados
+    fig, ax2 = plt.subplots(figsize=(5, 4))
+    fig.patch.set_facecolor("white")
     ax2.set_facecolor("white")
     sns.heatmap(
         residuos,
@@ -1378,13 +1382,12 @@ def chi2_independencia_transiciones(alpha=0.05):
     )
     ax2.set_xlabel("Tipo destino")
     ax2.set_ylabel("Tipo origen")
-
     plt.suptitle(
         f"Chi-cuadrado de independencia — transiciones entre tipos\n{estado}   p = {p:.6f}",
         fontsize=11, y=1.02
     )
     plt.tight_layout()
-    plt.savefig(f"{OUT_CHI2_DIR}/chi2_transiciones.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.savefig(f"{OUT_CHI2_DIR}/chi2_02_residuos_estandarizados.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
 
     lineas = []
@@ -1401,18 +1404,20 @@ def chi2_independencia_transiciones(alpha=0.05):
     pr(f"  Grados de lib.  : {gl}")
     pr(f"  p-valor         : {p:.6f}")
     pr(f"  Resultado       : {estado}")
+    pr(f"  Alpha usado     : {alpha}")
     pr()
     pr(f"  V de Cramer     : {cramer_v:.4f}   ({fuerza})")
     pr()
     pr("  Nota: con n en el orden de millones el rechazo de H0 es")
     pr("  esperable. La V de Cramer es el indicador practico clave.")
-    pr(f"\n  Grafico en: {OUT_CHI2_DIR}/chi2_transiciones.png")
+    pr(f"\n  Graficos en: {OUT_CHI2_DIR}/chi2_01_conteos_observados.png")
+    pr(f"               {OUT_CHI2_DIR}/chi2_02_residuos_estandarizados.png")
 
     with open(OUT_CHI2_TXT, "w", encoding="utf-8") as f:
         f.write("\n".join(lineas) + "\n")
 
     print(f"\n  -> {OUT_CHI2_TXT} guardado")
-    print(f"  -> Grafico en {OUT_CHI2_DIR}/")
+    print(f"  -> Graficos en {OUT_CHI2_DIR}/")
 
 
 def spearman_coocurrencia_tipos(alpha=0.05):
@@ -1430,7 +1435,7 @@ def spearman_coocurrencia_tipos(alpha=0.05):
         None
 
     Returns:
-        None: Guarda un grafico de dispersion con tendencia y un resumen en texto plano.
+        None: Guarda graficos de dispersion con tendencia y un resumen en texto plano.
 
     Example:
         >>> spearman_coocurrencia_tipos()
@@ -1503,7 +1508,7 @@ def spearman_coocurrencia_tipos(alpha=0.05):
     print(f"  Spearman presencia vs co-ocurrencia media: rho = {rho1:.4f}   p = {p1:.4f}   {estado1}")
 
     # Correlacion 2: para cada par (i,j) con i<j, Jaccard vs media de presencias del par
-    pares_jaccard  = []
+    pares_jaccard   = []
     pares_presencia = []
     pares_labels    = []
 
@@ -1517,15 +1522,14 @@ def spearman_coocurrencia_tipos(alpha=0.05):
     pares_presencia = np.array(pares_presencia)
 
     rho2, p2 = stats.spearmanr(pares_jaccard, pares_presencia)
-    rechaza2  = p2 < 0.05
+    rechaza2  = p2 < alpha
     estado2   = "RECHAZA H0" if rechaza2 else "No rechaza H0"
 
     print(f"  Spearman pares Jaccard vs presencia media del par: rho = {rho2:.4f}   p = {p2:.4f}   {estado2}")
 
-    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+    # Grafico 1: presencia individual vs co-ocurrencia media
+    fig, ax1 = plt.subplots(figsize=(6, 5))
     fig.patch.set_facecolor("white")
-
-    ax1 = axes[0]
     ax1.set_facecolor("white")
     ax1.scatter(presencia_ind, cooc_media, s=120, color=palette[7], edgecolors=palette[9], zorder=3)
 
@@ -1548,8 +1552,13 @@ def spearman_coocurrencia_tipos(alpha=0.05):
     ax1.set_ylabel("Co-ocurrencia media con otros tipos (%)")
     sns.despine(ax=ax1)
     ax1.grid(linestyle="--", alpha=0.4)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_SP2_DIR}/spearman_01_presencia_vs_coocurrencia.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
 
-    ax2 = axes[1]
+    # Grafico 2: presencia media del par vs Jaccard ponderado
+    fig, ax2 = plt.subplots(figsize=(6, 5))
+    fig.patch.set_facecolor("white")
     ax2.set_facecolor("white")
     ax2.scatter(pares_presencia, pares_jaccard, s=120, color=palette[7], edgecolors=palette[9], zorder=3)
 
@@ -1572,10 +1581,8 @@ def spearman_coocurrencia_tipos(alpha=0.05):
     ax2.set_ylabel("Jaccard ponderado del par (%)")
     sns.despine(ax=ax2)
     ax2.grid(linestyle="--", alpha=0.4)
-
-    plt.suptitle("Spearman — Co-ocurrencia entre tipos de caracter", fontsize=12, y=1.02)
     plt.tight_layout()
-    plt.savefig(f"{OUT_SP2_DIR}/spearman_coocurrencia.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.savefig(f"{OUT_SP2_DIR}/spearman_02_pares_jaccard.png", dpi=150, bbox_inches="tight", facecolor="white")
     plt.close()
 
     lineas = []
@@ -1603,14 +1610,16 @@ def spearman_coocurrencia_tipos(alpha=0.05):
     pr(f"  p-valor   : {p2:.6f}")
     pr(f"  Resultado : {estado2}")
     pr()
+    pr(f"  Alpha usado     : {alpha}")
     pr("  Nota: n pequeno (4 y 6 puntos); interpretar como exploratorio.")
-    pr(f"\n  Grafico en: {OUT_SP2_DIR}/spearman_coocurrencia.png")
+    pr(f"\n  Graficos en: {OUT_SP2_DIR}/spearman_01_presencia_vs_coocurrencia.png")
+    pr(f"               {OUT_SP2_DIR}/spearman_02_pares_jaccard.png")
 
     with open(OUT_SP2_TXT, "w", encoding="utf-8") as f:
         f.write("\n".join(lineas) + "\n")
 
     print(f"\n  -> {OUT_SP2_TXT} guardado")
-    print(f"  -> Grafico en {OUT_SP2_DIR}/")
+    print(f"  -> Graficos en {OUT_SP2_DIR}/")
 
 # main
 if __name__ == "__main__":
