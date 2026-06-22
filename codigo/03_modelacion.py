@@ -1256,12 +1256,368 @@ def analizar_patrones_mascaras():
     print(f"  -> Graficos en {OUT_PAT_DIR}/")
 
 
+def chi2_independencia_transiciones(alpha=0.05):
+    """
+    Aplica la prueba chi-cuadrado de independencia sobre la matriz de bigramas
+    de transicion entre tipos de caracter (L, U, D, S), para determinar si
+    el tipo destino es estadisticamente independiente del tipo origen.
+
+    Args:
+        None
+
+    Returns:
+        None: Guarda un grafico de residuos estandarizados y un resumen en texto plano.
+
+    Example:
+        >>> chi2_independencia_transiciones()
+        Chi2 de independencia (transiciones): X2 = 812345.23   gl = 9   p = 0.000000   RECHAZA H0
+        V de Cramer: 0.4821   Asociacion: Grande
+
+    Notes:
+        Los conteos crudos se reconstruyen desde ROCKYOUMASKS contando las
+        transiciones tipo-a-tipo ponderadas por frecuencia de mascara.
+        La prueba usa scipy.stats.chi2_contingency con correccion de Yates
+        desactivada (no aplica para tablas mayores a 2x2).
+        Se complementa con la V de Cramer para cuantificar la fuerza de
+        asociacion independientemente del tamaño muestral.
+        Con n en el orden de millones el rechazo de H0 es casi inevitable;
+        la V de Cramer es el indicador practico relevante.
+    """
+
+    OUT_CHI2_DIR = "../datos/procesados/graficos_chi2"
+    OUT_CHI2_TXT = "../datos/procesados/chi2_transiciones_resumen.txt"
+    os.makedirs(OUT_CHI2_DIR, exist_ok=True)
+
+    mascaras    = []
+    frecuencias = []
+
+    with open(ROCKYOUMASKS, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            mascaras.append(row["mascara"])
+            frecuencias.append(int(row["frecuencia"]))
+
+    mascaras    = np.array(mascaras)
+    frecuencias = np.array(frecuencias, dtype=float)
+
+    tipos_ord = ["L", "U", "D", "S"]
+    t_idx     = {t: i for i, t in enumerate(tipos_ord)}
+    trans_mat = np.zeros((4, 4), dtype=float)
+
+    for m, f in zip(mascaras, frecuencias):
+        for k in range(len(m) - 1):
+            a, b = m[k], m[k + 1]
+            if a in t_idx and b in t_idx:
+                trans_mat[t_idx[a], t_idx[b]] += f
+
+    # scipy espera conteos enteros; se redondea porque las frecuencias son pesos
+    trans_counts = np.round(trans_mat).astype(int)
+
+    chi2, p, gl, esperados = stats.chi2_contingency(trans_counts, correction=False)
+
+    n        = trans_counts.sum()
+    min_dim  = min(trans_counts.shape[0] - 1, trans_counts.shape[1] - 1)
+    cramer_v = math.sqrt(chi2 / (n * min_dim))
+
+    rechaza = p < alpha
+    estado  = "RECHAZA H0" if rechaza else "No rechaza H0"
+
+    # Interpretar V de Cramer con gl = min(r-1, c-1) = 3
+    if cramer_v >= 0.29:
+        fuerza = "Grande"
+    elif cramer_v >= 0.17:
+        fuerza = "Media"
+    elif cramer_v >= 0.06:
+        fuerza = "Pequeña"
+    else:
+        fuerza = "Muy pequeña"
+
+    print(f"  Chi2 de independencia (transiciones): X2 = {chi2:.2f}   gl = {gl}   p = {p:.6f}   {estado}")
+    print(f"  V de Cramer: {cramer_v:.4f}   Asociacion: {fuerza}")
+
+    # Residuos estandarizados: (observado - esperado) / sqrt(esperado)
+    residuos = (trans_counts - esperados) / np.sqrt(esperados)
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+    fig.patch.set_facecolor("white")
+
+    ax1 = axes[0]
+    ax1.set_facecolor("white")
+    sns.heatmap(
+        trans_counts,
+        annot=True,
+        fmt=".0f",
+        xticklabels=tipos_ord,
+        yticklabels=tipos_ord,
+        cmap="Blues",
+        linewidths=0.5,
+        ax=ax1,
+        annot_kws={"size": 10}
+    )
+    ax1.set_title("Conteos observados\n(bigramas de transicion)", fontsize=10)
+    ax1.set_xlabel("Tipo destino")
+    ax1.set_ylabel("Tipo origen")
+
+    ax2 = axes[1]
+    ax2.set_facecolor("white")
+    sns.heatmap(
+        residuos,
+        annot=True,
+        fmt=".2f",
+        xticklabels=tipos_ord,
+        yticklabels=tipos_ord,
+        cmap="RdBu_r",
+        center=0,
+        linewidths=0.5,
+        ax=ax2,
+        annot_kws={"size": 10}
+    )
+    ax2.set_title(
+        f"Residuos estandarizados\nX² = {chi2:.2f}  |  gl = {gl}  |  V = {cramer_v:.4f}  |  {fuerza}",
+        fontsize=10
+    )
+    ax2.set_xlabel("Tipo destino")
+    ax2.set_ylabel("Tipo origen")
+
+    plt.suptitle(
+        f"Chi-cuadrado de independencia — transiciones entre tipos\n{estado}   p = {p:.6f}",
+        fontsize=11, y=1.02
+    )
+    plt.tight_layout()
+    plt.savefig(f"{OUT_CHI2_DIR}/chi2_transiciones.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    lineas = []
+    def pr(t=""):
+        lineas.append(t)
+
+    pr("=" * 65)
+    pr("  CHI2 DE INDEPENDENCIA — Bigramas de transicion entre tipos")
+    pr("=" * 65)
+    pr(f"  Mascaras unicas : {len(mascaras):>10,}")
+    pr(f"  Transiciones    : {int(n):>10,}")
+    pr()
+    pr(f"  X² estadistico  : {chi2:.4f}")
+    pr(f"  Grados de lib.  : {gl}")
+    pr(f"  p-valor         : {p:.6f}")
+    pr(f"  Resultado       : {estado}")
+    pr()
+    pr(f"  V de Cramer     : {cramer_v:.4f}   ({fuerza})")
+    pr()
+    pr("  Nota: con n en el orden de millones el rechazo de H0 es")
+    pr("  esperable. La V de Cramer es el indicador practico clave.")
+    pr(f"\n  Grafico en: {OUT_CHI2_DIR}/chi2_transiciones.png")
+
+    with open(OUT_CHI2_TXT, "w", encoding="utf-8") as f:
+        f.write("\n".join(lineas) + "\n")
+
+    print(f"\n  -> {OUT_CHI2_TXT} guardado")
+    print(f"  -> Grafico en {OUT_CHI2_DIR}/")
+
+
+def spearman_coocurrencia_tipos(alpha=0.05):
+    """
+    Calcula la correlacion de Spearman entre la presencia individual de cada
+    tipo de caracter (diagonal de la matriz de co-ocurrencia) y su co-ocurrencia
+    promedio con los demas tipos (promedio de la fila fuera de la diagonal),
+    usando los cuatro tipos L, U, D, S.
+
+    Adicionalmente calcula Spearman entre todos los pares de valores de
+    co-ocurrencia Jaccard ponderado (triangulo superior) y la presencia
+    individual de cada tipo involucrado en el par.
+
+    Args:
+        None
+
+    Returns:
+        None: Guarda un grafico de dispersion con tendencia y un resumen en texto plano.
+
+    Example:
+        >>> spearman_coocurrencia_tipos()
+        Spearman presencia vs co-ocurrencia media: rho = 0.9487   p = 0.0513   No rechaza H0
+        Spearman pares Jaccard vs presencia media del par: rho = 0.8321   p = 0.0000   RECHAZA H0
+
+    Notes:
+        La presencia individual se calcula como el porcentaje ponderado de
+        contrasennas que contienen al menos una vez el tipo dado.
+        La co-ocurrencia Jaccard ponderado entre tipos A y B se define como
+        frecuencia(A y B) / frecuencia(A o B) * 100.
+        Con solo 4 tipos el n de la primera correlacion es pequeno (n=4);
+        la segunda usa los C(4,2)=6 pares del triangulo superior (n=6).
+        Los resultados deben interpretarse como exploratoria descriptiva.
+    """
+
+    OUT_SP2_DIR = "../datos/procesados/graficos_spearman_cooc"
+    OUT_SP2_TXT = "../datos/procesados/spearman_coocurrencia_resumen.txt"
+    os.makedirs(OUT_SP2_DIR, exist_ok=True)
+
+    mascaras    = []
+    frecuencias = []
+
+    with open(ROCKYOUMASKS, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            mascaras.append(row["mascara"])
+            frecuencias.append(int(row["frecuencia"]))
+
+    mascaras    = np.array(mascaras)
+    frecuencias = np.array(frecuencias, dtype=float)
+    total_pw    = frecuencias.sum()
+
+    chars_set = [set(m) for m in mascaras]
+
+    tipos4 = ["L", "U", "D", "S"]
+    tiene  = {
+        t: np.array([t in s for s in chars_set])
+        for t in tipos4
+    }
+
+    def wpct(mask_bool):
+        return frecuencias[mask_bool].sum() / total_pw * 100
+
+    # Matriz de co-ocurrencia identica a la del analisis de patrones
+    n4  = len(tipos4)
+    mat = np.zeros((n4, n4))
+
+    for i, ti in enumerate(tipos4):
+        for j, tj in enumerate(tipos4):
+            if i == j:
+                mat[i, j] = wpct(tiene[ti])
+            else:
+                ambos      = tiene[ti] & tiene[tj]
+                cualquiera = tiene[ti] | tiene[tj]
+                denom      = frecuencias[cualquiera].sum()
+                mat[i, j]  = (frecuencias[ambos].sum() / denom * 100) if denom > 0 else 0
+
+    # Correlacion 1: presencia individual vs co-ocurrencia media con otros tipos
+    presencia_ind = np.array([mat[i, i] for i in range(n4)])
+    cooc_media    = np.array([
+        np.mean([mat[i, j] for j in range(n4) if j != i])
+        for i in range(n4)
+    ])
+
+    rho1, p1 = stats.spearmanr(presencia_ind, cooc_media)
+    rechaza1  = p1 < alpha
+    estado1   = "RECHAZA H0" if rechaza1 else "No rechaza H0"
+
+    print(f"  Spearman presencia vs co-ocurrencia media: rho = {rho1:.4f}   p = {p1:.4f}   {estado1}")
+
+    # Correlacion 2: para cada par (i,j) con i<j, Jaccard vs media de presencias del par
+    pares_jaccard  = []
+    pares_presencia = []
+    pares_labels    = []
+
+    for i in range(n4):
+        for j in range(i + 1, n4):
+            pares_jaccard.append(mat[i, j])
+            pares_presencia.append((presencia_ind[i] + presencia_ind[j]) / 2)
+            pares_labels.append(f"{tipos4[i]}-{tipos4[j]}")
+
+    pares_jaccard   = np.array(pares_jaccard)
+    pares_presencia = np.array(pares_presencia)
+
+    rho2, p2 = stats.spearmanr(pares_jaccard, pares_presencia)
+    rechaza2  = p2 < 0.05
+    estado2   = "RECHAZA H0" if rechaza2 else "No rechaza H0"
+
+    print(f"  Spearman pares Jaccard vs presencia media del par: rho = {rho2:.4f}   p = {p2:.4f}   {estado2}")
+
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+    fig.patch.set_facecolor("white")
+
+    ax1 = axes[0]
+    ax1.set_facecolor("white")
+    ax1.scatter(presencia_ind, cooc_media, s=120, color=palette[7], edgecolors=palette[9], zorder=3)
+
+    for i, label in enumerate(tipos4):
+        ax1.annotate(label, (presencia_ind[i], cooc_media[i]),
+                     textcoords="offset points", xytext=(6, 4), fontsize=11)
+
+    if len(presencia_ind) > 2:
+        z     = np.polyfit(presencia_ind, cooc_media, 1)
+        p_fit = np.poly1d(z)
+        xs    = np.linspace(presencia_ind.min(), presencia_ind.max(), 100)
+        ax1.plot(xs, p_fit(xs), "--", color=palette[4], linewidth=1.5, label="Tendencia")
+        ax1.legend()
+
+    ax1.set_title(
+        f"Presencia individual vs Co-ocurrencia media\nrho = {rho1:.4f}  |  p = {p1:.4f}  |  {estado1}",
+        fontsize=11
+    )
+    ax1.set_xlabel("Presencia individual del tipo (%)")
+    ax1.set_ylabel("Co-ocurrencia media con otros tipos (%)")
+    sns.despine(ax=ax1)
+    ax1.grid(linestyle="--", alpha=0.4)
+
+    ax2 = axes[1]
+    ax2.set_facecolor("white")
+    ax2.scatter(pares_presencia, pares_jaccard, s=120, color=palette[7], edgecolors=palette[9], zorder=3)
+
+    for i, label in enumerate(pares_labels):
+        ax2.annotate(label, (pares_presencia[i], pares_jaccard[i]),
+                     textcoords="offset points", xytext=(6, 4), fontsize=10)
+
+    if len(pares_presencia) > 2:
+        z     = np.polyfit(pares_presencia, pares_jaccard, 1)
+        p_fit = np.poly1d(z)
+        xs    = np.linspace(pares_presencia.min(), pares_presencia.max(), 100)
+        ax2.plot(xs, p_fit(xs), "--", color=palette[4], linewidth=1.5, label="Tendencia")
+        ax2.legend()
+
+    ax2.set_title(
+        f"Presencia media del par vs Jaccard ponderado\nrho = {rho2:.4f}  |  p = {p2:.4f}  |  {estado2}",
+        fontsize=11
+    )
+    ax2.set_xlabel("Presencia media del par (%)")
+    ax2.set_ylabel("Jaccard ponderado del par (%)")
+    sns.despine(ax=ax2)
+    ax2.grid(linestyle="--", alpha=0.4)
+
+    plt.suptitle("Spearman — Co-ocurrencia entre tipos de caracter", fontsize=12, y=1.02)
+    plt.tight_layout()
+    plt.savefig(f"{OUT_SP2_DIR}/spearman_coocurrencia.png", dpi=150, bbox_inches="tight", facecolor="white")
+    plt.close()
+
+    lineas = []
+    def pr(t=""):
+        lineas.append(t)
+
+    pr("=" * 65)
+    pr("  SPEARMAN — Co-ocurrencia entre tipos de caracter")
+    pr("=" * 65)
+    pr(f"  Mascaras unicas : {len(mascaras):>10,}")
+    pr(f"  Contrasennas    : {int(total_pw):>10,}")
+    pr()
+    pr("--- Correlacion 1: presencia individual vs co-ocurrencia media ---")
+    pr(f"  n puntos  : {n4} (uno por tipo)")
+    pr(f"  rho       : {rho1:.6f}")
+    pr(f"  p-valor   : {p1:.6f}")
+    pr(f"  Resultado : {estado1}")
+    pr()
+    pr("--- Correlacion 2: Jaccard del par vs presencia media del par ---")
+    pr(f"  n puntos  : {len(pares_jaccard)} (C(4,2) pares)")
+    for lbl, jac, pre in zip(pares_labels, pares_jaccard, pares_presencia):
+        pr(f"    {lbl:<6}  Jaccard = {jac:.2f}%   Presencia media = {pre:.2f}%")
+    pr()
+    pr(f"  rho       : {rho2:.6f}")
+    pr(f"  p-valor   : {p2:.6f}")
+    pr(f"  Resultado : {estado2}")
+    pr()
+    pr("  Nota: n pequeno (4 y 6 puntos); interpretar como exploratorio.")
+    pr(f"\n  Grafico en: {OUT_SP2_DIR}/spearman_coocurrencia.png")
+
+    with open(OUT_SP2_TXT, "w", encoding="utf-8") as f:
+        f.write("\n".join(lineas) + "\n")
+
+    print(f"\n  -> {OUT_SP2_TXT} guardado")
+    print(f"  -> Grafico en {OUT_SP2_DIR}/")
+
 # main
 if __name__ == "__main__":
 
     alpha_ks   = 0.05
-    cap_expand = 500_000
-    cap_spear  = 200_000
+    cap_expand = 14_000_000
+    cap_spear  = 14_000_000
 
     print("  Bienvenido al menu de pruebas estadisticas")
 
@@ -1323,6 +1679,23 @@ if __name__ == "__main__":
     # Complementa KW al dar una medida continua de la relación, no solo si
     # los grupos difieren.
     spearman_longitud_entropia(cap_spear)
+
+    print("Calculando Chi2 de independencia sobre transiciones...")
+    # Prueba si el tipo destino es independiente del tipo origen en los bigramas.
+    # Al rechazar H0 se confirma que las transiciones siguen patrones estructurales
+    # no aleatorios (ej. L→L domina). La V de Cramer cuantifica la fuerza real
+    # de esa dependencia mas alla del tamaño muestral, respondiendo si los patrones
+    # de transicion son predecibles y por tanto explotables en ataques de diccionario.
+    chi2_independencia_transiciones(alpha_ks)
+
+    print("Calculando Spearman sobre co-ocurrencia de tipos...")
+    # Dos correlaciones complementarias sobre la matriz de Jaccard ponderado:
+    #   (1) presencia individual del tipo vs su co-ocurrencia media con otros tipos.
+    #   (2) presencia media del par vs Jaccard del par (6 combinaciones posibles).
+    # Un rho alto en (2) indica que los tipos mas comunes tienden a co-ocurrir mas,
+    # confirmando que la complejidad de la mascara no se distribuye uniformemente
+    # sino que sigue la popularidad de sus tipos componentes.
+    spearman_coocurrencia_tipos(alpha_ks)
 
     print("Analizando los patrones de las mascaras...")
     analizar_patrones_mascaras()
