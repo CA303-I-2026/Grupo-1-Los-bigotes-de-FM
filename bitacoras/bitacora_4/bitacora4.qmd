@@ -113,26 +113,26 @@ reference-section-title: "Bibliografía"
 
 \subsection*{Titular}
 
-No se cumple similitud en las distribuciones con tokenización en la posición 1. 
+Los tipos de carácter más frecuentes individualmente tienden a co-ocurrir más con los demás, pero esta relación no es estadísticamente significativa dado el tamaño muestral reducido.
  
 \subsection*{Nombre del hallazgo/resultado}
 
-KS y Benford no concuerdan en la primera posición de las contraseñas tokenizadas con cl100k base. 
+Spearman entre presencia individual y co-ocurrencia media no rechaza H₀ (rho = 0.80, p = 0.20).
 
 \subsection*{Resumen en una oración}
 
-Para la primera posición de la contraseña, se cumple Benford teóricamente pero no lo suficiente para pasar el test KS. 
+Aunque L y D, los tipos más presentes individualmente, también presentan la mayor co-ocurrencia media con los demás tipos, la correlación de Spearman no alcanza significancia estadística con solo 4 puntos de datos.
 
 \subsection*{Método o análisis que lo produjo}
 
-Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
+Para cada uno de los cuatro tipos de carácter (L, U, D, S) se calculó su presencia individual ponderada por frecuencia de contraseña (porcentaje de contraseñas que contienen al menos una vez ese tipo) y su co-ocurrencia media con los otros tres tipos usando el índice de Jaccard ponderado. Se aplicó la correlación de Spearman entre ambas variables sobre los 4 puntos resultantes, uno por tipo.
 
 \subsection*{Evidencia}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/co-ocurrencia.jpeg}
-    \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \caption*{Spearman: presencia individual vs co-ocurrencia media por tipo de carácter}
     \label{fig:miimagen}
 \end{figure}
 
@@ -141,19 +141,19 @@ Se usó la tokenización con base cl100k, para tener mayor control de la parte d
 
 \subsection*{Conexión con la pregunta de investigación}
 
-Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 1 en las contraseñas siguen Benford, no lo suficiente para pasar KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
+L (80.5% de presencia) y D (54.0%) se ubican en el extremo superior del gráfico, mientras U y S se agrupan en el inferior con valores menores al 10%. Esto sugiere que los tipos dominantes no solo son los más usados individualmente sino también los que más co-ocurren con otros, lo cual apunta a que la complejidad de las contraseñas se concentra en muy pocos tipos y no se distribuye de forma balanceada.
 
 \subsection*{Contraste con la literatura}
 
-Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 1. 
+Esto tiene relación directa con nuestra literatura de pruebas no paramétricas. 
 
 \subsection*{Lo que NO explica este resultado}
 
-Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 1. 
+Este resultado no permite concluir estadísticamente que la relación existe en la población, dado que n=4 es insuficiente para que la prueba de Spearman tenga poder estadístico real. El p-valor de 0.20 no implica que no haya relación, sino que con 4 puntos es prácticamente imposible rechazar H₀ aunque el patrón sea visualmente fuerte.
 
 \subsection*{Implicación para el siguiente paso}
 
-Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
+El hallazgo orienta a examinar con mayor detalle la dominancia del binomio L-D como par, que es exactamente lo que se analiza en la segunda correlación.
 
 
 ---------- FICHA 2 ----------
@@ -162,19 +162,19 @@ Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las
 
 \subsection*{Titular}
 
-No se cumple similitud en las distribuciones con tokenización en la posición 1. 
+El par L-D es un outlier estructural en la co-ocurrencia entre tipos: su Jaccard ponderado (36.75%) es más de seis veces mayor que el del resto de combinaciones. 
  
 \subsection*{Nombre del hallazgo/resultado}
 
-KS y Benford no concuerdan en la primera posición de las contraseñas tokenizadas con cl100k base. 
+Spearman entre presencia media del par y Jaccard ponderado no rechaza H₀ (rho = 0.14, p = 0.79), pero el par L-D rompe visualmente el patrón del resto.
 
 \subsection*{Resumen en una oración}
 
-Para la primera posición de la contraseña, se cumple Benford teóricamente pero no lo suficiente para pasar el test KS. 
+No existe una relación monotona general entre cuán presentes son los tipos de un par y cuánto co-ocurren, porque el par L-D domina de forma tan pronunciada que el resto de combinaciones se comporta de manera homogénea e independiente de su presencia media.
 
 \subsection*{Método o análisis que lo produjo}
 
-Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
+Se calcularon los seis pares posibles entre los cuatro tipos (C(4,2): L-U, L-D, L-S, U-D, U-S, D-S). Para cada par se obtuvo su Jaccard ponderado (frecuencia de contraseñas que contienen ambos tipos dividida entre las que contienen al menos uno, ponderada por frecuencia) y la presencia media del par (promedio de las presencias individuales de los dos tipos). Se aplicó Spearman sobre estos 6 puntos.
 
 \newpage 
 
@@ -183,7 +183,7 @@ Se usó la tokenización con base cl100k, para tener mayor control de la parte d
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/jaccard.jpeg}
-    \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \caption*{Spearman: presencia media del par vs Jaccard ponderado para los 6 pares posibles}
     \label{fig:miimagen}
 \end{figure}
 
@@ -192,19 +192,20 @@ Se usó la tokenización con base cl100k, para tener mayor control de la parte d
 
 \subsection*{Conexión con la pregunta de investigación}
 
-Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 1 en las contraseñas siguen Benford, no lo suficiente para pasar KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
+El Jaccard de L-D (36.75%) frente al segundo más alto, U-D (5.84%), revela que la combinación minúsculas más dígitos no es simplemente la más común sino que es cualitativamente distinta al resto. Esto indica que el patrón estructural dominante en RockYou es letras seguidas de números, lo que implica que las contraseñas tienen una predictibilidad estructural alta y no aprovechan la diversidad de los cuatro tipos disponibles.
 
 \subsection*{Contraste con la literatura}
 
-Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 1. 
+Esto tiene relación directa con nuestra literatura sobre pruebas no paramétricas. 
 
 \subsection*{Lo que NO explica este resultado}
 
-Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 1. 
+El rho bajo (0.14) y el p-valor alto (0.79) no significan que el Jaccard sea independiente de la presencia en general, sino que la relación no es monotona: U-S tiene Jaccard relativamente alto (5.46%) pese a que ambos tipos son poco frecuentes individualmente, lo que rompe el patrón esperado. Este resultado no permite generalizar más allá de los cuatro tipos analizados.
+
 
 \subsection*{Implicación para el siguiente paso}
 
-Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
+La dominancia del par L-D justifica analizar con mayor énfasis los patrones de transición entre estos dos tipos específicamente, en particular si las contraseñas siguen la estructura bloque-L seguido de bloque-D. 
 
 ---------- FICHA 3 ----------
 
@@ -261,26 +262,26 @@ Nos toca averiguar si esto apoya la entropía.
 
 \subsection*{Titular}
 
-No se cumple similitud en las distribuciones con tokenización en la posición 1. 
- 
+No hay independencia entre el origen y el destino. 
+
 \subsection*{Nombre del hallazgo/resultado}
 
-KS y Benford no concuerdan en la primera posición de las contraseñas tokenizadas con cl100k base. 
+Prueba Chi-Cuadrado sobre la matriz de transiciones. 
 
 \subsection*{Resumen en una oración}
 
-Para la primera posición de la contraseña, se cumple Benford teóricamente pero no lo suficiente para pasar el test KS. 
+La prueba chi cuadrado de independecia sobre la matriz de transiciones rechaza la hipotesis nula de independencia entre el tipo origen y destino.
 
 \subsection*{Método o análisis que lo produjo}
 
-Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
+Se realizó una prueba chi-cuadrado a la matriz de transiciones. 
 
 \subsection*{Evidencia}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/chi.jpeg}
-    \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \caption*{Prueba Chi-Cuadrado sobre la matriz de transición}
     \label{fig:miimagen}
 \end{figure}
 
@@ -289,19 +290,19 @@ Se usó la tokenización con base cl100k, para tener mayor control de la parte d
 
 \subsection*{Conexión con la pregunta de investigación}
 
-Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 1 en las contraseñas siguen Benford, no lo suficiente para pasar KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre la independencia de los datos, se descubrió que dada la prueba chi-cuadrado, se evita la alternancia entre los tipos de datos. 
 
 \subsection*{Contraste con la literatura}
 
-Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 1. 
+Esto tiene relación directa con nuestra ficha de literatura (Keszthelyi,2013), pues también refuerza que el ser humano tiende a elegir patrones reconocibles y memorizables en el tiempo en lugar de contraseñas aleatorias y complicadas, sustentando la hipótesis de la entropía baja.
 
 \subsection*{Lo que NO explica este resultado}
 
-Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 1. 
+Este resultado claramente NO dice que no se pueda pasar de un tipo de caracter a otro, solo nos dice que se descartó la hipótesis nula de que sean independientes. 
 
 \subsection*{Implicación para el siguiente paso}
 
-Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
+Nos toca averiguar si esto afecta la entropía de las contraseñas, lo cual sospechamos que más bien apoya que la entropía sea menor. 
 
 
 \chapter{Parte de escritura}
