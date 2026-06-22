@@ -98,6 +98,7 @@ format:
           \end{center}
         \end{titlepage}
       }
+bibliography: ../../referencias/referencias.bib
 
 csl: apa.csl   
 reference-section-title: "Bibliografía"
