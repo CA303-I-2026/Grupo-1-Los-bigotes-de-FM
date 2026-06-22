@@ -108,9 +108,200 @@ reference-section-title: "Bibliografía"
 
 \chapter{Parte de planificación}
 
-\section{Fichas de resultados}
+---------- FICHA 1 ----------
 
-Holi. 
+\section*{Nivel descriptivo (¿qué encontraron?)} 
+
+\subsection*{Titular}
+
+No se cumple similitud en las distribuciones con tokenización en la posición 1. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
+
+KS y Benford no concuerdan en la primera posición de las contraseñas tokenizadas con cl100k base. 
+
+\subsection*{Resumen en una oración}
+
+Para la primera posición de la contraseña, se cumple Benford teóricamente pero no lo suficiente para pasar el test KS. 
+
+\subsection*{Método o análisis que lo produjo}
+
+Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
+
+\subsection*{Evidencia}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/co-ocurrencia.jpeg}
+    \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
+
+
+\section*{Nivel analítico (¿qué significa?)}
+
+\subsection*{Conexión con la pregunta de investigación}
+
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 1 en las contraseñas siguen Benford, no lo suficiente para pasar KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
+
+\subsection*{Contraste con la literatura}
+
+Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 1. 
+
+\subsection*{Lo que NO explica este resultado}
+
+Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 1. 
+
+\subsection*{Implicación para el siguiente paso}
+
+Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
+
+
+---------- FICHA 2 ----------
+
+\section*{Nivel descriptivo (¿qué encontraron?)} 
+
+\subsection*{Titular}
+
+No se cumple similitud en las distribuciones con tokenización en la posición 1. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
+
+KS y Benford no concuerdan en la primera posición de las contraseñas tokenizadas con cl100k base. 
+
+\subsection*{Resumen en una oración}
+
+Para la primera posición de la contraseña, se cumple Benford teóricamente pero no lo suficiente para pasar el test KS. 
+
+\subsection*{Método o análisis que lo produjo}
+
+Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
+
+\subsection*{Evidencia}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/jaccard.jpeg}
+    \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
+
+
+\section*{Nivel analítico (¿qué significa?)}
+
+\subsection*{Conexión con la pregunta de investigación}
+
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 1 en las contraseñas siguen Benford, no lo suficiente para pasar KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
+
+\subsection*{Contraste con la literatura}
+
+Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 1. 
+
+\subsection*{Lo que NO explica este resultado}
+
+Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 1. 
+
+\subsection*{Implicación para el siguiente paso}
+
+Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
+
+---------- FICHA 3 ----------
+
+\section*{Nivel descriptivo (¿qué encontraron?)} 
+
+\subsection*{Titular}
+
+No se cumple similitud en las distribuciones con tokenización en la posición 1. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
+
+KS y Benford no concuerdan en la primera posición de las contraseñas tokenizadas con cl100k base. 
+
+\subsection*{Resumen en una oración}
+
+Para la primera posición de la contraseña, se cumple Benford teóricamente pero no lo suficiente para pasar el test KS. 
+
+\subsection*{Método o análisis que lo produjo}
+
+Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
+
+\subsection*{Evidencia}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/conteos.jpeg}
+    \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
+
+
+\section*{Nivel analítico (¿qué significa?)}
+
+\subsection*{Conexión con la pregunta de investigación}
+
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 1 en las contraseñas siguen Benford, no lo suficiente para pasar KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
+
+\subsection*{Contraste con la literatura}
+
+Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 1. 
+
+\subsection*{Lo que NO explica este resultado}
+
+Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 1. 
+
+\subsection*{Implicación para el siguiente paso}
+
+Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
+
+
+---------- FICHA 4 ----------
+
+\section*{Nivel descriptivo (¿qué encontraron?)} 
+
+\subsection*{Titular}
+
+No se cumple similitud en las distribuciones con tokenización en la posición 1. 
+ 
+\subsection*{Nombre del hallazgo/resultado}
+
+KS y Benford no concuerdan en la primera posición de las contraseñas tokenizadas con cl100k base. 
+
+\subsection*{Resumen en una oración}
+
+Para la primera posición de la contraseña, se cumple Benford teóricamente pero no lo suficiente para pasar el test KS. 
+
+\subsection*{Método o análisis que lo produjo}
+
+Se usó la tokenización con base cl100k, para tener mayor control de la parte de letras y de números al mismo tiempo, se le aplicó el test KS y se descubrió que sigue una distribución similar a la Benford teórica, al menos en la posición 1, pero no lo suficiente para pasar el test KS, por lo que se rechaza Ho.
+
+\subsection*{Evidencia}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/chi.jpeg}
+    \caption*{KS y Benford para posición 1 con contraseñas tokenizadas}
+    \label{fig:miimagen}
+\end{figure}
+
+
+\section*{Nivel analítico (¿qué significa?)}
+
+\subsection*{Conexión con la pregunta de investigación}
+
+Este hallazgo, nos ayuda a contestar nuestra pregunta pues vamos construyendo conocimiento sobre cómo se distribuyen los dígitos en las posiciones, en este caso, la posición 1 en las contraseñas siguen Benford, no lo suficiente para pasar KS, por lo que vemos que las claves no son tan aleatorias como parecen. 
+
+\subsection*{Contraste con la literatura}
+
+Esto tiene relación directa con nuestra ficha de literatura relacionada a Benford de María Caputi (2019), sobre el test KS (Chandy, et.al, 2025) que nos ayudó a comprobar la distribución en este caso para la posición 1. 
+
+\subsection*{Lo que NO explica este resultado}
+
+Este resultado claramente NO explica que todas las posiciones se rijan bajo ley de Benford y que no se cumpla el test KS, este resultado solo nos guía para la posición 1. 
+
+\subsection*{Implicación para el siguiente paso}
+
+Nos toca averiguar si esto mismo se cumple para las siguientes posiciones en las contraseñas del dataset de RockYou. 
+
 
 \chapter{Parte de escritura}
 
