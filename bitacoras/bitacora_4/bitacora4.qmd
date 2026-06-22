@@ -120,7 +120,11 @@ Holi.
 
 \section{Conclusión}
 
-Holi. 
+La presente investigación buscó responder en qué medida los patrones estructurales de las contraseñas de RockYou, su composición de caracteres, longitud y distribución de dígitos, determinan su entropía y evidencian que los usuarios no las eligen al azar. Esta pregunta sustituyó a la de la Bitácora #2, centrada solo en Benford, pues rockyou.txt carecía de metadatos de usuario. Acompañados del profesor Maikol Solís se reorientó el proyecto hacia un enfoque estructural y entrópico, sin abandonar Benford, sino aplicándolo sobre la suma de los vectores de tokenización cl100k de cada contraseña. 
+
+Se esperaba hallar sesgos sistemáticos detectables estadísticamente, y los resultados coincidieron solo en parte el test KS rechazó Benford en las posiciones 1 y 2 de esa suma tokenizada, pero no a partir de la posición 3, donde lo empírico y lo teórico convergen a la uniformidad; Kruskal-Wallis confirmó que máscara y longitud determinan la entropía de Shannon, y la matriz de bigramas mostró orden en la transición entre tipos de carácter. La metodología, combinando tokenización, pruebas no paramétricas y entropía, resolvió la pregunta desde varios ángulos, aunque no sin tropiezos: aplicar Benford directamente sobre los dígitos sin tokenizar fracasó por las fechas, las longitudes acotadas y los sesgos cognitivos de los usuarios, lo que obligó a replantear el enfoque hacia la suma tokenizada. Para trabajos futuros se recomienda probar otras normas o esquemas de tokenización que extiendan el ajuste a Benford a todas las posiciones y complementar los hallazgos con modelos de Markov o redes generativas. 
+
+Finalmente, este trabajo llena un vacío poco explorado: ni los estudios de Benford (Caputi, 2019; Nigrini, 2012) ni los de seguridad de contraseñas (Bonneau, 2012; Wang et al., 2017) habían combinado la tokenización de los modelos de lenguaje con pruebas estadísticas formales para medir la predecibilidad de contraseñas, lo que vuelve esta investigación un puente metodológico novedoso entre ambas tradiciones.
 
 \section{Introducción}
 
